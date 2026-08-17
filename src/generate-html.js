@@ -550,7 +550,8 @@ function renderList() {
       if(currentPerson){if(isIn(s.id,currentPerson)){cls+=hasConf(s.id,currentPerson)?' conflict':' highlighted';}else cls+=' dimmed';}
       const dc=domainColors[s.ownerDomain]||'#999';
       h+='<div class="'+cls+'" style="border-left-color:'+dc+'">';
-      h+='<div class="list-card-time"><span class="time-start">'+s.startTime+'</span><span class="time-end">'+s.endTime+'</span><span class="time-dur">'+s.duration+' '+t('min')+'</span></div>';
+      const dur=timeToMin(s.endTime)-timeToMin(s.startTime);
+      h+='<div class="list-card-time"><span class="time-start">'+s.startTime+'</span><span class="time-end">'+s.endTime+'</span><span class="time-dur">'+dur+' '+t('min')+'</span></div>';
       h+='<div class="list-card-header">';
       h+='<span class="list-card-title">'+s.topic+'</span>';
       h+='<span class="domain-badge" style="background:'+dc+'">'+s.ownerDomain+'</span>';
