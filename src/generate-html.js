@@ -751,8 +751,8 @@ function importFile(target){
 }
 
 // === PASSWORD & MODE ===
-const VIEW_PW = 'sesonki3';
-const ADMIN_PW = 'sesonki3admin';
+const VIEW_PW = 'luottokumppani';
+const ADMIN_PW = 'luottokumppaniadmin';
 let isAdmin = false;
 
 function checkPw(){
