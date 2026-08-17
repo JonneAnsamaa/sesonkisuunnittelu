@@ -1,0 +1,4 @@
+[
+  { "person": "Heidi Falenius", "day": 1, "startTime": "14:00", "endTime": "16:00", "reason": "Johtoryhmän kokous" },
+  { "person": "Filip Holmberg", "day": 2, "startTime": "09:00", "endTime": "11:00", "reason": "Asiakastapaaminen" }
+]

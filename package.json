@@ -1,0 +1,15 @@
+{
+  "name": "sesonkisuunnittelu",
+  "version": "1.0.0",
+  "description": "Dependencies planning aikataulutustyökalu",
+  "type": "module",
+  "scripts": {
+    "parse": "node src/parse-input.js",
+    "schedule": "node src/scheduler.js",
+    "generate": "node src/generate-html.js",
+    "build": "npm run parse && npm run schedule && npm run generate"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}
