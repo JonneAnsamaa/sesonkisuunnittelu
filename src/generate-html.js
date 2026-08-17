@@ -433,7 +433,8 @@ function getOverlapConflicts(session,start,end,day,scheduled) {
   return c;
 }
 function selectRoom(session,start,end,day,scheduled) {
-  const n=session.participants.length, dr=rooms.filter(r=>!r.availableDays||r.availableDays.includes(day)), sr=[...dr].sort((a,b)=>b.capacity-a.capacity);
+  const af=config.activeFloors;
+  const n=session.participants.length, dr=rooms.filter(r=>(!r.availableDays||r.availableDays.includes(day))&&(!af||!af.length||af.includes(r.floor))), sr=[...dr].sort((a,b)=>b.capacity-a.capacity);
   for(const r of sr){if(r.capacity<n)continue;if(!scheduled.some(s=>s.day===day&&s.room===r.id&&timeToMin(s.startTime)<end&&timeToMin(s.endTime)>start))return r;}
   for(const r of sr){if(!scheduled.some(s=>s.day===day&&s.room===r.id&&timeToMin(s.startTime)<end&&timeToMin(s.endTime)>start))return r;}
   return null;
@@ -849,7 +850,8 @@ function renderSessions() {
     h+='</select>';
     h+='<select id="move-room-'+si+'" style="padding:0.35rem;border:1px solid var(--border);border-radius:4px;font-size:0.85rem;min-width:140px">';
     const moveDay=scheduled?scheduled.day:config.days[0].day;
-    const dayRooms=rooms.filter(r=>!r.availableDays||r.availableDays.includes(moveDay));
+    const maf=config.activeFloors;
+    const dayRooms=rooms.filter(r=>(!r.availableDays||r.availableDays.includes(moveDay))&&(!maf||!maf.length||maf.includes(r.floor)));
     dayRooms.forEach(r=>{h+='<option value="'+r.id+'"'+(scheduled&&scheduled.room===r.id?' selected':'')+'>'+(r.floor?r.floor+' ':'')+ r.name+' ('+r.capacity+'P)</option>';});
     h+='</select>';
     h+='<button class="btn btn-primary" onclick="moveSession('+si+')">Siirrä manuaalisesti</button>';
@@ -879,7 +881,8 @@ function updateMoveRooms(si){
   const dayVal=+document.getElementById('move-day-'+si).value;
   const sel=document.getElementById('move-room-'+si);
   const prev=sel.value;
-  const dr=rooms.filter(r=>!r.availableDays||r.availableDays.includes(dayVal));
+  const uaf=config.activeFloors;
+  const dr=rooms.filter(r=>(!r.availableDays||r.availableDays.includes(dayVal))&&(!uaf||!uaf.length||uaf.includes(r.floor)));
   sel.innerHTML=dr.map(r=>'<option value="'+r.id+'">'+(r.floor?r.floor+' ':'')+r.name+' ('+r.capacity+'P)</option>').join('');
   if(dr.some(r=>r.id===prev))sel.value=prev;
 }
@@ -942,7 +945,8 @@ function autoScheduleOne(si){
       const all=[...ac,...oc];
       let pp=0;for(const p of s.participants){const pref=preferences.find(pr=>pr.person===p.name&&pr.type==='prefer-day');if(pref&&!pref.days.includes(day))pp++;}
       const score=oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*0.3;
-      const dr=rooms.filter(r=>!r.availableDays||r.availableDays.includes(day));
+      const afr=config.activeFloors;
+      const dr=rooms.filter(r=>(!r.availableDays||r.availableDays.includes(day))&&(!afr||!afr.length||afr.includes(r.floor)));
       const sr=[...dr].sort((a,b)=>b.capacity-a.capacity);
       let room=null;
       for(const r of sr){if(r.capacity<s.participants.length)continue;if(!schedWithout.some(x=>x.day===day&&x.room===r.id&&timeToMin(x.startTime)<end&&timeToMin(x.endTime)>slot)){room=r;break;}}

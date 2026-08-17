@@ -10,7 +10,8 @@
     "lunchStart": "11:00",
     "lunchEnd": "12:00",
     "breakBetweenSessions": 0,
-    "slotGranularity": 15
+    "slotGranularity": 15,
+    "activeFloors": ["K1"]
   },
   "rooms": [
     { "id": "k1-01", "name": "Ilkka Malmberg", "floor": "K1", "number": "01", "capacity": 8, "availableDays": [1, 2, 3] },

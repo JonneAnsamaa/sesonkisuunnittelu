@@ -115,7 +115,8 @@ function getPersonConflicts(session, startTime, endTime, day, schedule) {
 function selectRoom(session, startTime, endTime, day, schedule) {
   const participantCount = session.participants.length;
 
-  const dayRooms = rooms.filter(r => !r.availableDays || r.availableDays.includes(day));
+  const af=config.activeFloors;
+  const dayRooms = rooms.filter(r => (!r.availableDays || r.availableDays.includes(day)) && (!af || !af.length || af.includes(r.floor)));
   const sortedRooms = [...dayRooms].sort((a, b) => b.capacity - a.capacity);
 
   for (const room of sortedRooms) {
