@@ -315,6 +315,7 @@ const html = `<!DOCTYPE html>
 
 <script>
 // === DATA (muokattava) ===
+const BUILD_VERSION = '${new Date().toISOString()}';
 let sessions = JSON.parse(document.getElementById('init-sessions').textContent);
 let config = JSON.parse(document.getElementById('init-config').textContent);
 let rooms = JSON.parse(document.getElementById('init-rooms').textContent);
@@ -1064,10 +1065,14 @@ function closeBlockPopup(){
 
 // === LOCAL STORAGE PERSISTENCE ===
 const LS_KEY='sesonki-data';
+const LS_VER_KEY='sesonki-build';
 function saveToLocal(){
   localStorage.setItem(LS_KEY,JSON.stringify({constraints:constraints,preferences:preferences,sessions:sessions,config:config,rooms:rooms}));
+  localStorage.setItem(LS_VER_KEY,BUILD_VERSION);
 }
 function loadFromLocal(){
+  const savedVer=localStorage.getItem(LS_VER_KEY);
+  if(savedVer!==BUILD_VERSION){localStorage.removeItem(LS_KEY);localStorage.removeItem(LS_VER_KEY);return false;}
   const raw=localStorage.getItem(LS_KEY);
   if(!raw)return false;
   try{
