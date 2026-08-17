@@ -6,10 +6,10 @@
       { "day": 3, "date": "2026-08-26", "label": "Ke 26.8." }
     ],
     "dayStartTime": "09:00",
-    "dayEndTime": "16:00",
-    "lunchStart": "12:00",
-    "lunchEnd": "13:00",
-    "breakBetweenSessions": 15,
+    "dayEndTime": "15:00",
+    "lunchStart": "11:00",
+    "lunchEnd": "12:00",
+    "breakBetweenSessions": 0,
     "slotGranularity": 15
   },
   "rooms": [

@@ -5,6 +5,9 @@ const roomsData = JSON.parse(readFileSync('data/rooms.json', 'utf-8'));
 const constraints = existsSync('data/constraints.json')
   ? JSON.parse(readFileSync('data/constraints.json', 'utf-8'))
   : [];
+const preferences = existsSync('data/preferences.json')
+  ? JSON.parse(readFileSync('data/preferences.json', 'utf-8'))
+  : [];
 
 const { config, rooms } = roomsData;
 const { sessions, season } = input;
@@ -64,7 +67,7 @@ const html = `<!DOCTYPE html>
     .day-group h2 { font-size: 1.1rem; padding: 0.5rem 0; border-bottom: 2px solid var(--text); margin-bottom: 0.75rem; }
 
     .session-row { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); border-left: 4px solid transparent; transition: opacity 0.2s; }
-    .session-row-top { display: grid; grid-template-columns: 100px 60px 150px 1fr 150px 60px; gap: 0.75rem; align-items: center; }
+    .session-row-top { display: grid; grid-template-columns: 100px 60px 150px 1fr; gap: 0.75rem; align-items: center; }
     .session-row:hover { background: #f0f0f0; }
     .session-row .time { font-weight: 600; font-variant-numeric: tabular-nums; }
     .session-row .domain-tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 0.15rem 0.4rem; border-radius: 3px; text-align: center; color: white; white-space: nowrap; }
@@ -188,13 +191,47 @@ const html = `<!DOCTYPE html>
     .status-bar { text-align: center; padding: 0.5rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
     .status-bar strong { color: var(--text); }
 
+    /* Stats bar */
+    .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 960px; margin: 0 auto 1.5rem; }
+    .stat-card { background: var(--card-bg); border: 1px solid var(--border); border-left: 3px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.35rem; }
+    .stat-value { font-size: 1.75rem; font-weight: 700; margin: 0.25rem 0; }
+    .stat-sub { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* List cards */
+    .list-card { background: var(--card-bg); border: 1px solid var(--border); border-left: 4px solid; border-radius: 8px; padding: 0.85rem 1.1rem; margin-bottom: 0.75rem; transition: opacity 0.2s, box-shadow 0.2s; display: grid; grid-template-columns: 70px 1fr; gap: 0 1rem; }
+    .list-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .list-card.dimmed { opacity: var(--dimmed-opacity); }
+    .list-card.highlighted { background: var(--highlight); border-left-color: var(--highlight-border) !important; }
+    .list-card.conflict { background: var(--conflict-bg); border-left-color: var(--conflict-border) !important; }
+    .list-card-time { grid-row: 1 / 4; display: flex; flex-direction: column; justify-content: flex-start; padding-top: 0.1rem; }
+    .list-card-time .time-start { font-size: 1.15rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; }
+    .list-card-time .time-end { font-size: 0.8rem; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+    .list-card-time .time-dur { font-size: 0.75rem; color: var(--text-muted); font-style: italic; }
+    .list-card-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem; flex-wrap: wrap; }
+    .list-card-title { font-size: 1rem; font-weight: 600; }
+    .domain-badge { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; padding: 0.12rem 0.45rem; border-radius: 4px; color: white; white-space: nowrap; }
+    .list-card-meta { font-size: 0.82rem; color: var(--text-muted); display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+    .list-card-participants { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .participant-chip { display: inline-flex; align-items: center; gap: 0.3rem; background: #f5f5f5; border: 1px solid #e8e8e8; border-radius: 20px; padding: 0.15rem 0.55rem 0.15rem 0.15rem; font-size: 0.72rem; white-space: nowrap; }
+    .participant-chip.is-owner { font-weight: 600; }
+    .participant-chip.nice-to-have { opacity: 0.6; font-style: italic; }
+    .participant-chip.is-selected { background: #ffeeba; border-color: var(--highlight-border); }
+    .p-avatar { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: white; font-size: 0.55rem; font-weight: 700; flex-shrink: 0; }
+
+    /* Language toggle */
+    .lang-toggle { position: absolute; top: 1rem; right: 1rem; display: flex; gap: 0.25rem; }
+    .lang-toggle button { padding: 0.3rem 0.6rem; border: 1px solid var(--border); border-radius: 4px; background: var(--card-bg); cursor: pointer; font-size: 0.85rem; }
+    .lang-toggle button.active { background: var(--text); color: white; border-color: var(--text); }
+
     .hidden { display: none; }
-    .admin-only { display: none; }
-    body.is-admin .admin-only { display: inline-block; }
-    @media print { .controls, .admin-view { display: none; } body { padding: 0; } }
+    .admin-only { display: none !important; }
+    body.is-admin .admin-only { display: inline-block !important; }
+    body.is-admin .admin-only.admin-block { display: block !important; }
+    @media print { .controls, .admin-view, .lang-toggle { display: none; } body { padding: 0; } }
     @media (max-width: 768px) {
-      .session-row-top { grid-template-columns: 80px 1fr; }
-      .session-row .room, .session-row .owner, .session-row .count, .session-row .domain-tag { display: none; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .list-card-meta { gap: 0.5rem; }
       .form-row { flex-direction: column; align-items: flex-start; }
     }
   </style>
@@ -213,9 +250,27 @@ const html = `<!DOCTYPE html>
 
 <div id="app-content" style="display:none;">
 
-<header>
+<header style="position:relative;">
+  <div class="lang-toggle">
+    <button id="lang-fi" class="active" onclick="setLang('fi')">&#127467;&#127470; FI</button>
+    <button id="lang-en" onclick="setLang('en')">&#127468;&#127463; EN</button>
+  </div>
   <h1>Sesonki ${season.number} — Dependencies Planning</h1>
   <p>${season.startDate} – ${season.endDate}</p>
+  <details style="margin-top:0.5rem;cursor:pointer;">
+    <summary style="font-size:0.85rem;color:var(--accent);font-weight:600;">S3/26 syklit</summary>
+    <div style="display:flex;flex-wrap:wrap;gap:0.4rem;justify-content:center;margin-top:0.5rem;">
+      <span style="font-size:0.75rem;background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:0.2rem 0.5rem;"><strong>1</strong> 31.8–13.9</span>
+      <span style="font-size:0.75rem;background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:0.2rem 0.5rem;"><strong>2</strong> 14.9–27.9</span>
+      <span style="font-size:0.75rem;background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:0.2rem 0.5rem;"><strong>3</strong> 28.9–11.10</span>
+      <span style="font-size:0.75rem;background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:0.2rem 0.5rem;"><strong>4</strong> 12.10–25.10</span>
+      <span style="font-size:0.75rem;background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:0.2rem 0.5rem;"><strong>5</strong> 26.10–8.11</span>
+      <span style="font-size:0.75rem;background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:0.2rem 0.5rem;"><strong>6</strong> 9.11–22.11</span>
+      <span style="font-size:0.75rem;background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:0.2rem 0.5rem;"><strong>7</strong> 23.11–6.12</span>
+      <span style="font-size:0.75rem;background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:0.2rem 0.5rem;"><strong>8</strong> 7.12–20.12</span>
+      <span style="font-size:0.75rem;background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:0.2rem 0.5rem;"><strong>9</strong> 21.12–3.1</span>
+    </div>
+  </details>
 </header>
 
 <div class="controls" id="main-controls">
@@ -226,24 +281,28 @@ const html = `<!DOCTYPE html>
   <button id="btn-admin" class="admin-only" onclick="showView('admin')">Asetukset</button>
   <button class="admin-only" style="background:#27AE60;color:white;border-color:#27AE60;font-weight:600" onclick="rebuildUI();showToast('Aikataulu rakennettu uudelleen!')" title="Aja aikataulutusalgoritmi uudelleen">&#x21bb; Aikatauluta</button>
 
-  <div style="display: flex; align-items: center; gap: 0.5rem;">
-    <label for="person-filter" style="font-size: 0.85rem;">Henkilö:</label>
-    <select id="person-filter" onchange="filterPerson(this.value)"></select>
-  </div>
 
-  <div id="day-buttons" style="display: flex; align-items: center; gap: 0.5rem;">
-    <label style="font-size: 0.85rem;">Päivä:</label>
-  </div>
 </div>
 
 <div id="legend" class="legend"></div>
+<div id="stats-bar" class="stats-bar"></div>
 <div id="status-bar" class="status-bar"></div>
+
+<div id="filter-bar" style="max-width:960px;margin:0 auto 1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+  <div style="display:flex;align-items:center;gap:0.5rem;">
+    <label id="person-label" for="person-filter" style="font-size:0.85rem;font-weight:600;">Henkilö:</label>
+    <select id="person-filter" onchange="filterPerson(this.value)" style="padding:0.5rem 0.75rem;border:1px solid var(--border);border-radius:6px;font-size:0.9rem;background:var(--card-bg);min-width:220px;"></select>
+  </div>
+  <div id="day-buttons" style="display:flex;align-items:center;gap:0.5rem;"></div>
+</div>
 
 <div id="view-list" class="list-view"></div>
 <div id="view-grid" class="grid-view hidden"></div>
 <div id="view-conflicts" class="conflicts-view hidden"></div>
 <div id="view-sessions" class="sessions-view hidden"></div>
 <div id="view-admin" class="admin-view hidden"></div>
+<div id="block-popup" style="display:none;position:fixed;z-index:100;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.15);padding:1rem 1.25rem;max-width:400px;min-width:280px;"></div>
+<div id="popup-overlay" style="display:none;position:fixed;inset:0;z-index:99;" onclick="closeBlockPopup()"></div>
 <div id="toast" class="toast"></div>
 
 </div>
@@ -252,6 +311,7 @@ const html = `<!DOCTYPE html>
 <script id="init-config" type="application/json">${JSON.stringify(config)}</script>
 <script id="init-rooms" type="application/json">${JSON.stringify(rooms)}</script>
 <script id="init-constraints" type="application/json">${JSON.stringify(constraints)}</script>
+<script id="init-preferences" type="application/json">${JSON.stringify(preferences)}</script>
 
 <script>
 // === DATA (muokattava) ===
@@ -259,7 +319,74 @@ let sessions = JSON.parse(document.getElementById('init-sessions').textContent);
 let config = JSON.parse(document.getElementById('init-config').textContent);
 let rooms = JSON.parse(document.getElementById('init-rooms').textContent);
 let constraints = JSON.parse(document.getElementById('init-constraints').textContent);
+let preferences = JSON.parse(document.getElementById('init-preferences').textContent);
 const PALETTE = ${JSON.stringify(colorPalette)};
+
+const TR = {
+  fi: {
+    list:'Lista', grid:'Lukujärjestys', conflicts:'Päällekkäisyydet',
+    sessions:'Sessiot', settings:'Asetukset', rescheduleBtn:'\\u21bb Aikatauluta',
+    person:'Henkilö', all:'Kaikki', dayLabel:'Päivä',
+    statsSessions:'Suunnittelusettejä', statsTime:'Suunnitteluaikaa',
+    statsParticipants:'Osallistujia', statsHours:'Yhteistunteja',
+    statsDays:'päivää', statsCalTotal:'kalenteriaikaa yhteensä',
+    statsUnique:'eri henkilöä mukana', statsWorkTotal:'kaikkien työpanos yhteensä',
+    owner:'Vetäjä', min:'min', ppl:'hlö', h:'h',
+    noConflicts:'Ei päällekkäisyyksiä!',
+    reqConflicts:'pakollista konfliktia', nthConflicts:'nice-to-have konfliktia',
+    badgeBlocked:'ESTE', badgeRequired:'PAKOLLINEN', badgeNth:'Nice-to-have',
+    overlapWith:'päällekkäin',
+    pw:'Salasana', pwOpen:'Avaa aikataulu', pwWrong:'Väärä salasana',
+    lunch:'Lounas',
+    statusScheduled:'sessiota aikataulutettu', statusRooms:'neukkaria',
+    statusDays:'päivää', statusPersons:'henkilöä',
+  },
+  en: {
+    list:'List', grid:'Timetable', conflicts:'Conflicts',
+    sessions:'Sessions', settings:'Settings', rescheduleBtn:'\\u21bb Schedule',
+    person:'Person', all:'All', dayLabel:'Day',
+    statsSessions:'Planning sessions', statsTime:'Planning time',
+    statsParticipants:'Participants', statsHours:'Total hours',
+    statsDays:'days', statsCalTotal:'calendar time in total',
+    statsUnique:'unique participants', statsWorkTotal:'total effort across all',
+    owner:'Facilitator', min:'min', ppl:'ppl', h:'h',
+    noConflicts:'No conflicts!',
+    reqConflicts:'required conflicts', nthConflicts:'nice-to-have conflicts',
+    badgeBlocked:'BLOCKED', badgeRequired:'REQUIRED', badgeNth:'Nice-to-have',
+    overlapWith:'overlaps with',
+    pw:'Password', pwOpen:'Open schedule', pwWrong:'Wrong password',
+    lunch:'Lunch',
+    statusScheduled:'sessions scheduled', statusRooms:'rooms',
+    statusDays:'days', statusPersons:'participants',
+  }
+};
+let lang = 'fi';
+function t(k) { return (TR[lang]&&TR[lang][k])||k; }
+
+function setLang(l) {
+  lang=l;
+  document.getElementById('lang-fi').classList.toggle('active',l==='fi');
+  document.getElementById('lang-en').classList.toggle('active',l==='en');
+  translateStatic();
+  rebuildUI();
+}
+
+function translateStatic() {
+  const pi=document.getElementById('pw-input'); if(pi)pi.placeholder=t('pw');
+  const pb=document.querySelector('#login-gate button'); if(pb)pb.textContent=t('pwOpen');
+  const pe=document.getElementById('pw-error'); if(pe)pe.textContent=t('pwWrong');
+}
+
+function getInitials(name) {
+  const parts=name.trim().split(/\\s+/);
+  if(parts.length>=2)return(parts[0][0]+parts[parts.length-1][0]).toUpperCase();
+  return name.substring(0,2).toUpperCase();
+}
+function nameColor(name) {
+  let h=0;for(let i=0;i<name.length;i++)h=name.charCodeAt(i)+((h<<5)-h);
+  const cols=['#4A90D9','#E67E22','#27AE60','#8E44AD','#E74C3C','#16A085','#F39C12','#2C3E50','#D35400','#1ABC9C','#9B59B6','#34495E','#c0392b','#2980b9'];
+  return cols[Math.abs(h)%cols.length];
+}
 
 let schedule = [];
 let conflicts = [];
@@ -277,8 +404,11 @@ function buildTimeSlots() {
   const slots=[]; for(let t=s;t<e;t+=g){if(t>=ls&&t<le)continue;slots.push(t);} return slots;
 }
 function canFit(start,dur) {
-  const end=start+dur, ls=timeToMin(config.lunchStart), de=timeToMin(config.dayEndTime);
-  if(end>de)return false; if(start<ls&&end>ls)return false; return true;
+  const end=start+dur, ls=timeToMin(config.lunchStart), le=timeToMin(config.lunchEnd), de=timeToMin(config.dayEndTime);
+  if(end>de)return false;
+  if(start>=ls&&start<le)return false;
+  if(start<ls&&end>ls)return false;
+  return true;
 }
 function getAvailConflicts(session,start,end,day) {
   const c=[];
@@ -325,7 +455,8 @@ function runScheduler() {
         if(ac.some(c=>c.requiredInThis))continue;
         const oc=getOverlapConflicts(session,slot,end,day,schedule);
         const all=[...ac,...oc];
-        const score=oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length;
+        let pp=0;for(const p of session.participants){const pref=preferences.find(pr=>pr.person===p.name&&pr.type==='prefer-day');if(pref&&!pref.days.includes(day))pp++;}
+        const score=oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*0.3;
         const room=selectRoom(session,slot,end,day,schedule);
         if(!room)continue;
         if(score<bestScore){bestScore=score;best={day,startTime:minToTime(slot),endTime:minToTime(end),room:room.id,roomName:room.name,conflicts:all};}
@@ -353,22 +484,40 @@ function allParticipants() {
 
 function rebuildUI() {
   buildDomainColors(); runScheduler();
+  // Nav labels
+  document.getElementById('btn-list').textContent=t('list');
+  document.getElementById('btn-grid').textContent=t('grid');
+  document.getElementById('btn-sessions').textContent=t('sessions');
+  document.getElementById('btn-admin').textContent=t('settings');
   // Legend
   const doms=[...new Set(sessions.map(s=>s.ownerDomain))];
   document.getElementById('legend').innerHTML=doms.map(d=>'<div class="legend-item"><div class="legend-dot" style="background:'+domainColors[d]+'"></div>'+d+'</div>').join('');
   // Person dropdown
   const sel=document.getElementById('person-filter');
-  const prev=sel.value; sel.innerHTML='<option value="">Kaikki</option>'+allParticipants().map(p=>'<option value="'+p+'">'+p+'</option>').join('');
+  const prev=sel.value; sel.innerHTML='<option value="">'+t('all')+'</option>'+allParticipants().map(p=>'<option value="'+p+'">'+p+'</option>').join('');
   sel.value=prev;
+  document.getElementById('person-label').textContent=t('person')+':';
   // Day buttons
   const db=document.getElementById('day-buttons');
-  db.innerHTML='<label style="font-size:0.85rem;">Päivä:</label>'+config.days.map(d=>'<button class="day-btn'+(d.day===currentDay?' active':'')+'" onclick="selectDay('+d.day+')">'+d.label+'</button>').join('');
+  db.innerHTML='<label style="font-size:0.85rem;font-weight:600;">'+t('dayLabel')+':</label>'+config.days.map(d=>'<button class="day-btn'+(d.day===currentDay?' active':'')+'" data-day="'+d.day+'" onclick="selectDay('+d.day+')">'+d.label+'</button>').join('');
   // Conflict count
-  document.getElementById('btn-conflicts').textContent='Päällekkäisyydet'+(conflicts.length?' ('+conflicts.length+')':'');
+  document.getElementById('btn-conflicts').textContent=t('conflicts')+(conflicts.length?' ('+conflicts.length+')':'');
+  // Stats bar
+  const ap=allParticipants();
+  const totalMin=sessions.reduce((s,x)=>s+x.duration,0);
+  const totalPersonMin=sessions.reduce((s,x)=>s+x.duration*x.participants.length,0);
+  const totalH=Math.round(totalMin/60);
+  const totalPersonH=Math.round(totalPersonMin/60);
+  document.getElementById('stats-bar').innerHTML=
+    '<div class="stat-card"><div class="stat-label">\\ud83d\\udcc5 '+t('statsSessions')+'</div><div class="stat-value">'+sessions.length+'</div><div class="stat-sub">'+config.days.length+' '+t('statsDays')+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label">\\u23f1 '+t('statsTime')+'</div><div class="stat-value">'+totalH+' '+t('h')+'</div><div class="stat-sub">'+t('statsCalTotal')+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label">\\ud83d\\udc65 '+t('statsParticipants')+'</div><div class="stat-value">'+ap.length+'</div><div class="stat-sub">'+t('statsUnique')+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label">\\ud83e\\udd1d '+t('statsHours')+'</div><div class="stat-value">'+totalPersonH+' '+t('h')+'</div><div class="stat-sub">'+t('statsWorkTotal')+'</div></div>';
   // Status
-  document.getElementById('status-bar').innerHTML='<strong>'+schedule.length+'</strong>/'+sessions.length+' sessiota aikataulutettu · <strong>'+rooms.length+'</strong> neukkaria · <strong>'+config.days.length+'</strong> päivää · <strong>'+allParticipants().length+'</strong> henkilöä';
+  document.getElementById('status-bar').innerHTML='<strong>'+schedule.length+'</strong>/'+sessions.length+' '+t('statusScheduled')+' \\u00b7 <strong>'+rooms.length+'</strong> '+t('statusRooms')+' \\u00b7 <strong>'+config.days.length+'</strong> '+t('statusDays')+' \\u00b7 <strong>'+ap.length+'</strong> '+t('statusPersons');
   render();
   if(typeof applyMode==='function')applyMode();
+  if(typeof saveToLocal==='function')saveToLocal();
 }
 
 // === VIEW SWITCHING ===
@@ -376,9 +525,10 @@ function showView(v) {
   currentView=v;
   ['list','grid','conflicts','sessions','admin'].forEach(id=>{document.getElementById('view-'+id).classList.add('hidden');document.getElementById('btn-'+id).classList.remove('active');});
   document.getElementById('view-'+v).classList.remove('hidden'); document.getElementById('btn-'+v).classList.add('active');
+  document.getElementById('day-buttons').style.display=v==='grid'?'flex':'none';
   render();
 }
-function selectDay(d) { currentDay=d; document.querySelectorAll('.day-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(d))); render(); }
+function selectDay(d) { currentDay=d; document.querySelectorAll('.day-btn').forEach(b=>b.classList.toggle('active',+b.dataset.day===d)); render(); }
 function filterPerson(n) { currentPerson=n; render(); }
 
 function getSessionParts(id) { const s=sessions.find(x=>x.id===id); return s?s.participants:[]; }
@@ -396,28 +546,33 @@ function renderList() {
     const ds=schedule.filter(s=>s.day===day.day).sort((a,b)=>a.startTime.localeCompare(b.startTime));
     h+='<div class="day-group"><h2>'+day.label+(day.date?' — '+day.date:'')+'</h2>';
     for(const s of ds) {
-      let c='session-row';
-      if(currentPerson){if(isIn(s.id,currentPerson)){c+=hasConf(s.id,currentPerson)?' conflict':' highlighted';}else c+=' dimmed';}
+      let cls='list-card';
+      if(currentPerson){if(isIn(s.id,currentPerson)){cls+=hasConf(s.id,currentPerson)?' conflict':' highlighted';}else cls+=' dimmed';}
       const dc=domainColors[s.ownerDomain]||'#999';
-      h+='<div class="'+c+'" style="border-left-color:'+dc+';background:linear-gradient(90deg,'+dc+'08 0%,transparent 40%)">';
-      h+='<div class="session-row-top">';
-      h+='<span class="time">'+s.startTime+'–'+s.endTime+'</span>';
-      h+='<span class="domain-tag" style="background:'+dc+'">'+s.ownerDomain+'</span>';
-      h+='<span class="room">'+(s.roomFloor?s.roomFloor+' · ':'')+s.roomName+'</span>';
-      h+='<span class="topic">'+s.topic+'</span>';
-      h+='<span class="owner">'+s.owner+'</span>';
-      h+='<span class="count">'+s.participantCount+' hlö</span>';
+      h+='<div class="'+cls+'" style="border-left-color:'+dc+'">';
+      h+='<div class="list-card-time"><span class="time-start">'+s.startTime+'</span><span class="time-end">'+s.endTime+'</span><span class="time-dur">'+s.duration+' '+t('min')+'</span></div>';
+      h+='<div class="list-card-header">';
+      h+='<span class="list-card-title">'+s.topic+'</span>';
+      h+='<span class="domain-badge" style="background:'+dc+'">'+s.ownerDomain+'</span>';
       h+='</div>';
       const parts=getSessionParts(s.id);
+      const roomLabel=(s.roomFloor?s.roomFloor+' ':'')+s.roomName;
+      h+='<div class="list-card-meta">';
+      h+='<span>\\ud83d\\udccd '+roomLabel+'</span>';
+      h+='<span>\\ud83d\\udc65 '+parts.length+' '+t('ppl')+'</span>';
+      h+='<span>'+t('owner')+': '+s.owner+'</span>';
+      h+='</div>';
       if(parts.length){
-        h+='<div class="participants">';
+        h+='<div class="list-card-participants">';
         h+=parts.map(p=>{
-          let pc='participant-name';
-          if(p.name===s.owner)pc+=' is-owner';
-          if(!p.required)pc+=' nice-to-have';
-          if(currentPerson&&p.name===currentPerson)pc+=' is-selected';
-          return '<span class="'+pc+'">'+p.name+'</span>';
-        }).join(', ');
+          let cc='participant-chip';
+          if(p.name===s.owner)cc+=' is-owner';
+          if(!p.required)cc+=' nice-to-have';
+          if(currentPerson&&p.name===currentPerson)cc+=' is-selected';
+          const col=nameColor(p.name);
+          const crown=p.name===s.owner?'\\ud83d\\udc51 ':'';
+          return '<div class="'+cc+'"><span class="p-avatar" style="background:'+col+'">'+getInitials(p.name)+'</span><span>'+crown+p.name+'</span></div>';
+        }).join('');
         h+='</div>';
       }
       h+='</div>';
@@ -431,14 +586,15 @@ function renderGrid() {
   const el=document.getElementById('view-grid');
   const ds=timeToMin(config.dayStartTime),de=timeToMin(config.dayEndTime),ls=timeToMin(config.lunchStart),le=timeToMin(config.lunchEnd),g=config.slotGranularity;
   const slots=[]; for(let t=ds;t<de;t+=g)slots.push(t);
-  const dayRooms=rooms.filter(r=>!r.availableDays||r.availableDays.includes(currentDay));
+  const dayS=schedule.filter(s=>s.day===currentDay);
+  const usedRoomIds=new Set(dayS.map(s=>s.room));
+  const dayRooms=rooms.filter(r=>(!r.availableDays||r.availableDays.includes(currentDay))&&usedRoomIds.has(r.id));
   const rc=dayRooms.length;
   let h='<div class="timetable" style="grid-template-columns:60px repeat('+rc+',1fr)">';
-  h+='<div class="room-header"></div>'; dayRooms.forEach(r=>{h+='<div class="room-header">'+r.name+'<br><small>'+r.floor+' · '+r.capacity+' hlö</small></div>';});
-  const dayS=schedule.filter(s=>s.day===currentDay);
+  h+='<div class="room-header"></div>'; dayRooms.forEach(r=>{h+='<div class="room-header">'+r.name+'<br><small>'+r.floor+' \\u00b7 '+r.capacity+' '+t('ppl')+'</small></div>';});
   for(const slot of slots) {
     const ts=minToTime(slot);
-    if(slot>=ls&&slot<le){h+='<div class="time-label">'+ts+'</div>';for(let i=0;i<rc;i++)h+='<div class="lunch-row">'+(slot===ls?'Lounas':'')+'</div>';continue;}
+    if(slot>=ls&&slot<le){h+='<div class="time-label">'+ts+'</div>';for(let i=0;i<rc;i++)h+='<div class="lunch-row">'+(slot===ls?t('lunch'):'')+'</div>';continue;}
     h+='<div class="time-label">'+ts+'</div>';
     for(const room of dayRooms) {
       h+='<div class="cell">';
@@ -447,8 +603,8 @@ function renderGrid() {
         const dur=timeToMin(sh.endTime)-timeToMin(sh.startTime), hs=dur/g, ht=(hs*29)-2, col=domainColors[sh.ownerDomain]||'#999';
         let c='session-block';
         if(currentPerson){if(isIn(sh.id,currentPerson)){c+=hasConf(sh.id,currentPerson)?' conflict':' highlighted';}else c+=' dimmed';}
-        h+='<div class="'+c+'" style="height:'+ht+'px;background:'+col+'18;border-left-color:'+col+'" title="'+sh.topic+'">';
-        h+='<div class="block-topic">'+sh.topic+'</div><div class="block-owner">'+sh.owner+'</div><div class="block-time">'+sh.startTime+'–'+sh.endTime+'</div></div>';
+        h+='<div class="'+c+'" style="height:'+ht+'px;background:'+col+'18;border-left-color:'+col+'" onclick="showBlockPopup(event,\\''+sh.id+'\\')">';
+        h+='<div class="block-topic">'+sh.topic+'</div><div class="block-owner">'+sh.owner+'</div><div class="block-time">'+sh.startTime+'\\u2013'+sh.endTime+'</div></div>';
       }
       h+='</div>';
     }
@@ -458,18 +614,18 @@ function renderGrid() {
 
 function renderConflicts() {
   const el=document.getElementById('view-conflicts');
-  if(!conflicts.length){el.innerHTML='<p style="text-align:center;color:var(--text-muted);padding:2rem;">Ei päällekkäisyyksiä!</p>';return;}
+  if(!conflicts.length){el.innerHTML='<p style="text-align:center;color:var(--text-muted);padding:2rem;">'+t('noConflicts')+'</p>';return;}
   const reqCount=conflicts.reduce((n,c)=>n+c.conflicts.filter(x=>x.requiredInThis).length,0);
   const optCount=conflicts.reduce((n,c)=>n+c.conflicts.filter(x=>!x.requiredInThis).length,0);
-  let h='<div style="margin-bottom:1rem;text-align:center;"><strong>'+reqCount+'</strong> pakollista konfliktia · <strong>'+optCount+'</strong> nice-to-have konfliktia</div>';
+  let h='<div style="margin-bottom:1rem;text-align:center;"><strong>'+reqCount+'</strong> '+t('reqConflicts')+' \\u00b7 <strong>'+optCount+'</strong> '+t('nthConflicts')+'</div>';
   for(const c of conflicts) {
     h+='<div class="conflict-card"><h3>'+c.sessionTopic+'</h3><ul>';
     for(const cf of c.conflicts) {
-      const badge=cf.type==='availability'?'<span class="badge availability">ESTE</span>':cf.requiredInThis?'<span class="badge required">PAKOLLINEN</span>':'<span class="badge optional">Nice-to-have</span>';
+      const badge=cf.type==='availability'?'<span class="badge availability">'+t('badgeBlocked')+'</span>':cf.requiredInThis?'<span class="badge required">'+t('badgeRequired')+'</span>':'<span class="badge optional">'+t('badgeNth')+'</span>';
       let detail='';
-      if(cf.type==='availability')detail=cf.reason+' ('+cf.constraintStart+'–'+cf.constraintEnd+')';
-      else detail='päällekkäin: "'+cf.otherSessionTopic+'"';
-      h+='<li>'+badge+' <strong>'+cf.person+'</strong> ('+cf.domain+') — '+detail+'</li>';
+      if(cf.type==='availability')detail=cf.reason+' ('+cf.constraintStart+'\\u2013'+cf.constraintEnd+')';
+      else detail=t('overlapWith')+': \\u201c'+cf.otherSessionTopic+'\\u201d';
+      h+='<li>'+badge+' <strong>'+cf.person+'</strong> ('+cf.domain+') \\u2014 '+detail+'</li>';
     }
     h+='</ul></div>';
   }
@@ -553,6 +709,29 @@ function renderAdmin() {
   h+='</div>';
   h+='</div>';
 
+  // Päivätoiveet
+  h+='<div class="admin-section"><h2>Päivätoiveet</h2>';
+  h+='<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">Pehmeitä toiveita jotka ohjaavat algoritmia sijoittamaan henkilön sessiot toivotuille päiville. Ei estä muita päiviä, mutta suosii toivottuja.</p>';
+  if(preferences.length) {
+    h+='<table class="admin-table"><thead><tr><th>Henkilö</th><th>Toivotut päivät</th><th>Syy</th><th></th></tr></thead><tbody>';
+    preferences.forEach((p,i)=>{
+      const dayLabels=(p.days||[]).map(d=>{const dd=config.days.find(x=>x.day===d);return dd?dd.label:'Päivä '+d;}).join(', ');
+      h+='<tr><td>'+p.person+'</td><td>'+dayLabels+'</td><td style="font-size:0.8rem;color:var(--text-muted);">'+(p.reason||'')+'</td>';
+      h+='<td><button class="btn btn-danger" onclick="removePreference('+i+')">Poista</button></td></tr>';
+    });
+    h+='</tbody></table>';
+  }
+  h+='<h3>Lisää toive</h3>';
+  h+='<div class="form-row">';
+  h+='<select id="pref-person">'+allParticipants().map(p=>'<option>'+p+'</option>').join('')+'</select>';
+  h+='<div style="display:flex;gap:0.5rem;align-items:center;">';
+  config.days.forEach(d=>{h+='<label style="font-size:0.85rem;display:flex;align-items:center;gap:0.2rem;"><input type="checkbox" class="pref-day-cb" value="'+d.day+'"> '+d.label+'</label>';});
+  h+='</div>';
+  h+='<input type="text" id="pref-reason" placeholder="Syy (valinnainen)">';
+  h+='<button class="btn btn-primary" onclick="addPreference()">Lisää</button>';
+  h+='</div>';
+  h+='</div>';
+
   // Vie/tuo tiedot
   h+='<div class="export-section"><h2>Tietojen tallennus</h2>';
   h+='<p>Selaimessa tehdyt muutokset (sessiot, esteet, neukkarit, asetukset) <strong>eivät tallennu automaattisesti</strong> projektin tiedostoihin. Vie muokatut tiedot alla olevilla napeilla ja korvaa projektin <code>data/</code>-kansion tiedostot.</p>';
@@ -561,6 +740,7 @@ function renderAdmin() {
   h+='<button class="btn" onclick="exportFile(\\'input.json\\',buildInputJson())">Vie sessiot (input.json)</button>';
   h+='<button class="btn" onclick="exportFile(\\'rooms.json\\',buildRoomsJson())">Vie neukkarit (rooms.json)</button>';
   h+='<button class="btn" onclick="exportFile(\\'constraints.json\\',JSON.stringify(constraints,null,2))">Vie esteet (constraints.json)</button>';
+  h+='<button class="btn" onclick="exportFile(\\'preferences.json\\',JSON.stringify(preferences,null,2))">Vie toiveet (preferences.json)</button>';
   h+='</div>';
   h+='<div style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--border)">';
   h+='<p style="margin-bottom:0.5rem">Tai tuo aiemmin viedyt tiedostot:</p>';
@@ -568,7 +748,12 @@ function renderAdmin() {
   h+='<button class="btn" onclick="importFile(\\'sessions\\')">Tuo sessiot</button>';
   h+='<button class="btn" onclick="importFile(\\'rooms\\')">Tuo neukkarit</button>';
   h+='<button class="btn" onclick="importFile(\\'constraints\\')">Tuo esteet</button>';
+  h+='<button class="btn" onclick="importFile(\\'preferences\\')">Tuo toiveet</button>';
   h+='</div>';
+  h+='</div>';
+  h+='<div style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--border)">';
+  h+='<p style="margin-bottom:0.5rem;font-size:0.85rem;color:var(--text-muted);">Muutokset tallentuvat automaattisesti selaimen muistiin (localStorage). Jos haluat palauttaa alkuperäiset tiedot:</p>';
+  h+='<button class="btn btn-danger" onclick="if(confirm(\\'Palautetaanko kaikki alkuperäiset tiedot? Selaimessa tehdyt muutokset katoavat.\\'))clearLocalData()">Palauta oletusdata</button>';
   h+='</div>';
   h+='</div>';
 
@@ -644,6 +829,34 @@ function renderSessions() {
     h+='</div>';
     h+='</div>';
 
+    // Aikataulutus (admin)
+    h+='<div class="admin-only admin-block" style="margin-top:0.75rem;padding:0.75rem;background:#f8f9fa;border-radius:6px;border:1px solid var(--border)">';
+    h+='<h3 style="font-size:0.9rem;margin-bottom:0.5rem;">Aikataulutus</h3>';
+    if(scheduled){
+      const dl=config.days.find(d=>d.day===scheduled.day);
+      h+='<p style="font-size:0.85rem;margin-bottom:0.5rem;color:var(--text-muted)">Nyt: <strong>'+(dl?dl.label:'Päivä '+scheduled.day)+' '+scheduled.startTime+'–'+scheduled.endTime+'</strong>, '+(scheduled.roomFloor?scheduled.roomFloor+' ':'')+scheduled.roomName+'</p>';
+    } else {
+      h+='<p style="font-size:0.85rem;margin-bottom:0.5rem;color:var(--text-muted);font-style:italic">Ei vielä aikataulutettu</p>';
+    }
+    h+='<div class="form-row" style="margin-bottom:0.5rem">';
+    h+='<select id="move-day-'+si+'" style="padding:0.35rem;border:1px solid var(--border);border-radius:4px;font-size:0.85rem" onchange="updateMoveRooms('+si+')">';
+    config.days.forEach(d=>{h+='<option value="'+d.day+'"'+(scheduled&&scheduled.day===d.day?' selected':'')+'>'+d.label+'</option>';});
+    h+='</select>';
+    h+='<select id="move-time-'+si+'" style="padding:0.35rem;border:1px solid var(--border);border-radius:4px;font-size:0.85rem">';
+    const moveSlots=buildTimeSlots();
+    moveSlots.forEach(sl=>{const t=minToTime(sl);h+='<option value="'+t+'"'+(scheduled&&scheduled.startTime===t?' selected':'')+'>'+t+'</option>';});
+    h+='</select>';
+    h+='<select id="move-room-'+si+'" style="padding:0.35rem;border:1px solid var(--border);border-radius:4px;font-size:0.85rem;min-width:140px">';
+    const moveDay=scheduled?scheduled.day:config.days[0].day;
+    const dayRooms=rooms.filter(r=>!r.availableDays||r.availableDays.includes(moveDay));
+    dayRooms.forEach(r=>{h+='<option value="'+r.id+'"'+(scheduled&&scheduled.room===r.id?' selected':'')+'>'+(r.floor?r.floor+' ':'')+ r.name+' ('+r.capacity+'P)</option>';});
+    h+='</select>';
+    h+='<button class="btn btn-primary" onclick="moveSession('+si+')">Siirrä manuaalisesti</button>';
+    h+='<button class="btn btn-success" onclick="autoScheduleOne('+si+')">&#x21bb; Aikatauluta automaattisesti</button>';
+    h+='</div>';
+    h+='<div id="move-conflicts-'+si+'" style="font-size:0.8rem"></div>';
+    h+='</div>';
+
     h+='<div class="session-card-actions">';
     h+='<button class="btn btn-danger" onclick="removeSession('+si+')">Poista sessio</button>';
     h+='</div>';
@@ -660,6 +873,97 @@ function renderSessions() {
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 function toggleSession(id){openSessionId=openSessionId===id?null:id;renderSessions();}
+
+function updateMoveRooms(si){
+  const dayVal=+document.getElementById('move-day-'+si).value;
+  const sel=document.getElementById('move-room-'+si);
+  const prev=sel.value;
+  const dr=rooms.filter(r=>!r.availableDays||r.availableDays.includes(dayVal));
+  sel.innerHTML=dr.map(r=>'<option value="'+r.id+'">'+(r.floor?r.floor+' ':'')+r.name+' ('+r.capacity+'P)</option>').join('');
+  if(dr.some(r=>r.id===prev))sel.value=prev;
+}
+
+function moveSession(si){
+  const s=sessions[si];
+  const day=+document.getElementById('move-day-'+si).value;
+  const startTime=document.getElementById('move-time-'+si).value;
+  const roomId=document.getElementById('move-room-'+si).value;
+  const endTime=minToTime(timeToMin(startTime)+s.duration);
+  const room=rooms.find(r=>r.id===roomId);
+  if(!room){alert('Neukkaria ei löydy');return;}
+
+  const start=timeToMin(startTime), end=timeToMin(endTime);
+  if(!canFit(start,s.duration)){alert('Sessio ei mahdu valittuun aikaan (ylittää päivän lopun tai osuu lounaalle)');return;}
+
+  const ac=getAvailConflicts(s,start,end,day);
+  const schedWithout=schedule.filter(x=>x.id!==s.id);
+  const oc=getOverlapConflicts(s,start,end,day,schedWithout);
+  const allC=[...ac,...oc];
+
+  const reqConflicts=allC.filter(c=>c.requiredInThis);
+  if(reqConflicts.length>0){
+    const names=reqConflicts.map(c=>c.person+' ('+(c.type==='availability'?c.reason:'päällekkäin: '+c.otherSessionTopic)+')').join('\\n');
+    if(!confirm('Pakollisilla osallistujilla on konflikteja:\\n\\n'+names+'\\n\\nSiirretäänkö silti?'))return;
+  }
+
+  const existing=schedule.findIndex(x=>x.id===s.id);
+  const entry={id:s.id,topic:s.topic,owner:s.owner,ownerDomain:s.ownerDomain,day:day,startTime:startTime,endTime:endTime,room:roomId,roomName:room.name,roomFloor:room.floor||'',participantCount:s.participants.length,conflicts:allC};
+  if(existing>=0)schedule[existing]=entry; else schedule.push(entry);
+
+  conflicts=[];
+  for(const sc of schedule){if(sc.conflicts&&sc.conflicts.length>0)conflicts.push({sessionId:sc.id,sessionTopic:sc.topic,conflicts:sc.conflicts});}
+
+  const el=document.getElementById('move-conflicts-'+si);
+  if(allC.length>0){
+    el.innerHTML='<div style="margin-top:0.5rem;padding:0.5rem;background:var(--conflict-bg);border-radius:4px;"><strong>Konfliktit:</strong><ul style="margin:0.25rem 0 0 1rem;">'+allC.map(c=>'<li>'+c.person+' — '+(c.type==='availability'?c.reason:'päällekkäin: '+c.otherSessionTopic)+(c.requiredInThis?' <span class="badge required">PAKOLLINEN</span>':' <span class="badge optional">Nice-to-have</span>')+'</li>').join('')+'</ul></div>';
+  } else { el.innerHTML='<div style="margin-top:0.5rem;color:#27AE60;font-weight:600;">&#10003; Ei konflikteja</div>'; }
+
+  buildDomainColors();
+  document.getElementById('btn-conflicts').textContent='Päällekkäisyydet'+(conflicts.length?' ('+conflicts.length+')':'');
+  document.getElementById('status-bar').innerHTML='<strong>'+schedule.length+'</strong>/'+sessions.length+' sessiota aikataulutettu · <strong>'+rooms.length+'</strong> neukkaria · <strong>'+config.days.length+'</strong> päivää · <strong>'+allParticipants().length+'</strong> henkilöä';
+  showToast(s.topic+' siirretty!');
+  renderSessions();
+}
+
+function autoScheduleOne(si){
+  const s=sessions[si];
+  if(!s.participants.length){alert('Sessiolla ei ole osallistujia — ei voi aikatauluttaa');return;}
+  const schedWithout=schedule.filter(x=>x.id!==s.id);
+  const slots=buildTimeSlots();
+  let best=null, bestScore=Infinity;
+  for(let day=1;day<=config.days.length;day++){
+    for(const slot of slots){
+      const end=slot+s.duration;
+      if(!canFit(slot,s.duration))continue;
+      const ac=getAvailConflicts(s,slot,end,day);
+      if(ac.some(c=>c.requiredInThis))continue;
+      const oc=getOverlapConflicts(s,slot,end,day,schedWithout);
+      const all=[...ac,...oc];
+      let pp=0;for(const p of s.participants){const pref=preferences.find(pr=>pr.person===p.name&&pr.type==='prefer-day');if(pref&&!pref.days.includes(day))pp++;}
+      const score=oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*0.3;
+      const dr=rooms.filter(r=>!r.availableDays||r.availableDays.includes(day));
+      const sr=[...dr].sort((a,b)=>b.capacity-a.capacity);
+      let room=null;
+      for(const r of sr){if(r.capacity<s.participants.length)continue;if(!schedWithout.some(x=>x.day===day&&x.room===r.id&&timeToMin(x.startTime)<end&&timeToMin(x.endTime)>slot)){room=r;break;}}
+      if(!room)for(const r of sr){if(!schedWithout.some(x=>x.day===day&&x.room===r.id&&timeToMin(x.startTime)<end&&timeToMin(x.endTime)>slot)){room=r;break;}}
+      if(!room)continue;
+      if(score<bestScore){bestScore=score;best={day,startTime:minToTime(slot),endTime:minToTime(end),room:room.id,roomName:room.name,roomFloor:room.floor||'',conflicts:all};}
+      if(score===0)break;
+    }
+    if(best&&bestScore===0)break;
+  }
+  if(!best){alert('Ei löytynyt sopivaa aikaa sessiolle');return;}
+  const existing=schedule.findIndex(x=>x.id===s.id);
+  const entry={id:s.id,topic:s.topic,owner:s.owner,ownerDomain:s.ownerDomain,day:best.day,startTime:best.startTime,endTime:best.endTime,room:best.room,roomName:best.roomName,roomFloor:best.roomFloor,participantCount:s.participants.length,conflicts:best.conflicts};
+  if(existing>=0)schedule[existing]=entry;else schedule.push(entry);
+  conflicts=[];for(const sc of schedule){if(sc.conflicts&&sc.conflicts.length>0)conflicts.push({sessionId:sc.id,sessionTopic:sc.topic,conflicts:sc.conflicts});}
+  const dl=config.days.find(d=>d.day===best.day);
+  showToast(s.topic+' → '+(dl?dl.label:'Päivä '+best.day)+' '+best.startTime+', '+best.roomName);
+  buildDomainColors();
+  document.getElementById('btn-conflicts').textContent='Päällekkäisyydet'+(conflicts.length?' ('+conflicts.length+')':'');
+  document.getElementById('status-bar').innerHTML='<strong>'+schedule.length+'</strong>/'+sessions.length+' sessiota aikataulutettu · <strong>'+rooms.length+'</strong> neukkaria · <strong>'+config.days.length+'</strong> päivää · <strong>'+allParticipants().length+'</strong> henkilöä';
+  renderSessions();
+}
 
 function updateSession(si,field,val){sessions[si][field]=val;rebuildUI();}
 
@@ -706,6 +1010,81 @@ function addConstraint(){
   rebuildUI();
 }
 function removeConstraint(i){constraints.splice(i,1);rebuildUI();}
+function addPreference(){
+  const p=document.getElementById('pref-person').value;
+  const days=[...document.querySelectorAll('.pref-day-cb:checked')].map(cb=>+cb.value);
+  const r=document.getElementById('pref-reason').value;
+  if(p&&days.length)preferences.push({person:p,type:'prefer-day',days:days,reason:r});
+  rebuildUI();
+}
+function removePreference(i){preferences.splice(i,1);rebuildUI();}
+
+// === GRID POPUP ===
+function showBlockPopup(ev,id){
+  ev.stopPropagation();
+  const s=sessions.find(x=>x.id===id); if(!s)return;
+  const sc=schedule.find(x=>x.id===id);
+  const dc=domainColors[s.ownerDomain]||'#999';
+  let h='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;">';
+  h+='<div><span class="domain-badge" style="background:'+dc+'">'+s.ownerDomain+'</span></div>';
+  h+='<button onclick="closeBlockPopup()" style="background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--text-muted);padding:0 0.25rem;">\\u2715</button>';
+  h+='</div>';
+  h+='<div style="font-weight:600;font-size:1rem;margin-bottom:0.35rem;">'+s.topic+'</div>';
+  if(sc){h+='<div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">\\u23f1 '+sc.startTime+'\\u2013'+sc.endTime+' \\u00b7 '+s.duration+' '+t('min')+' \\u00b7 \\ud83d\\udccd '+(sc.roomFloor?sc.roomFloor+' ':'')+sc.roomName+'</div>';}
+  h+='<div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">'+t('owner')+': <strong>'+s.owner+'</strong></div>';
+  h+='<div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.35rem;">\\ud83d\\udc65 '+s.participants.length+' '+t('ppl')+'</div>';
+  h+='<div style="display:flex;flex-wrap:wrap;gap:0.3rem;">';
+  for(const p of s.participants){
+    const col=nameColor(p.name);
+    let cc='participant-chip';if(p.name===s.owner)cc+=' is-owner';if(!p.required)cc+=' nice-to-have';
+    h+='<div class="'+cc+'"><span class="p-avatar" style="background:'+col+'">'+getInitials(p.name)+'</span><span>'+(p.name===s.owner?'\\ud83d\\udc51 ':'')+p.name+'</span></div>';
+  }
+  h+='</div>';
+  const popup=document.getElementById('block-popup');
+  popup.innerHTML=h;
+  popup.style.display='block';
+  document.getElementById('popup-overlay').style.display='block';
+  const rect=ev.currentTarget.getBoundingClientRect();
+  let left=rect.right+8, top=rect.top;
+  if(left+400>window.innerWidth)left=rect.left-408;
+  if(left<8)left=8;
+  if(top+300>window.innerHeight)top=window.innerHeight-310;
+  if(top<8)top=8;
+  popup.style.left=left+'px'; popup.style.top=top+'px';
+}
+function closeBlockPopup(){
+  document.getElementById('block-popup').style.display='none';
+  document.getElementById('popup-overlay').style.display='none';
+}
+
+// === LOCAL STORAGE PERSISTENCE ===
+const LS_KEY='sesonki-data';
+function saveToLocal(){
+  localStorage.setItem(LS_KEY,JSON.stringify({constraints:constraints,preferences:preferences,sessions:sessions,config:config,rooms:rooms}));
+}
+function loadFromLocal(){
+  const raw=localStorage.getItem(LS_KEY);
+  if(!raw)return false;
+  try{
+    const d=JSON.parse(raw);
+    if(d.constraints)constraints=d.constraints;
+    if(d.preferences)preferences=d.preferences;
+    if(d.sessions)sessions=d.sessions;
+    if(d.config)config=d.config;
+    if(d.rooms)rooms=d.rooms;
+    return true;
+  }catch(e){return false;}
+}
+function clearLocalData(){
+  localStorage.removeItem(LS_KEY);
+  sessions=JSON.parse(document.getElementById('init-sessions').textContent);
+  config=JSON.parse(document.getElementById('init-config').textContent);
+  rooms=JSON.parse(document.getElementById('init-rooms').textContent);
+  constraints=JSON.parse(document.getElementById('init-constraints').textContent);
+  preferences=JSON.parse(document.getElementById('init-preferences').textContent);
+  rebuildUI();
+  showToast('Palautettu oletusdata');
+}
 
 // === EXPORT/IMPORT ===
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
@@ -725,7 +1104,7 @@ function buildRoomsJson(){
 function exportFile(name,content){downloadBlob(name,content);showToast(name+' ladattu!');}
 
 function exportAll(){
-  const files={'input.json':buildInputJson(),'rooms.json':buildRoomsJson(),'constraints.json':JSON.stringify(constraints,null,2),'schedule.json':JSON.stringify({schedule:schedule,conflicts:conflicts},null,2)};
+  const files={'input.json':buildInputJson(),'rooms.json':buildRoomsJson(),'constraints.json':JSON.stringify(constraints,null,2),'preferences.json':JSON.stringify(preferences,null,2),'schedule.json':JSON.stringify({schedule:schedule,conflicts:conflicts},null,2)};
   const names=Object.keys(files);
   names.forEach(n=>downloadBlob(n,files[n]));
   showToast(names.length+' tiedostoa ladattu!');
@@ -742,6 +1121,7 @@ function importFile(target){
         if(target==='sessions'){if(data.sessions)sessions=data.sessions;else sessions=data;showToast('Sessiot tuotu ('+sessions.length+')');}
         else if(target==='rooms'){if(data.rooms){rooms=data.rooms;if(data.config)config=data.config;}else rooms=data;showToast('Neukkarit tuotu ('+rooms.length+')');}
         else if(target==='constraints'){constraints=data;showToast('Esteet tuotu ('+constraints.length+')');}
+        else if(target==='preferences'){preferences=data;showToast('Toiveet tuotu ('+preferences.length+')');}
         rebuildUI();
       }catch(e){alert('Tiedoston luku epäonnistui: '+e.message);}
     };
@@ -771,6 +1151,9 @@ function unlock(){
 function applyMode(){
   document.body.classList.toggle('is-admin',isAdmin);
 }
+
+// Load saved data from localStorage (persists across page reloads)
+loadFromLocal();
 
 // Auto-unlock if already authenticated this session
 const savedMode=sessionStorage.getItem('sesonki-mode');

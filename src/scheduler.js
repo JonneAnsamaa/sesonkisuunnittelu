@@ -5,6 +5,9 @@ const roomsData = JSON.parse(readFileSync('data/rooms.json', 'utf-8'));
 const constraints = existsSync('data/constraints.json')
   ? JSON.parse(readFileSync('data/constraints.json', 'utf-8'))
   : [];
+const preferences = existsSync('data/preferences.json')
+  ? JSON.parse(readFileSync('data/preferences.json', 'utf-8'))
+  : [];
 
 const { config, rooms } = roomsData;
 const { sessions } = input;
@@ -42,6 +45,7 @@ function canFitSession(startSlot, duration, daySlots) {
   const dayEnd = timeToMinutes(config.dayEndTime);
 
   if (endTime > dayEnd) return false;
+  if (startSlot >= lunchStart && startSlot < lunchEnd) return false;
   if (startSlot < lunchStart && endTime > lunchStart) return false;
 
   return true;
@@ -187,7 +191,12 @@ function schedule() {
         const allConflictsForSlot = [...availConflicts, ...overlapConflicts];
         const requiredOverlaps = overlapConflicts.filter((c) => c.requiredInThis).length;
         const optionalConflicts = allConflictsForSlot.filter((c) => !c.requiredInThis).length;
-        const conflictScore = requiredOverlaps * 1000 + optionalConflicts;
+        let prefPenalty = 0;
+        for (const p of session.participants) {
+          const pref = preferences.find(pr => pr.person === p.name && pr.type === 'prefer-day');
+          if (pref && !pref.days.includes(day)) prefPenalty++;
+        }
+        const conflictScore = requiredOverlaps * 1000 + optionalConflicts + prefPenalty * 0.3;
 
         const room = selectRoom(session, slotStart, endTime, day, scheduled);
         if (!room) continue;

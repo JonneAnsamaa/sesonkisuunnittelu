@@ -59,6 +59,7 @@ const NAME_ALIASES = {
   'Katriina': 'Katriina Siimes',
   'Sami Luutiviki': 'Sami Luutikivi',
   'Jenni Tammninen': 'Jenni Tamminen',
+  'Raatikainen Satu': 'Satu Raatikainen',
 };
 
 // Nämä eivät ole henkilönimiä
