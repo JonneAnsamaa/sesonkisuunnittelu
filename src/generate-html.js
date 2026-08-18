@@ -59,7 +59,7 @@ const html = `<!DOCTYPE html>
 
     .filter-group { display: flex; flex-direction: column; gap: 0.35rem; }
     .filter-label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
-    #person-filter { padding: 0.6rem 2rem 0.6rem 1rem; border: 1px solid var(--border); border-radius: 24px; font-size: 0.9rem; background: var(--card-bg); min-width: 240px; cursor: pointer; }
+    #person-filter, #domain-filter { padding: 0.6rem 2rem 0.6rem 1rem; border: 1px solid var(--border); border-radius: 24px; font-size: 0.9rem; background: var(--card-bg); min-width: 200px; cursor: pointer; }
     .day-btn-group { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
     .day-btn-group .day-btn { padding: 0.5rem 1rem; border: none; border-left: 1px solid var(--border); background: var(--card-bg); cursor: pointer; font-size: 0.85rem; white-space: nowrap; }
     .day-btn-group .day-btn:first-child { border-left: none; }
@@ -310,6 +310,10 @@ const html = `<!DOCTYPE html>
     <select id="person-filter" onchange="filterPerson(this.value)"></select>
   </div>
   <div class="filter-group">
+    <label id="domain-label" class="filter-label">Domain</label>
+    <select id="domain-filter" onchange="filterDomain(this.value)"></select>
+  </div>
+  <div class="filter-group">
     <label id="day-label" class="filter-label">Päiväfiltteri</label>
     <div id="day-buttons" class="day-btn-group"></div>
   </div>
@@ -347,7 +351,7 @@ const TR = {
     list:'Lista', grid:'Lukujärjestys', conflicts:'Päällekkäisyydet',
     sessions:'Sessiot', settings:'Asetukset', rescheduleBtn:'\\u21bb Aikatauluta',
     person:'Henkilö', all:'Kaikki', allPersons:'Kaikki henkilöt', dayLabel:'Päivä',
-    personFilter:'Henkilöfiltteri', dayFilter:'Päiväfiltteri',
+    personFilter:'Henkilöfiltteri', domainFilter:'Domain', allDomains:'Kaikki domainit', dayFilter:'Päiväfiltteri',
     statsSessions:'Suunnittelusettejä', statsTime:'Suunnitteluaikaa',
     statsParticipants:'Osallistujia', statsHours:'Yhteistunteja',
     statsDays:'päivää', statsCalTotal:'kalenteriaikaa yhteensä',
@@ -367,7 +371,7 @@ const TR = {
     list:'List', grid:'Timetable', conflicts:'Conflicts',
     sessions:'Sessions', settings:'Settings', rescheduleBtn:'\\u21bb Schedule',
     person:'Person', all:'All', allPersons:'All persons', dayLabel:'Day',
-    personFilter:'Person filter', dayFilter:'Day filter',
+    personFilter:'Person filter', domainFilter:'Domain', allDomains:'All domains', dayFilter:'Day filter',
     statsSessions:'Planning sessions', statsTime:'Planning time',
     statsParticipants:'Participants', statsHours:'Total hours',
     statsDays:'days', statsCalTotal:'calendar time in total',
@@ -459,6 +463,7 @@ let domainColors = {};
 let currentView = 'list';
 let currentDay = 0;
 let currentPerson = '';
+let currentDomain = '';
 
 // === SCHEDULER (selaimessa) ===
 function timeToMin(t) { const [h,m]=t.split(':').map(Number); return h*60+m; }
@@ -566,7 +571,12 @@ function rebuildUI() {
   const prev=sel.value; sel.innerHTML='<option value="">'+t('allPersons')+'</option>'+allParticipants().map(p=>'<option value="'+p+'">'+p+'</option>').join('');
   sel.value=prev;
   document.getElementById('person-label').textContent=t('personFilter');
+  document.getElementById('domain-label').textContent=t('domainFilter');
   document.getElementById('day-label').textContent=t('dayFilter');
+  // Domain dropdown
+  const domSel=document.getElementById('domain-filter');
+  const prevDom=domSel.value; domSel.innerHTML='<option value="">'+t('allDomains')+'</option>'+doms.map(d=>'<option value="'+d+'">'+d+'</option>').join('');
+  domSel.value=prevDom;
   // Day buttons
   const db=document.getElementById('day-buttons');
   db.innerHTML='<button class="day-btn'+(currentDay===0?' active':'')+'" data-day="0" onclick="selectDay(0)">'+t('all')+'</button>'+config.days.map(d=>'<button class="day-btn'+(d.day===currentDay?' active':'')+'" data-day="'+d.day+'" onclick="selectDay('+d.day+')">'+d.label+'</button>').join('');
@@ -602,6 +612,7 @@ function showView(v) {
 }
 function selectDay(d) { currentDay=d; document.querySelectorAll('.day-btn').forEach(b=>b.classList.toggle('active',+b.dataset.day===d)); render(); }
 function filterPerson(n) { currentPerson=n; render(); }
+function filterDomain(d) { currentDomain=d; render(); }
 
 function getSessionParts(id) { const s=sessions.find(x=>x.id===id); return s?s.participants:[]; }
 function isIn(id,name) { return getSessionParts(id).some(p=>p.name===name); }
@@ -616,7 +627,8 @@ function renderList() {
   const el=document.getElementById('view-list'); let h='';
   const daysToShow=currentDay>0?config.days.filter(d=>d.day===currentDay):config.days;
   for(const day of daysToShow) {
-    const ds=schedule.filter(s=>s.day===day.day).sort((a,b)=>a.startTime.localeCompare(b.startTime));
+    const ds=schedule.filter(s=>s.day===day.day&&(!currentDomain||s.ownerDomain===currentDomain)).sort((a,b)=>a.startTime.localeCompare(b.startTime));
+    if(!ds.length)continue;
     h+='<div class="day-group"><h2>'+day.label+(day.date?' — '+day.date:'')+'</h2>';
     for(const s of ds) {
       const sess=sessions.find(x=>x.id===s.id);
@@ -627,7 +639,7 @@ function renderList() {
       const dc=domainColors[s.ownerDomain]||'#999';
       h+='<div class="'+cls+'" style="border-left-color:'+dc+'">';
       const dur=timeToMin(s.endTime)-timeToMin(s.startTime);
-      h+='<div class="list-card-time"><span class="domain-badge" style="background:'+dc+';font-size:0.6rem;padding:0.1rem 0.35rem;">'+s.ownerDomain+'</span><span class="time-start">'+s.startTime+'</span><span class="time-end">'+s.endTime+'</span><span class="time-dur">'+dur+' '+t('min')+'</span></div>';
+      h+='<div class="list-card-time"><span class="time-start">'+s.startTime+'</span><span class="time-end">'+s.endTime+'</span><span class="time-dur">'+dur+' '+t('min')+'</span><span class="domain-badge" style="background:'+dc+';font-size:0.6rem;padding:0.1rem 0.35rem;">'+s.ownerDomain+'</span></div>';
       h+='<div class="list-card-header">';
       h+='<span class="list-card-title">'+schedTopicText(s)+'</span>';
       if(isInternal)h+='<span class="status-badge st-internal">'+t('statusInternal')+'</span>';
@@ -681,14 +693,13 @@ function renderGrid() {
       const sh=dayS.find(s=>s.room===room.id&&timeToMin(s.startTime)===slot);
       if(sh) {
         const dur=timeToMin(sh.endTime)-timeToMin(sh.startTime), hs=dur/g, ht=(hs*28)-2, col=domainColors[sh.ownerDomain]||'#999';
-        const rm=dayRooms.find(r=>r.id===sh.room);
-        const cap=rm?rm.capacity:'?';
         let c='session-block';
-        if(currentPerson){if(isIn(sh.id,currentPerson)){c+=hasConf(sh.id,currentPerson)?' conflict':' highlighted';}else c+=' dimmed';}
+        if(currentDomain&&sh.ownerDomain!==currentDomain)c+=' dimmed';
+        else if(currentPerson){if(isIn(sh.id,currentPerson)){c+=hasConf(sh.id,currentPerson)?' conflict':' highlighted';}else c+=' dimmed';}
         h+='<div class="'+c+'" style="height:'+ht+'px;background:'+col+'18;border-left-color:'+col+'" onclick="showBlockPopup(event,\\''+sh.id+'\\')">';
         h+='<div class="block-topic">'+schedTopicText(sh)+'</div>';
         h+='<div class="block-time">'+sh.startTime+'\\u2013'+sh.endTime+'</div>';
-        h+='<div class="block-meta"><span class="domain-badge" style="background:'+col+'">'+sh.ownerDomain+'</span><span>\\ud83d\\udc65'+sh.participantCount+'/'+cap+'</span></div>';
+        h+='<div class="block-meta"><span class="domain-badge" style="background:'+col+'">'+sh.ownerDomain+'</span><span>\\ud83d\\udc65'+sh.participantCount+'</span></div>';
         h+='</div>';
       }
       h+='</div>';
