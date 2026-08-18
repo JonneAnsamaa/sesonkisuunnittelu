@@ -18,6 +18,11 @@ const bgBase64 = existsSync(bgImagePath)
   ? readFileSync(bgImagePath).toString('base64')
   : '';
 
+const discoMusicPath = 'data/The_Champs_-_Tequila_(mp3.pm).mp3';
+const discoMusicBase64 = existsSync(discoMusicPath)
+  ? readFileSync(discoMusicPath).toString('base64')
+  : '';
+
 const memePath = 'data/this-is-fine.webp';
 const memeBase64 = existsSync(memePath)
   ? readFileSync(memePath).toString('base64')
@@ -1582,6 +1587,8 @@ function thisIsFineClick(){
   let pos=0;
   let discoOn=false;
   let discoInterval=null;
+  const discoAudio=new Audio('data:audio/mp3;base64,${discoMusicBase64}');
+  discoAudio.loop=true;
   document.addEventListener('keydown',function(e){
     if(e.keyCode===seq[pos]){pos++;if(pos===seq.length){pos=0;toggleDisco();}}else{pos=e.keyCode===seq[0]?1:0;}
   });
@@ -1600,9 +1607,11 @@ function thisIsFineClick(){
         });
         if(h)h.style.color='hsl('+hue+',80%,40%)';
       },200);
+      discoAudio.currentTime=0;discoAudio.play().catch(function(){});
       const t=document.getElementById('toast');
       if(t){t.textContent='\\u{1f57a} DISCO MODE ACTIVATED \\u{1f483}';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2000);}
     }else{
+      discoAudio.pause();discoAudio.currentTime=0;
       clearInterval(discoInterval);
       discoInterval=null;
       document.querySelectorAll('.list-card,.session-block').forEach(function(el){el.style.background='';el.style.transition='';});
