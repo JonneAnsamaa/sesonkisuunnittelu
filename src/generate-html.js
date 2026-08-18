@@ -10,7 +10,17 @@ const preferences = existsSync('data/preferences.json')
   : [];
 
 const { config, rooms } = roomsData;
-const { sessions, season } = input;
+const { sessions, season, personDomains, domainDescriptions } = input;
+
+const bgImagePath = 'data/app-background.jpg';
+const bgBase64 = existsSync(bgImagePath)
+  ? readFileSync(bgImagePath).toString('base64')
+  : '';
+
+const fontPath = 'data/UnicaOne-Regular.ttf';
+const fontBase64 = existsSync(fontPath)
+  ? readFileSync(fontPath).toString('base64')
+  : '';
 
 const colorPalette = [
   '#4A90D9', '#E67E22', '#27AE60', '#8E44AD',
@@ -38,27 +48,36 @@ const html = `<!DOCTYPE html>
       --dimmed-opacity: 0.25;
       --accent: #4A90D9;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
       background: var(--bg); color: var(--text); line-height: 1.5; padding: 1rem;
     }
-    header { text-align: center; margin-bottom: 1.5rem; padding: 1rem; }
-    header h1 { font-size: 1.5rem; font-weight: 700; }
+    body.has-bg {
+      background-color: rgba(245,245,245,0.7);
+      background-image: url('data:image/jpeg;base64,${bgBase64}');
+      background-size: cover; background-position: center; background-attachment: fixed;
+      background-blend-mode: overlay;
+      --bg: rgba(245,245,245,0.8);
+      --card-bg: rgba(255,255,255,0.88);
+    }
+    @font-face { font-family: 'Unica One'; src: url(data:font/ttf;base64,${fontBase64}) format('truetype'); font-weight: 400; font-style: normal; }
+    header { text-align: center; margin-bottom: 1.5rem; padding: 1.5rem 1rem; }
+    header h1 { font-family: 'Unica One', sans-serif; font-size: 3.2rem; font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; -webkit-text-stroke: 0.5px currentColor; }
     header p { color: var(--text-muted); margin-top: 0.25rem; }
 
     .controls {
       display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem;
     }
     .controls button, .controls select {
-      padding: 0.5rem 1rem; border: 1px solid var(--border); border-radius: 6px;
-      background: var(--card-bg); cursor: pointer; font-size: 0.9rem;
+      padding: 0.55rem 1.1rem; border: 1px solid var(--border); border-radius: 8px;
+      background: var(--card-bg); cursor: pointer; font-size: 0.95rem; font-weight: 400;
     }
     .controls button.active { background: var(--text); color: white; border-color: var(--text); }
     .controls select { min-width: 200px; }
 
     .filter-group { display: flex; flex-direction: column; gap: 0.35rem; }
-    .filter-label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+    .filter-label { font-size: 0.8rem; font-weight: 600; color: var(--text); }
     #person-filter, #domain-filter { padding: 0.6rem 2rem 0.6rem 1rem; border: 1px solid var(--border); border-radius: 24px; font-size: 0.9rem; background: var(--card-bg); min-width: 200px; cursor: pointer; }
     .day-btn-group { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
     .day-btn-group .day-btn { padding: 0.5rem 1rem; border: none; border-left: 1px solid var(--border); background: var(--card-bg); cursor: pointer; font-size: 0.85rem; white-space: nowrap; }
@@ -66,7 +85,9 @@ const html = `<!DOCTYPE html>
     .day-btn-group .day-btn.active { background: var(--text); color: white; }
 
     .legend { display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
-    .legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; }
+    .legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; cursor: help; position: relative; }
+    .legend-item .legend-tooltip { display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: var(--text); color: white; padding: 0.3rem 0.6rem; border-radius: 5px; font-size: 0.75rem; white-space: nowrap; pointer-events: none; margin-bottom: 4px; z-index: 10; }
+    .legend-item:hover .legend-tooltip { display: block; }
     .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
 
     /* Lista */
@@ -99,10 +120,11 @@ const html = `<!DOCTYPE html>
     .timetable .room-header { background: var(--text); color: white; padding: 0.5rem; text-align: center; font-weight: 600; font-size: 0.85rem; }
     .timetable .cell { background: var(--card-bg); min-height: 28px; position: relative; }
     .timetable .cell.slot-30 { border-top: 1px solid var(--border); }
-    .session-block { position: absolute; left: 2px; right: 2px; top: 1px; border-radius: 6px; padding: 0.25rem 0.35rem; font-size: 0.62rem; overflow: hidden; cursor: pointer; border-left: 4px solid; transition: opacity 0.2s; z-index: 1; display: flex; flex-direction: column; }
+    .session-block { position: absolute; left: 2px; right: 2px; top: 1px; border-radius: 6px; padding: 0.25rem 0.35rem; font-size: 0.62rem; overflow: hidden; cursor: pointer; border-left: 4px solid; transition: opacity 0.2s, box-shadow 0.15s; z-index: 1; display: flex; flex-direction: column; }
+    .session-block:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 4; }
     .session-block .block-topic { font-weight: 600; line-height: 1.2; }
     .session-block .block-time { font-size: 0.6rem; opacity: 0.7; }
-    .session-block .block-meta { display: flex; align-items: center; gap: 0.3rem; font-size: 0.58rem; opacity: 0.85; margin-top: auto; }
+    .session-block .block-meta { display: flex; align-items: center; gap: 0.3rem; font-size: 0.58rem; opacity: 0.85; margin-top: auto; line-height: 1; }
     .session-block.dimmed { opacity: var(--dimmed-opacity); }
     .session-block.highlighted { box-shadow: 0 0 0 2px var(--highlight-border); z-index: 2; }
     .session-block.conflict { box-shadow: 0 0 0 2px var(--conflict-border); z-index: 3; }
@@ -210,7 +232,8 @@ const html = `<!DOCTYPE html>
     .stat-sub { font-size: 0.75rem; color: var(--text-muted); }
 
     /* List cards */
-    .list-card { background: var(--card-bg); border: 1px solid var(--border); border-left: 4px solid; border-radius: 8px; padding: 0.85rem 1.1rem; margin-bottom: 0.75rem; transition: opacity 0.2s, box-shadow 0.2s; display: grid; grid-template-columns: 70px 1fr; gap: 0 1rem; }
+    .list-card { background: var(--card-bg); border: 1px solid var(--border); border-left: 4px solid; border-radius: 8px; padding: 0.85rem 1.1rem; margin-bottom: 0.75rem; transition: opacity 0.2s, box-shadow 0.2s; display: grid; grid-template-columns: 70px 1fr; gap: 0 1rem; cursor: default; }
+    .list-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); transform: translateY(-1px); transition: box-shadow 0.15s, transform 0.15s; }
     .list-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
     .list-card.dimmed { opacity: var(--dimmed-opacity); }
     .list-card.highlighted { background: var(--highlight); border-left-color: var(--highlight-border) !important; }
@@ -255,27 +278,39 @@ const html = `<!DOCTYPE html>
 </head>
 <body>
 
-<div id="login-gate" style="display:flex;justify-content:center;align-items:center;min-height:80vh;">
-  <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:2.5rem;text-align:center;max-width:360px;width:100%;">
-    <h1 style="font-size:1.3rem;margin-bottom:0.25rem;">Sesonki ${season.number}</h1>
-    <p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:0.9rem;">Dependencies Planning</p>
-    <input id="pw-input" type="password" placeholder="Salasana" style="width:100%;padding:0.6rem;border:1px solid var(--border);border-radius:6px;font-size:1rem;margin-bottom:0.75rem;text-align:center;" onkeydown="if(event.key==='Enter')checkPw()">
-    <button onclick="checkPw()" style="width:100%;padding:0.6rem;background:var(--accent);color:white;border:none;border-radius:6px;font-size:0.9rem;cursor:pointer;font-weight:600;">Avaa aikataulu</button>
-    <p id="pw-error" style="color:var(--conflict-border);font-size:0.8rem;margin-top:0.5rem;display:none;">Väärä salasana</p>
+<div id="login-gate" style="position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:#0a0a0a;z-index:9999;">
+  ${bgBase64 ? '<div style="position:absolute;inset:0;background-image:url(data:image/jpeg;base64,' + bgBase64 + ');background-size:cover;background-position:center;opacity:0.45;"></div>' : ''}
+  <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 50%,rgba(0,0,0,0.7) 100%);"></div>
+  <div class="login-lang-toggle" style="position:absolute;top:1.5rem;right:1.5rem;display:flex;gap:0.5rem;z-index:2;">
+    <button id="login-lang-fi" class="active" onclick="setLoginLang('fi')" style="padding:0.5rem 1rem;border:2px solid rgba(255,255,255,0.5);border-radius:8px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);color:white;cursor:pointer;font-size:0.95rem;font-weight:600;transition:all 0.2s;">&#127467;&#127470; Suomi</button>
+    <button id="login-lang-en" onclick="setLoginLang('en')" style="padding:0.5rem 1rem;border:2px solid rgba(255,255,255,0.3);border-radius:8px;background:rgba(255,255,255,0.05);backdrop-filter:blur(8px);color:rgba(255,255,255,0.7);cursor:pointer;font-size:0.95rem;font-weight:600;transition:all 0.2s;">&#127468;&#127463; English</button>
+  </div>
+  <div style="position:relative;z-index:1;text-align:center;max-width:520px;width:100%;padding:2rem;color:white;">
+    <h1 id="welcome-title" style="font-size:2.2rem;font-weight:800;margin-bottom:0.5rem;letter-spacing:-0.02em;text-shadow:0 2px 20px rgba(0,0,0,0.5);">Sesonki 3 tulee.</h1>
+    <p id="welcome-subtitle" style="font-size:1.2rem;font-weight:600;margin-bottom:2rem;opacity:0.9;text-shadow:0 1px 10px rgba(0,0,0,0.5);">Sinä päätät, oletko valmis.</p>
+    <div id="welcome-body" style="font-size:0.95rem;line-height:1.8;opacity:0.8;margin-bottom:1.5rem;text-shadow:0 1px 6px rgba(0,0,0,0.4);">
+      Kalenteri tietää enemmän kuin kertoo.<br>Black Friday lähestyy. Joulu odottaa vuoroaan.<br>Kesä tapahtuu joka vuosi, silti se yllättää.
+    </div>
+    <p id="welcome-footer" style="font-size:0.9rem;font-style:italic;opacity:0.7;margin-bottom:2.5rem;text-shadow:0 1px 6px rgba(0,0,0,0.4);">Tervetuloa riippuvuussuunnitteluun, jossa suunnitelmat elävät,<br>mutta deadlinet eivät.</p>
+    <p id="welcome-cta" style="font-size:0.85rem;opacity:0.6;margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.1em;">Syötä salasana ja astu sisään.</p>
+    <div style="max-width:320px;margin:0 auto;">
+      <input id="pw-input" type="password" placeholder="Salasana" style="width:100%;padding:0.75rem 1rem;border:2px solid rgba(255,255,255,0.3);border-radius:10px;font-size:1rem;text-align:center;background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);color:white;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='rgba(255,255,255,0.7)'" onblur="this.style.borderColor='rgba(255,255,255,0.3)'" onkeydown="if(event.key==='Enter')checkPw()">
+      <button id="pw-submit" onclick="checkPw()" style="width:100%;margin-top:0.75rem;padding:0.75rem;background:rgba(255,255,255,0.2);backdrop-filter:blur(8px);color:white;border:2px solid rgba(255,255,255,0.3);border-radius:10px;font-size:0.95rem;cursor:pointer;font-weight:600;transition:all 0.2s;letter-spacing:0.02em;" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">Avaa aikataulu</button>
+      <p id="pw-error" style="color:#ff6b6b;font-size:0.85rem;margin-top:0.75rem;display:none;text-shadow:0 1px 4px rgba(0,0,0,0.5);">Väärä salasana</p>
+    </div>
   </div>
 </div>
 
-<div id="app-content" style="display:none;">
+<div id="app-content" style="display:none;position:relative;">
 
 <header style="position:relative;">
   <div class="lang-toggle">
-    <button id="lang-fi" class="active" onclick="setLang('fi')">&#127467;&#127470; FI</button>
-    <button id="lang-en" onclick="setLang('en')">&#127468;&#127463; EN</button>
+    <button id="lang-fi" class="active" onclick="setLang('fi')">&#127467;&#127470; Suomi</button>
+    <button id="lang-en" onclick="setLang('en')">&#127468;&#127463; English</button>
   </div>
-  <h1>Sesonki ${season.number} — Dependencies Planning</h1>
-  <p>${season.startDate} – ${season.endDate}</p>
+  <h1 id="main-title">Sesonkisuunnittelu: Sesonki ${season.number}/2026</h1>
   <details style="margin-top:0.5rem;cursor:pointer;">
-    <summary style="font-size:0.85rem;color:var(--accent);font-weight:600;">S3/26 syklit</summary>
+    <summary id="cycles-title" style="font-size:0.85rem;color:#555;font-weight:600;">S3/26 syklit</summary>
     <div style="display:flex;flex-wrap:wrap;gap:0.4rem;justify-content:center;margin-top:0.5rem;">
       <span style="font-size:0.75rem;background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:0.2rem 0.5rem;"><strong>1</strong> 31.8–13.9</span>
       <span style="font-size:0.75rem;background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:0.2rem 0.5rem;"><strong>2</strong> 14.9–27.9</span>
@@ -296,13 +331,10 @@ const html = `<!DOCTYPE html>
   <button id="btn-conflicts" onclick="showView('conflicts')">Päällekkäisyydet</button>
   <button id="btn-sessions" class="admin-only" onclick="showView('sessions')">Sessiot</button>
   <button id="btn-admin" class="admin-only" onclick="showView('admin')">Asetukset</button>
-
-
 </div>
 
-<div id="legend" class="legend"></div>
 <div id="stats-bar" class="stats-bar"></div>
-<div id="status-bar" class="status-bar"></div>
+<div id="status-bar" class="status-bar" style="display:none;"></div>
 
 <div id="filter-bar" style="max-width:960px;margin:0 auto 1rem;display:flex;align-items:flex-start;gap:2rem;flex-wrap:wrap;">
   <div class="filter-group">
@@ -318,6 +350,7 @@ const html = `<!DOCTYPE html>
     <div id="day-buttons" class="day-btn-group"></div>
   </div>
 </div>
+<div id="legend" class="legend"></div>
 
 <div id="view-list" class="list-view"></div>
 <div id="view-grid" class="grid-view hidden"></div>
@@ -348,44 +381,58 @@ const PALETTE = ${JSON.stringify(colorPalette)};
 
 const TR = {
   fi: {
-    list:'Lista', grid:'Lukujärjestys', conflicts:'Päällekkäisyydet',
-    sessions:'Sessiot', settings:'Asetukset', rescheduleBtn:'\\u21bb Aikatauluta',
+    list:'\\ud83d\\udccb Lista', grid:'\\ud83d\\udcc5 Lukujärjestys', conflicts:'\\u26a0\\ufe0f Päällekkäisyydet',
+    sessions:'\\ud83d\\udcdd Sessiot', settings:'\\u2699\\ufe0f Asetukset', rescheduleBtn:'\\u21bb Aikatauluta',
     person:'Henkilö', all:'Kaikki', allPersons:'Kaikki henkilöt', dayLabel:'Päivä',
     personFilter:'Henkilöfiltteri', domainFilter:'Domain', allDomains:'Kaikki domainit', dayFilter:'Päiväfiltteri',
     statsSessions:'Suunnittelusettejä', statsTime:'Suunnitteluaikaa',
     statsParticipants:'Osallistujia', statsHours:'Yhteistunteja',
     statsDays:'päivää', statsCalTotal:'kalenteriaikaa yhteensä',
     statsUnique:'eri henkilöä mukana', statsWorkTotal:'kaikkien työpanos yhteensä',
+    statsInvestment:'Suunnittelun arvo', statsInvestSub:'à 35 €/hlö-tunti',
     owner:'Vetäjä', min:'min', ppl:'hlö', h:'h',
     noConflicts:'Ei päällekkäisyyksiä!',
     reqConflicts:'pakollista konfliktia', nthConflicts:'toivottujen konfliktia',
     badgeBlocked:'ESTE', badgeRequired:'PAKOLLINEN', badgeNth:'TOIVOTTU',
     overlapWith:'päällekkäin',
     pw:'Salasana', pwOpen:'Avaa aikataulu', pwWrong:'Väärä salasana',
+    welcomeTitle:'Sesonki 3 tulee.',
+    welcomeSubtitle:'Sinä päätät, oletko valmis.',
+    welcomeBody:'Kalenteri tietää enemmän kuin kertoo.<br>Black Friday lähestyy. Joulu odottaa vuoroaan.<br>Kesä tapahtuu joka vuosi, silti se yllättää.',
+    welcomeFooter:'Tervetuloa riippuvuussuunnitteluun, jossa suunnitelmat elävät,<br>mutta deadlinet eivät.',
+    welcomeCta:'Syötä salasana ja astu sisään.',
     lunch:'Lounas',
     statusLabel:'Tila', statusActive:'Aktiivinen', statusInternal:'Domainin sisäinen', statusCancelled:'Ei tarvita',
     statusScheduled:'sessiota aikataulutettu', statusRooms:'neukkaria',
     statusDays:'päivää', statusPersons:'henkilöä',
+    mainTitle:'Sesonkisuunnittelu: Sesonki', cyclesTitle:'S3/26 syklit',
   },
   en: {
-    list:'List', grid:'Timetable', conflicts:'Conflicts',
-    sessions:'Sessions', settings:'Settings', rescheduleBtn:'\\u21bb Schedule',
+    list:'\\ud83d\\udccb List', grid:'\\ud83d\\udcc5 Timetable', conflicts:'\\u26a0\\ufe0f Conflicts',
+    sessions:'\\ud83d\\udcdd Sessions', settings:'\\u2699\\ufe0f Settings', rescheduleBtn:'\\u21bb Schedule',
     person:'Person', all:'All', allPersons:'All persons', dayLabel:'Day',
     personFilter:'Person filter', domainFilter:'Domain', allDomains:'All domains', dayFilter:'Day filter',
     statsSessions:'Planning sessions', statsTime:'Planning time',
     statsParticipants:'Participants', statsHours:'Total hours',
     statsDays:'days', statsCalTotal:'calendar time in total',
     statsUnique:'unique participants', statsWorkTotal:'total effort across all',
+    statsInvestment:'Planning investment', statsInvestSub:'at €35/person-hour',
     owner:'Facilitator', min:'min', ppl:'ppl', h:'h',
     noConflicts:'No conflicts!',
     reqConflicts:'required conflicts', nthConflicts:'optional conflicts',
     badgeBlocked:'BLOCKED', badgeRequired:'REQUIRED', badgeNth:'OPTIONAL',
     overlapWith:'overlaps with',
     pw:'Password', pwOpen:'Open schedule', pwWrong:'Wrong password',
+    welcomeTitle:'Season 3 is coming.',
+    welcomeSubtitle:'You decide if you\\'re ready.',
+    welcomeBody:'The calendar knows more than it tells.<br>Black Friday approaches. Christmas awaits its turn.<br>Summer happens every year, yet it always surprises.',
+    welcomeFooter:'Welcome to dependencies planning, where plans live,<br>but deadlines don\\'t.',
+    welcomeCta:'Enter the password and step inside.',
     lunch:'Lunch',
     statusLabel:'Status', statusActive:'Active', statusInternal:'Domain internal', statusCancelled:'Not needed',
     statusScheduled:'sessions scheduled', statusRooms:'rooms',
     statusDays:'days', statusPersons:'participants',
+    mainTitle:'Season Planning: Season', cyclesTitle:'S3/26 cycles',
   }
 };
 const TOPIC_EN = {
@@ -419,6 +466,22 @@ const TOPIC_EN = {
 'session-36':'2027 productization and pricing finalization & launch to sales',
 'session-38':'SMF data asset management & development from B2B perspective - starting with native support',
 'session-39':'Reporting needs for S3',
+'session-25':'Solution Builder vision - not for dependency planning, Mikko N. contacts separately',
+'session-26':'API renewal PoC to support AI development',
+'session-27':'TagomoAI agentic Ad Manager booking: automated agency-advertiser relationship updates',
+'session-28':'Reporting: Matillion renewal',
+'session-29':'Display material automation in Ad Manager',
+'session-30':'Missing Creative AI Capabilities (HTML5 and tags)',
+'session-31':'Goal-based purchase flow',
+'session-34':'Soft launch new RT-optimized CPC productization',
+'session-37':'Optimizing the flow between Snowflake and Claude',
+'session-40':'AV Maestro, meeting 3',
+'session-41':'AV Maestro, meeting 4',
+'session-42':'AV Manager, gambling, product configuration & sales restrictions',
+'session-43':'TV Beat, meeting 1',
+'session-44':'TV Beat, meeting 2',
+'session-45':'SMF data asset management & development from B2B perspective - starting with native support',
+'session-46':'Reporting needs for S3',
 };
 function topicText(session) {
   if(lang==='en'&&TOPIC_EN[session.id])return TOPIC_EN[session.id];
@@ -440,10 +503,26 @@ function setLang(l) {
   rebuildUI();
 }
 
+function setLoginLang(l) {
+  lang=l;
+  const fi=document.getElementById('login-lang-fi');
+  const en=document.getElementById('login-lang-en');
+  if(fi){fi.classList.toggle('active',l==='fi');fi.style.borderColor=l==='fi'?'rgba(255,255,255,0.5)':'rgba(255,255,255,0.3)';fi.style.background=l==='fi'?'rgba(255,255,255,0.15)':'rgba(255,255,255,0.05)';fi.style.color=l==='fi'?'white':'rgba(255,255,255,0.7)';}
+  if(en){en.classList.toggle('active',l==='en');en.style.borderColor=l==='en'?'rgba(255,255,255,0.5)':'rgba(255,255,255,0.3)';en.style.background=l==='en'?'rgba(255,255,255,0.15)':'rgba(255,255,255,0.05)';en.style.color=l==='en'?'white':'rgba(255,255,255,0.7)';}
+  translateStatic();
+}
+
 function translateStatic() {
   const pi=document.getElementById('pw-input'); if(pi)pi.placeholder=t('pw');
-  const pb=document.querySelector('#login-gate button'); if(pb)pb.textContent=t('pwOpen');
+  const pb=document.getElementById('pw-submit'); if(pb)pb.textContent=t('pwOpen');
   const pe=document.getElementById('pw-error'); if(pe)pe.textContent=t('pwWrong');
+  const wt=document.getElementById('welcome-title'); if(wt)wt.textContent=t('welcomeTitle');
+  const ws=document.getElementById('welcome-subtitle'); if(ws)ws.textContent=t('welcomeSubtitle');
+  const wb=document.getElementById('welcome-body'); if(wb)wb.innerHTML=t('welcomeBody');
+  const wf=document.getElementById('welcome-footer'); if(wf)wf.innerHTML=t('welcomeFooter');
+  const wc=document.getElementById('welcome-cta'); if(wc)wc.textContent=t('welcomeCta');
+  const mt=document.getElementById('main-title'); if(mt)mt.textContent=t('mainTitle')+' ${season.number}/2026';
+  const ct=document.getElementById('cycles-title'); if(ct)ct.textContent=t('cyclesTitle');
 }
 
 function getInitials(name) {
@@ -451,10 +530,26 @@ function getInitials(name) {
   if(parts.length>=2)return(parts[0][0]+parts[parts.length-1][0]).toUpperCase();
   return name.substring(0,2).toUpperCase();
 }
+const personDomains = ${JSON.stringify(personDomains || {})};
+const domainDescriptions = Object.assign(${JSON.stringify(domainDescriptions || {})}, {
+  'MSS':'Marketing Solutions & Services',
+  'MSS / SM':'Marketing Solutions & Services / Sales & Marketing',
+  'S&M/B2B':'Sales & Marketing / B2B',
+  'B2B':'Business to Business',
+  'other':'Muu / Other'
+});
+const DOMAIN_ALIAS = {'MS&S':'MSS','N&F':'DG','Digital & AI':'DG','Core & Sales Reporting':'DSE','Ad Manager':'DG','Ad Manager Product':'DG','YDP':'DG','Personalization':'DG','Creative AI':'DG','CPR':'DG','PP':'DG','DO':'DG','AP':'DG','ADMP':'DG'};
+function resolveDomain(d) { return domainColors[d]?d:(DOMAIN_ALIAS[d]&&domainColors[DOMAIN_ALIAS[d]]?DOMAIN_ALIAS[d]:null); }
 function nameColor(name) {
-  let h=0;for(let i=0;i<name.length;i++)h=name.charCodeAt(i)+((h<<5)-h);
-  const cols=['#4A90D9','#E67E22','#27AE60','#8E44AD','#E74C3C','#16A085','#F39C12','#2C3E50','#D35400','#1ABC9C','#9B59B6','#34495E','#c0392b','#2980b9'];
-  return cols[Math.abs(h)%cols.length];
+  const pd=personDomains[name];
+  const rd=resolveDomain(pd);
+  if(rd)return domainColors[rd];
+  for(const s of sessions){
+    for(const p of s.participants){
+      if(p.name===name&&p.domain){const r=resolveDomain(p.domain);if(r)return domainColors[r];}
+    }
+  }
+  return '#999';
 }
 
 let schedule = [];
@@ -509,6 +604,27 @@ function selectRoom(session,start,end,day,scheduled) {
   for(const r of sr){if(!scheduled.some(s=>s.day===day&&s.room===r.id&&timeToMin(s.startTime)<end&&timeToMin(s.endTime)>start))return r;}
   return null;
 }
+function computeGroupPlacements(group,startSlot) {
+  const ls=timeToMin(config.lunchStart),le=timeToMin(config.lunchEnd),de=timeToMin(config.dayEndTime);
+  const placements=[];let ct=startSlot;
+  for(const gs of group){
+    if(ct>=ls&&ct<le)ct=le;
+    let et=ct+gs.duration;
+    if(ct<ls&&et>ls){ct=le;et=ct+gs.duration;}
+    if(et>de)return null;
+    placements.push({session:gs,startTime:ct,endTime:et});
+    ct=et;
+  }
+  return placements;
+}
+function selectRoomForGroup(placements,day,scheduled) {
+  const mx=Math.max(...placements.map(p=>p.session.participants.length));
+  const af=config.activeFloors;
+  const dr=rooms.filter(r=>(!r.availableDays||r.availableDays.includes(day))&&(!af||!af.length||af.includes(r.floor))),sr=[...dr].sort((a,b)=>b.capacity-a.capacity);
+  for(const r of sr){if(r.capacity<mx)continue;if(placements.every(p=>!scheduled.some(s=>s.day===day&&s.room===r.id&&timeToMin(s.startTime)<p.endTime&&timeToMin(s.endTime)>p.startTime)))return r;}
+  for(const r of sr){if(placements.every(p=>!scheduled.some(s=>s.day===day&&s.room===r.id&&timeToMin(s.startTime)<p.endTime&&timeToMin(s.endTime)>p.startTime)))return r;}
+  return null;
+}
 function runScheduler() {
   const active=sessions.filter(s=>s.status!=='cancelled');
   const sorted=[...active].sort((a,b)=>{
@@ -518,30 +634,71 @@ function runScheduler() {
     if(br!==ar)return br-ar; if(b.participants.length!==a.participants.length)return b.participants.length-a.participants.length; return a.priority-b.priority;
   });
   const slots=buildTimeSlots(); schedule=[]; conflicts=[];
+  const scheduledIds=new Set();
+  const groups={};
+  for(const s of active){if(s.group){if(!groups[s.group])groups[s.group]=[];groups[s.group].push(s);}}
+  for(const g of Object.values(groups))g.sort((a,b)=>(a.groupOrder||0)-(b.groupOrder||0));
+
   for(const session of sorted) {
-    if(!session.participants.length){continue;}
-    let best=null, bestScore=Infinity;
-    for(let day=1;day<=config.days.length;day++) {
-      for(const slot of slots) {
-        const end=slot+session.duration;
-        if(!canFit(slot,session.duration))continue;
-        const ac=getAvailConflicts(session,slot,end,day);
-        if(ac.some(c=>c.requiredInThis))continue;
-        const oc=getOverlapConflicts(session,slot,end,day,schedule);
-        const all=[...ac,...oc];
-        let pp=0;for(const p of session.participants){const pref=preferences.find(pr=>pr.person===p.name&&pr.type==='prefer-day');if(pref&&!pref.days.includes(day))pp++;}
-        const score=oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*0.3;
-        const room=selectRoom(session,slot,end,day,schedule);
-        if(!room)continue;
-        if(score<bestScore){bestScore=score;best={day,startTime:minToTime(slot),endTime:minToTime(end),room:room.id,roomName:room.name,conflicts:all};}
-        if(score===0)break;
+    if(scheduledIds.has(session.id))continue;
+    if(!session.participants.length)continue;
+
+    if(session.group&&groups[session.group]) {
+      const group=groups[session.group];
+      let best=null,bestScore=Infinity;
+      for(let day=1;day<=config.days.length;day++){
+        for(const slot of slots){
+          const placements=computeGroupPlacements(group,slot);
+          if(!placements)continue;
+          let blocker=false;
+          for(const p of placements){
+            const ac=getAvailConflicts(p.session,p.startTime,p.endTime,day);
+            if(ac.some(c=>c.requiredInThis)){blocker=true;break;}
+            const oc=getOverlapConflicts(p.session,p.startTime,p.endTime,day,schedule);
+            p.conflicts=[...ac,...oc];
+          }
+          if(blocker)continue;
+          const room=selectRoomForGroup(placements,day,schedule);
+          if(!room)continue;
+          const tc=placements.flatMap(p=>p.conflicts);
+          const score=tc.filter(c=>c.requiredInThis).length*1000+tc.filter(c=>!c.requiredInThis).length;
+          if(score<bestScore){bestScore=score;best={day,room,placements};}
+          if(score===0)break;
+        }
+        if(best&&bestScore===0)break;
       }
-      if(best&&bestScore===0)break;
-    }
-    if(best){
-      const rm=rooms.find(r=>r.id===best.room);
-      schedule.push({id:session.id,topic:session.topic,owner:session.owner,ownerDomain:session.ownerDomain,day:best.day,startTime:best.startTime,endTime:best.endTime,room:best.room,roomName:best.roomName,roomFloor:rm?rm.floor:'',participantCount:session.participants.length,conflicts:best.conflicts});
-      if(best.conflicts.length>0)conflicts.push({sessionId:session.id,sessionTopic:session.topic,conflicts:best.conflicts});
+      if(best){
+        for(const p of best.placements){
+          const rm=rooms.find(r=>r.id===best.room.id);
+          schedule.push({id:p.session.id,topic:p.session.topic,owner:p.session.owner,ownerDomain:p.session.ownerDomain,day:best.day,startTime:minToTime(p.startTime),endTime:minToTime(p.endTime),room:best.room.id,roomName:best.room.name,roomFloor:rm?rm.floor:'',participantCount:p.session.participants.length,conflicts:p.conflicts,group:p.session.group});
+          scheduledIds.add(p.session.id);
+          if(p.conflicts.length>0)conflicts.push({sessionId:p.session.id,sessionTopic:p.session.topic,conflicts:p.conflicts});
+        }
+      }
+    } else {
+      let best=null, bestScore=Infinity;
+      for(let day=1;day<=config.days.length;day++) {
+        for(const slot of slots) {
+          const end=slot+session.duration;
+          if(!canFit(slot,session.duration))continue;
+          const ac=getAvailConflicts(session,slot,end,day);
+          if(ac.some(c=>c.requiredInThis))continue;
+          const oc=getOverlapConflicts(session,slot,end,day,schedule);
+          const all=[...ac,...oc];
+          let pp=0;for(const p of session.participants){const pref=preferences.find(pr=>pr.person===p.name&&pr.type==='prefer-day');if(pref&&!pref.days.includes(day))pp++;}
+          const score=oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*0.3;
+          const room=selectRoom(session,slot,end,day,schedule);
+          if(!room)continue;
+          if(score<bestScore){bestScore=score;best={day,startTime:minToTime(slot),endTime:minToTime(end),room:room.id,roomName:room.name,conflicts:all};}
+          if(score===0)break;
+        }
+        if(best&&bestScore===0)break;
+      }
+      if(best){
+        const rm=rooms.find(r=>r.id===best.room);
+        schedule.push({id:session.id,topic:session.topic,owner:session.owner,ownerDomain:session.ownerDomain,day:best.day,startTime:best.startTime,endTime:best.endTime,room:best.room,roomName:best.roomName,roomFloor:rm?rm.floor:'',participantCount:session.participants.length,conflicts:best.conflicts});
+        if(best.conflicts.length>0)conflicts.push({sessionId:session.id,sessionTopic:session.topic,conflicts:best.conflicts});
+      }
     }
   }
 }
@@ -550,7 +707,8 @@ function runScheduler() {
 function buildDomainColors() {
   domainColors={};
   const doms=[...new Set(sessions.map(s=>s.ownerDomain))];
-  doms.forEach((d,i)=>{domainColors[d]=PALETTE[i%PALETTE.length];});
+  const FIXED_COLORS={'TM':'#E91E8C'};
+  doms.forEach((d,i)=>{domainColors[d]=FIXED_COLORS[d]||PALETTE[i%PALETTE.length];});
 }
 function allParticipants() {
   const s=new Set(); sessions.forEach(se=>se.participants.forEach(p=>s.add(p.name))); return [...s].sort((a,b)=>a.localeCompare(b,'fi'));
@@ -565,7 +723,7 @@ function rebuildUI() {
   document.getElementById('btn-admin').textContent=t('settings');
   // Legend
   const doms=[...new Set(sessions.map(s=>s.ownerDomain))];
-  document.getElementById('legend').innerHTML=doms.map(d=>'<div class="legend-item"><div class="legend-dot" style="background:'+domainColors[d]+'"></div>'+d+'</div>').join('');
+  document.getElementById('legend').innerHTML=doms.map(d=>'<div class="legend-item"><div class="legend-tooltip">'+(domainDescriptions[d]||d)+'</div><div class="legend-dot" style="background:'+domainColors[d]+'"></div>'+d+'</div>').join('');
   // Person dropdown
   const sel=document.getElementById('person-filter');
   const prev=sel.value; sel.innerHTML='<option value="">'+t('allPersons')+'</option>'+allParticipants().map(p=>'<option value="'+p+'">'+p+'</option>').join('');
@@ -606,12 +764,20 @@ function showView(v) {
   currentView=v;
   ['list','grid','conflicts','sessions','admin'].forEach(id=>{document.getElementById('view-'+id).classList.add('hidden');document.getElementById('btn-'+id).classList.remove('active');});
   document.getElementById('view-'+v).classList.remove('hidden'); document.getElementById('btn-'+v).classList.add('active');
-  document.getElementById('stats-bar').style.display=v==='list'?'none':'grid';
+  document.getElementById('stats-bar').style.display=(v==='list'||v==='sessions')?'grid':'none';
+  document.getElementById('status-bar').style.display='none';
   if(v==='grid'&&currentDay===0){currentDay=1;document.querySelectorAll('.day-btn').forEach(b=>b.classList.toggle('active',+b.dataset.day===1));}
+  document.querySelectorAll('.day-btn').forEach(b=>{if(+b.dataset.day===0){b.disabled=v==='grid';b.style.opacity=v==='grid'?'0.4':'';b.style.cursor=v==='grid'?'not-allowed':'pointer';}});
   render();
 }
 function selectDay(d) { currentDay=d; document.querySelectorAll('.day-btn').forEach(b=>b.classList.toggle('active',+b.dataset.day===d)); render(); }
-function filterPerson(n) { currentPerson=n; render(); }
+function filterPerson(n) {
+  currentPerson=n; render();
+  if(n){
+    const first=document.querySelector('.list-card.highlighted,.list-card.conflict');
+    if(first)first.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
 function filterDomain(d) { currentDomain=d; render(); }
 
 function getSessionParts(id) { const s=sessions.find(x=>x.id===id); return s?s.participants:[]; }
@@ -700,6 +866,7 @@ function renderGrid() {
         h+='<div class="block-topic">'+schedTopicText(sh)+'</div>';
         h+='<div class="block-time">'+sh.startTime+'\\u2013'+sh.endTime+'</div>';
         h+='<div class="block-meta"><span class="domain-badge" style="background:'+col+'">'+sh.ownerDomain+'</span><span>\\ud83d\\udc65'+sh.participantCount+'</span></div>';
+        h+='<div style="font-size:0.55rem;opacity:0.7;margin-top:1px;">'+sh.owner+'</div>';
         h+='</div>';
       }
       h+='</div>';
@@ -1255,6 +1422,9 @@ function unlock(){
   sessionStorage.setItem('sesonki-mode',isAdmin?'admin':'view');
   document.getElementById('login-gate').style.display='none';
   document.getElementById('app-content').style.display='block';
+  document.body.classList.add('has-bg');
+  document.getElementById('lang-fi').classList.toggle('active',lang==='fi');
+  document.getElementById('lang-en').classList.toggle('active',lang==='en');
   applyMode();
   rebuildUI();
 }

@@ -318,7 +318,7 @@
 
 <script>
 // === DATA (muokattava) ===
-const BUILD_VERSION = '2026-08-18T08:50:35.407Z';
+const BUILD_VERSION = '2026-08-18T10:47:16.859Z';
 let sessions = JSON.parse(document.getElementById('init-sessions').textContent);
 let config = JSON.parse(document.getElementById('init-config').textContent);
 let rooms = JSON.parse(document.getElementById('init-rooms').textContent);
@@ -586,7 +586,7 @@ function showView(v) {
   currentView=v;
   ['list','grid','conflicts','sessions','admin'].forEach(id=>{document.getElementById('view-'+id).classList.add('hidden');document.getElementById('btn-'+id).classList.remove('active');});
   document.getElementById('view-'+v).classList.remove('hidden'); document.getElementById('btn-'+v).classList.add('active');
-  document.getElementById('stats-bar').style.display=v==='list'?'none':'grid';
+  document.getElementById('stats-bar').style.display=v==='sessions'?'grid':'none';
   if(v==='grid'&&currentDay===0){currentDay=1;document.querySelectorAll('.day-btn').forEach(b=>b.classList.toggle('active',+b.dataset.day===1));}
   render();
 }

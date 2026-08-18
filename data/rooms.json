@@ -11,7 +11,8 @@
     "lunchEnd": "12:00",
     "breakBetweenSessions": 0,
     "slotGranularity": 15,
-    "activeFloors": ["K1"]
+    "activeFloors": ["K1"],
+    "secondaryRoomIds": ["9a-taka-toolo", "9a-etu-toolo", "9b-kaisaniemi", "9a-laakso"]
   },
   "rooms": [
     { "id": "k1-01", "name": "Ilkka Malmberg", "floor": "K1", "number": "01", "capacity": 8, "availableDays": [1, 2, 3] },

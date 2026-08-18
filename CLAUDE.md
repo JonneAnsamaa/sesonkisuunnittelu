@@ -97,7 +97,7 @@ Jokainen suunnittelusessio sisältää:
 
 1. **Pakollisten osallistujien esteet** — jos pakollinen osallistuja on merkitty estyneeksi (constraints.json), tämä slotti on EHDOTON EI.
 2. **Pakollisten osallistujien päällekkäisyydet** — sama pakollinen henkilö ei saa olla kahdessa sessiossa yhtä aikaa.
-3. **Neukkarikapasiteetin optimointi** — isoimmat sessiot isoimpiin neukkareihin.
+3. **Neukkarien priorisointi** — K1-kerroksen neukkarit ovat ensisijaisia. Jos K1:ssä ei ole tilaa, käytetään varaneukkareita (Taka-Töölö, Etu-Töölö, Kaisaniemi, Laakso). Muita kerroksia ei käytetä automaattisesti. Isoimmat sessiot isoimpiin neukkareihin.
 4. **Prioriteettijärjestys** — korkeamman prioriteetin sessiot aikaisemmin agendalla.
 5. **Toivotut osallistujat** — minimoidaan esteiden ja päällekkäisyyksien vaikutus, mutta näistä voidaan joustaa.
 6. **"Ei tarvita" -sessiot** — merkittyjä sessioita ei aikatauluteta lainkaan.

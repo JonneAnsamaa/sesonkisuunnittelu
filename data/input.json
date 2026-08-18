@@ -7,16 +7,16 @@
   "sessions": [
     {
       "id": "session-1",
-      "topic": "Eduskuntavaaleista kasvua:vaatii poikkileikkaavaa kaupallista konseptointia tahtotilasta identiteetin kulmasta ja tämä priorisoitava osana DSE Prio 11  keskustelua",
+      "topic": "Eduskuntavaaleista kasvua:vaatii poikkileikkaavaa kaupallista konseptointia tahtotilasta identiteetin kulmasta ja tämä priorisoitava osana DSE Prio 11 keskustelua",
       "topicFull": "Eduskuntavaaleista kasvua:vaatii poikkileikkaavaa kaupallista konseptointia tahtotilasta identiteetin kulmasta ja tämä priorisoitava osana DSE Prio 11  keskustelua",
-      "owner": "Jaana Tynys, Jaana Tanskanen",
+      "owner": "Jaana Tynys",
       "ownerDomain": "DSE",
       "duration": 90,
       "priority": 11,
       "status": "active",
       "participants": [
         {
-          "name": "Jaana Tynys, Jaana Tanskanen",
+          "name": "Jaana Tynys",
           "domain": "DSE",
           "team": "",
           "required": true
@@ -35,7 +35,7 @@
         },
         {
           "name": "Jaakko Kuivalainen",
-          "domain": "DSE",
+          "domain": "DG",
           "team": "",
           "required": true
         },
@@ -66,7 +66,7 @@
         },
         {
           "name": "Heidi Falenius",
-          "domain": "S&M",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
@@ -77,38 +77,38 @@
           "required": true
         },
         {
-          "name": "Vesa Mäkinen",
-          "domain": "S&M",
+          "name": "Vesa Lindqvist",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
-          "name": "Tanja Virtanen",
-          "domain": "S&M",
+          "name": "Tanja Kaikkonen",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
           "name": "Jaana Tanskanen",
-          "domain": "S&M",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
           "name": "Tuuli Rikama",
-          "domain": "S&M",
+          "domain": "DG",
           "team": "",
           "required": true
         },
         {
-          "name": "Tuukka Aalto",
-          "domain": "S&M",
+          "name": "Tuukka Antikainen",
+          "domain": "DG",
           "team": "",
           "required": true
         },
         {
-          "name": "Päivi Rautio",
-          "domain": "S&M",
+          "name": "Päivi Vaittinen",
+          "domain": "TM",
           "team": "",
           "required": true
         }
@@ -117,11 +117,11 @@
     },
     {
       "id": "session-3",
-      "topic": "Eduskuntavaaleista kasvua -  digin ostaminen & operaatiot. avoimuusilmoitus",
+      "topic": "Eduskuntavaaleista kasvua - digin ostaminen & operaatiot. avoimuusilmoitus",
       "topicFull": "Eduskuntavaaleista kasvua -  digin ostaminen & operaatiot. avoimuusilmoitus\r\n- vaalituotteistuspaketit myyntikanavasta tekniseen tuotteistukseen vaalipiiri geo-kohdennuksella\r\n- digi avoimuusilmoitus - DG Tuuli Rikama?\r\n- aineistoprosessi, digi aineistobannerikoneen linkitys\r\n- Advendio-Adnuntius integraatio, APIt \r\n- luottokorttimaksaminen vs. nykyinen malli laskulla\r\n- kampanjaraportti\r\n- asiakastuki\r\n- palevlunhallinta Adnuntius, - consentin ja vendorlistin  päivitys",
       "owner": "Tuuli Rikama",
       "ownerDomain": "DG",
-      "duration": 60,
+      "duration": 180,
       "priority": 2,
       "status": "active",
       "participants": [
@@ -216,8 +216,14 @@
           "required": true
         },
         {
+          "name": "Suvi Vesanen",
+          "domain": "MS&S",
+          "team": "",
+          "required": true
+        },
+        {
           "name": "Jani Moisiola",
-          "domain": "MSS",
+          "domain": "MS&S",
           "team": "",
           "required": true
         },
@@ -234,20 +240,32 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-4",
-      "topic": "Eduskuntavaaleista kasvua -  kirjautuminen , identiteetti",
+      "topic": "Eduskuntavaaleista kasvua - kirjautuminen , identiteetti",
       "topicFull": "Eduskuntavaaleista kasvua -  kirjautuminen , identiteetti\r\n- ostokanavaan kirjautuminen ja näkymä ostokanavassa (B2C SSO)?\r\n- identiteetti kuluttaja profiililla?",
-      "owner": "Jaana Tynys, Jaana Tanskanen",
+      "owner": "Jaana Tanskanen",
       "ownerDomain": "DSE",
       "duration": 90,
       "priority": 2,
       "status": "active",
       "participants": [
         {
-          "name": "Jaana Tynys, Jaana Tanskanen",
+          "name": "Jaana Tanskanen",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Filip Holmberg",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Jaana Tynys",
           "domain": "DSE",
           "team": "",
           "required": true
@@ -257,7 +275,7 @@
     },
     {
       "id": "session-5",
-      "topic": "Eduskuntavaaleista kasvua -  monimediallinen ostaminen & operaatiot",
+      "topic": "Eduskuntavaaleista kasvua - monimediallinen ostaminen & operaatiot",
       "topicFull": "Eduskuntavaaleista kasvua -  monimediallinen ostaminen & operaatiot\r\n- Design\r\n- Ad Manager Print integraatio\r\n- APIt\r\n- aineistoilmoitusten monikanavainen generointi ja manageeraus\r\n- operaatiot (ilmoitusten julkaisupäätökset, tekoälyn validointi)",
       "owner": "Heidi Falenius",
       "ownerDomain": "DSE",
@@ -314,14 +332,20 @@
           "required": true
         },
         {
+          "name": "Suvi Vesanen",
+          "domain": "MS&S",
+          "team": "",
+          "required": true
+        },
+        {
           "name": "Jani Moisiola",
-          "domain": "MSS",
+          "domain": "MS&S",
           "team": "",
           "required": true
         },
         {
           "name": "Päivi Vaittinen",
-          "domain": "DSE",
+          "domain": "TM",
           "team": "",
           "required": true
         },
@@ -344,7 +368,7 @@
           "required": true
         },
         {
-          "name": "Jero Karppinen",
+          "name": "Jero Liimatainen",
           "domain": "DSE",
           "team": "",
           "required": true
@@ -382,12 +406,18 @@
         },
         {
           "name": "Bilal Gill",
-          "domain": "MSS",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
           "name": "Aleksandrs Breus",
+          "domain": "MSS",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Johannes Ojala",
           "domain": "MSS",
           "team": "",
           "required": true
@@ -399,50 +429,56 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-7",
       "topic": "MSS Prio 9: Insight as a Service -kuukausipalvelun pilotointi asiakasrajapintaan",
       "topicFull": "MSS Prio 9: Insight as a Service -kuukausipalvelun pilotointi asiakasrajapintaan",
-      "owner": "Tarja Wiljanen",
+      "owner": "Tarja Viljanen",
       "ownerDomain": "MSS",
-      "duration": 60,
+      "duration": 90,
       "priority": 9,
       "status": "active",
       "participants": [
         {
-          "name": "Tarja Wiljanen",
+          "name": "Tarja Viljanen",
           "domain": "MSS",
           "team": "",
           "required": true
         },
         {
           "name": "Jani Moisiola",
-          "domain": "MSS",
+          "domain": "MS&S",
           "team": "",
           "required": true
         },
         {
           "name": "Anniina Hautala",
-          "domain": "MSS",
+          "domain": "DG",
           "team": "",
           "required": true
         },
         {
           "name": "Filip Holmberg",
-          "domain": "MSS",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
           "name": "Jaana Tanskanen",
-          "domain": "MSS",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Heidi Falenius",
+          "domain": "DSE",
           "team": "",
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-8",
@@ -462,7 +498,7 @@
         },
         {
           "name": "Jani Moisiola",
-          "domain": "MSS",
+          "domain": "MS&S",
           "team": "",
           "required": true
         },
@@ -473,11 +509,11 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-9",
-      "topic": "",
+      "topic": "Content Studion, Insight myynnin tekoälyratkaisujen käytön seurannan kehitys",
       "topicFull": "Content Studion, Insight  myynnin tekoälyratkaisujen käytön seurannan kehitys",
       "owner": "Anssi Heikka",
       "ownerDomain": "MSS",
@@ -493,7 +529,7 @@
         },
         {
           "name": "Jani Moisiola",
-          "domain": "MSS",
+          "domain": "MS&S",
           "team": "",
           "required": true
         },
@@ -511,20 +547,26 @@
       "topic": "MSS PRIO 7: Uusittujen Sanoma segmenttien käyttöönotto",
       "topicFull": "MSS PRIO 7: Uusittujen Sanoma segmenttien käyttöönotto \r\nSegmenttien jalkauttaminen myynnille\r\n- Segmenttipersoonabotti",
       "owner": "Jaana Jamalainen",
-      "ownerDomain": "MSS / SM",
-      "duration": 60,
+      "ownerDomain": "MSS",
+      "duration": 90,
       "priority": 7,
       "status": "active",
       "participants": [
         {
           "name": "Jaana Jamalainen",
-          "domain": "MSS / SM",
+          "domain": "MSS",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Sari Kärki",
+          "domain": "MS&S",
           "team": "",
           "required": true
         },
         {
           "name": "Tarja Viljanen",
-          "domain": "MSS / SM",
+          "domain": "MS&S",
           "team": "",
           "required": true
         },
@@ -541,22 +583,10 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-11",
-      "topic": "DSE Prio 11: Discovery: Monikanavaisen digitaalisen asiointi, Sales Engine ja API -rajapinnat:",
-      "topicFull": "DSE Prio 11: Discovery: Monikanavaisen digitaalisen asiointi, Sales Engine ja API -rajapinnat:\r\n- datatuotteistuksen päätös  - keräämmekö asiakas360 datatuotteseen AI Risto keskustelua ja tuotteistammeko tämän",
-      "owner": "TBD",
-      "ownerDomain": "DSE",
-      "duration": 90,
-      "priority": 11,
-      "status": "internal",
-      "participants": [],
-      "participantListReady": false
-    },
-    {
-      "id": "session-12",
       "topic": "DSE Prio 10: Yhteinen kaupallinen johtamismalli/RevOps: Yhteisen kaupallisen johtamismallin luonti ja käyttöönotto pienemmän asiakassegmentin osalta (RevOps) ja markkinoinnin yhteistyön selkeyttäminen osana kompetenssityötä",
       "topicFull": "DSE Prio 10: Yhteinen kaupallinen johtamismalli/RevOps: Yhteisen kaupallisen johtamismallin luonti ja käyttöönotto pienemmän asiakassegmentin osalta (RevOps) ja markkinoinnin yhteistyön selkeyttäminen osana kompetenssityötä",
       "owner": "TBD",
@@ -566,6 +596,12 @@
       "status": "internal",
       "participants": [
         {
+          "name": "Maiju Häkkinen",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
           "name": "Perttu Rekola",
           "domain": "DSE",
           "team": "",
@@ -573,7 +609,7 @@
         },
         {
           "name": "Tiina Kosonen",
-          "domain": "DSE",
+          "domain": "S&M",
           "team": "",
           "required": true
         },
@@ -587,12 +623,12 @@
       "participantListReady": false
     },
     {
-      "id": "session-13",
+      "id": "session-12",
       "topic": "DSE Prio 10: Yhteinen kaupallinen johtamismalli: Kehitämme prospektointia ja Skoutti –pelinrakentajaa.",
       "topicFull": "DSE Prio 10: Yhteinen kaupallinen johtamismalli: Kehitämme prospektointia ja Skoutti –pelinrakentajaa.",
       "owner": "Antti Ovaska",
       "ownerDomain": "DSE",
-      "duration": 60,
+      "duration": 90,
       "priority": 10,
       "status": "active",
       "participants": [
@@ -633,10 +669,10 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
-      "id": "session-14",
+      "id": "session-13",
       "topic": "MS&S Prio 4: Videolle –brändin hallittu alasajo",
       "topicFull": "MS&S Prio 4: Videolle –brändin hallittu alasajo  \r\nVideolle alasajo (sivustot ja markkinoinnin automaatio Hubspot) – Content Studio sisällöt uudestaan mietittävä",
       "owner": "Minna Kaitala",
@@ -662,12 +698,18 @@
           "domain": "DSE",
           "team": "",
           "required": true
+        },
+        {
+          "name": "Leena Koskinen",
+          "domain": "S&M",
+          "team": "",
+          "required": true
         }
       ],
       "participantListReady": false
     },
     {
-      "id": "session-15",
+      "id": "session-14",
       "topic": "Markkinoinnin osa-alueen pienkehitys:",
       "topicFull": "Markkinoinnin osa-alueen pienkehitys:\r\nVuosikellon visio synkattava (Leena jo buukannut session)",
       "owner": "Leena Koskinen",
@@ -702,13 +744,13 @@
         },
         {
           "name": "Filip Holmberg",
-          "domain": "S&M",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
           "name": "Jaana Tanskanen",
-          "domain": "S&M",
+          "domain": "DSE",
           "team": "",
           "required": true
         }
@@ -716,68 +758,7 @@
       "participantListReady": false
     },
     {
-      "id": "session-16",
-      "topic": "Markkinoinnin osa-alueen pienkehitys:",
-      "topicFull": "Markkinoinnin osa-alueen pienkehitys:\r\nMedia siten tuotteiden ja hinnastojen löydettävyys – DSE&A & Markkinointi yhteinen suunnittelu pidettävä",
-      "owner": "Leena Koskinen",
-      "ownerDomain": "S&M",
-      "duration": 60,
-      "priority": 99,
-      "status": "active",
-      "participants": [
-        {
-          "name": "Leena Koskinen",
-          "domain": "S&M",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Pia Laine",
-          "domain": "Marketing",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Pia Hauskaviita",
-          "domain": "Marketing",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Kalle Nisula",
-          "domain": "DSE",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Heidi Falenius",
-          "domain": "DSE",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Vesa Lindqvist",
-          "domain": "DSE",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Filip Holmberg",
-          "domain": "S&M",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Jaana Tanskanen",
-          "domain": "S&M",
-          "team": "",
-          "required": true
-        }
-      ],
-      "participantListReady": false
-    },
-    {
-      "id": "session-17",
+      "id": "session-15",
       "topic": "Sales KPI: myynnin raportoinnin & dashboard datojen haasteet ratkottava laittamalla kuntoon perusta datatuotteistuksen osalta jotta datakehitys tehdään agenttilähtöiseksi, ei raporttilähtöisesti. Edellyttää uudenlaista osaamista ja focusta tiimiin.",
       "topicFull": "Sales KPI: myynnin raportoinnin & dashboard datojen haasteet ratkottava laittamalla kuntoon perusta datatuotteistuksen osalta jotta datakehitys tehdään agenttilähtöiseksi, ei raporttilähtöisesti. Edellyttää uudenlaista osaamista ja focusta tiimiin.\r\n- huomioidaan myös Alteryx alasajo",
       "owner": "Sami Luutikivi",
@@ -794,13 +775,13 @@
         },
         {
           "name": "Mikko Neva",
-          "domain": "Digital & AI",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
           "name": "Filip Holmberg",
-          "domain": "Digital & AI",
+          "domain": "DSE",
           "team": "",
           "required": true
         }
@@ -808,79 +789,219 @@
       "participantListReady": false
     },
     {
-      "id": "session-18",
-      "topic": "Tuloksellisuus. Asiakaslähtöisen tuotehierarkian kerroksen luominen asiakasrajapintaan konseptin mukaisesti (huomioiden päivittynyt/päivittyvä strategia ja mainoskokemuksen korostunut rooli). Ns. \"konepelti\" - ei kosketa tuotehierarkiaan tällä sesongilla konepellin alla).",
-      "topicFull": "Tuloksellisuus. Asiakaslähtöisen tuotehierarkian kerroksen luominen asiakasrajapintaan konseptin mukaisesti (huomioiden päivittynyt/päivittyvä strategia ja mainoskokemuksen korostunut rooli). Ns. \"konepelti\" - ei kosketa tuotehierarkiaan tällä sesongilla konepellin alla).",
-      "owner": "Leena Koskinen & Tuomo Sinkkonen",
-      "ownerDomain": "S&M/B2B",
-      "duration": 60,
-      "priority": 1,
-      "status": "internal",
-      "participants": [
-        {
-          "name": "Leena Koskinen",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Tuomo Sinkkonen",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Janne Nurmisto",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Lotta Monten",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Minna Kruhse",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Riku Talvitie",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Tiina Kosonen",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Hanna Jalonen",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        }
-      ],
-      "participantListReady": false
-    },
-    {
-      "id": "session-19",
+      "id": "session-16",
       "topic": "Tuloksellisuus. Tavoite ja mittarimallin seuraavat vaiheet & vaikutukset eri domaineille (odotukset painottuen S1, mutta domainien odotetaan arvioivan ja huomioivan vaikutuksia jo S3 nykyisessä tekemisessä)",
       "topicFull": "Tuloksellisuus. Tavoite ja mittarimallin seuraavat vaiheet & vaikutukset eri domaineille (odotukset painottuen S1, mutta domainien odotetaan arvioivan ja huomioivan vaikutuksia jo S3 nykyisessä tekemisessä)",
       "owner": "Tiina Kosonen",
-      "ownerDomain": "S&M/B2B",
-      "duration": 90,
+      "ownerDomain": "S&M",
+      "duration": 60,
       "priority": 1,
       "status": "active",
       "participants": [
         {
           "name": "Tiina Kosonen",
-          "domain": "S&M/B2B",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Maria Meurman",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Mikko Neva",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Filip Holmberg",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Kati Alijoki",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Leena Koskinen",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Jonne Ansamaa",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Jenni Tamminen",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Vesa Lindqvist",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Jaana Tanskanen",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        }
+      ],
+      "participantListReady": false
+    },
+    {
+      "id": "session-17",
+      "topic": "Tuloksellisuus. Yhteiskehittämisen mallin edistäminen S3. Valitut end-to-end yhteiskehittämisen mallin mukaiset pilotit (revops & tuloksellisuuden malli). Miten data tallennetaan, varmistetaan, että toimitaan S3 mallin edistämiseksi fiksusti vaikka sen ympärillä ei teknisempää kehitystä.",
+      "topicFull": "Tuloksellisuus. Yhteiskehittämisen mallin edistäminen S3. Valitut end-to-end yhteiskehittämisen mallin mukaiset pilotit (revops & tuloksellisuuden malli). Miten data tallennetaan, varmistetaan, että toimitaan S3 mallin edistämiseksi fiksusti vaikka sen ympärillä ei teknisempää kehitystä.",
+      "owner": "Tiina Kosonen",
+      "ownerDomain": "S&M",
+      "duration": 30,
+      "priority": 1,
+      "status": "active",
+      "participants": [
+        {
+          "name": "Tiina Kosonen",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Reeta Thurman",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Tiina Virtanen",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Pilvi Seppälä",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Sami Tirkkonen",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Hanna Jalonen",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Sami Luutikivi",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        }
+      ],
+      "participantListReady": true
+    },
+    {
+      "id": "session-18",
+      "topic": "(Strateginen segmentointi) ICP:n eli ideal customer profilen luominen",
+      "topicFull": "(Strateginen segmentointi) ICP:n eli ideal customer profilen luominen",
+      "owner": "Tiina Kosonen",
+      "ownerDomain": "S&M",
+      "duration": 60,
+      "priority": 1,
+      "status": "active",
+      "participants": [
+        {
+          "name": "Tiina Kosonen",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Leena Koskinen",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Juhana Rautavirta",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Hanna Jalonen",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Eetu Laitinen",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Perttu Rekola",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Maiju Häkkinen",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        }
+      ],
+      "participantListReady": true
+    },
+    {
+      "id": "session-19",
+      "topic": "Discovery: jatkuvat palvelutuotteet varattaviksi (Kasvupalvelu Startti, Google, Meta)",
+      "topicFull": "Discovery: jatkuvat palvelutuotteet varattaviksi (Kasvupalvelu Startti, Google, Meta)",
+      "owner": "Jenni Tamminen",
+      "ownerDomain": "S&M",
+      "duration": 90,
+      "priority": 9,
+      "status": "active",
+      "participants": [
+        {
+          "name": "Jenni Tamminen",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Heidi Falenius",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Maria Meurman",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Marja Laulainen",
+          "domain": "S&M",
           "team": "",
           "required": true
         }
@@ -889,53 +1010,47 @@
     },
     {
       "id": "session-20",
-      "topic": "Tuloksellisuus. Yhteiskehittämisen mallin edistäminen S3. Valitut end-to-end yhteiskehittämisen mallin mukaiset pilotit (revops & tuloksellisuuden malli). Miten data tallennetaan, varmistetaan, että toimitaan S3 mallin edistämiseksi fiksusti vaikka sen ympärillä ei teknisempää kehitystä.",
-      "topicFull": "Tuloksellisuus. Yhteiskehittämisen mallin edistäminen S3. Valitut end-to-end yhteiskehittämisen mallin mukaiset pilotit (revops & tuloksellisuuden malli). Miten data tallennetaan, varmistetaan, että toimitaan S3 mallin edistämiseksi fiksusti vaikka sen ympärillä ei teknisempää kehitystä.",
-      "owner": "Tiina Kosonen",
-      "ownerDomain": "S&M/B2B",
+      "topic": "Discovery: kasvupalvelun suunnittelutiimin työkalujen ja järjestelmien pienkehitystyö ja suunnittelu miten kannattaisi hyödyntää esim. SalesForcea",
+      "topicFull": "Discovery: kasvupalvelun suunnittelutiimin työkalujen ja järjestelmien pienkehitystyö ja suunnittelu miten kannattaisi hyödyntää esim. SalesForcea",
+      "owner": "Jenni Tamminen",
+      "ownerDomain": "S&M",
       "duration": 90,
-      "priority": 1,
+      "priority": 9,
       "status": "active",
       "participants": [
         {
-          "name": "Tiina Kosonen",
-          "domain": "S&M/B2B",
+          "name": "Jenni Tamminen",
+          "domain": "S&M",
           "team": "",
           "required": true
         },
         {
-          "name": "Reeta Thurman",
-          "domain": "S&M/B2B",
+          "name": "Filip Holmberg",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
-          "name": "Tiina Virtanen",
-          "domain": "S&M/B2B",
+          "name": "Jaana Tanskanen",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
-          "name": "Pilvi Seppälä",
-          "domain": "S&M/B2B",
+          "name": "Jonne Ansamaa",
+          "domain": "DG",
           "team": "",
           "required": true
         },
         {
-          "name": "Sami Tirkkonen",
-          "domain": "S&M/B2B",
+          "name": "Nea Särkikoski",
+          "domain": "S&M",
           "team": "",
           "required": true
         },
         {
-          "name": "Hanna Jalonen",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Sami Luutikivi",
-          "domain": "S&M/B2B",
+          "name": "Petteri Varho",
+          "domain": "S&M",
           "team": "",
           "required": true
         }
@@ -944,47 +1059,23 @@
     },
     {
       "id": "session-21",
-      "topic": "(Strateginen segmentointi) ICP:n eli ideal customer profilen luominen",
-      "topicFull": "(Strateginen segmentointi) ICP:n eli ideal customer profilen luominen",
-      "owner": "Tiina Kosonen",
-      "ownerDomain": "S&M/B2B",
+      "topic": "Discovery: kasvupalvelun asiakkaiden mainosdatan rikastaminen tulosten parantamiseksi; vaihtoehtojen kartoitus ja pilotointi. Datan parannus melko domainin sisäinen työ, mutta pitää huomioida raportointi ja datayhteys näkökulmasta",
+      "topicFull": "Discovery: kasvupalvelun asiakkaiden mainosdatan rikastaminen tulosten parantamiseksi; vaihtoehtojen kartoitus ja pilotointi. Datan parannus melko domainin sisäinen työ, mutta pitää huomioida raportointi ja datayhteys näkökulmasta",
+      "owner": "Jenni Tamminen",
+      "ownerDomain": "S&M",
       "duration": 90,
-      "priority": 1,
+      "priority": 9,
       "status": "active",
       "participants": [
         {
-          "name": "Tiina Kosonen",
-          "domain": "S&M/B2B",
+          "name": "Jenni Tamminen",
+          "domain": "S&M",
           "team": "",
           "required": true
         },
         {
-          "name": "Juhana Rautavirta",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Hanna Jalonen",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Eetu Laitinen",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Perttu Rekola",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Maiju Häkkinen",
-          "domain": "S&M/B2B",
+          "name": "John Kronström",
+          "domain": "S&M",
           "team": "",
           "required": true
         }
@@ -993,23 +1084,17 @@
     },
     {
       "id": "session-22",
-      "topic": "Discovery: jatkuvat palvelutuotteet varattaviksi (Kasvupalvelu Startti, Google, Meta)",
-      "topicFull": "Discovery: jatkuvat palvelutuotteet varattaviksi (Kasvupalvelu Startti, Google, Meta)",
+      "topic": "Kasvuraportin kehitystyö, jatkokehitys (pienkehitys)",
+      "topicFull": "Kasvuraportin kehitystyö, jatkokehitys (pienkehitys)",
       "owner": "Jenni Tamminen",
-      "ownerDomain": "S&M/B2B",
+      "ownerDomain": "S&M",
       "duration": 90,
       "priority": 9,
-      "status": "active",
+      "status": "internal",
       "participants": [
         {
           "name": "Jenni Tamminen",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Heidi Falenius",
-          "domain": "S&M/B2B",
+          "domain": "S&M",
           "team": "",
           "required": true
         }
@@ -1018,98 +1103,23 @@
     },
     {
       "id": "session-23",
-      "topic": "Discovery: kasvupalvelun suunnittelutiimin työkalujen ja järjestelmien pienkehitystyö ja suunnittelu miten kannattaisi hyödyntää esim. SalesForcea",
-      "topicFull": "Discovery: kasvupalvelun suunnittelutiimin työkalujen ja järjestelmien pienkehitystyö ja suunnittelu miten kannattaisi hyödyntää esim. SalesForcea",
-      "owner": "Jenni Tamminen",
-      "ownerDomain": "S&M/B2B",
-      "duration": 90,
-      "priority": 9,
-      "status": "active",
-      "participants": [
-        {
-          "name": "Jenni Tamminen",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Filip Holmberg",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Jaana Tanskanen",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Jonne Ansamaa",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        }
-      ],
-      "participantListReady": false
-    },
-    {
-      "id": "session-24",
-      "topic": "Discovery: kasvupalvelun asiakkaiden mainosdatan rikastaminen tulosten parantamiseksi; vaihtoehtojen kartoitus ja pilotointi. Datan parannus melko domainin sisäinen työ, mutta pitää huomioida raportointi ja datayhteys näkökulmasta",
-      "topicFull": "Discovery: kasvupalvelun asiakkaiden mainosdatan rikastaminen tulosten parantamiseksi; vaihtoehtojen kartoitus ja pilotointi. Datan parannus melko domainin sisäinen työ, mutta pitää huomioida raportointi ja datayhteys näkökulmasta",
-      "owner": "Jenni Tamminen",
-      "ownerDomain": "S&M/B2B",
-      "duration": 90,
-      "priority": 9,
-      "status": "active",
-      "participants": [
-        {
-          "name": "Jenni Tamminen",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "John Kronström",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        }
-      ],
-      "participantListReady": false
-    },
-    {
-      "id": "session-25",
-      "topic": "Kasvuraportin kehitystyö, jatkokehitys (pienkehitys)",
-      "topicFull": "Kasvuraportin kehitystyö, jatkokehitys (pienkehitys)",
-      "owner": "Jenni Tamminen",
-      "ownerDomain": "S&M/B2B",
-      "duration": 90,
-      "priority": 9,
-      "status": "internal",
-      "participants": [
-        {
-          "name": "Jenni Tamminen",
-          "domain": "S&M/B2B",
-          "team": "",
-          "required": true
-        }
-      ],
-      "participantListReady": false
-    },
-    {
-      "id": "session-26",
       "topic": "Discovery: verkkokauppasegmentin tuotemahdollisuudet",
       "topicFull": "Discovery: verkkokauppasegmentin tuotemahdollisuudet",
       "owner": "Jenni Tamminen",
-      "ownerDomain": "S&M/B2B",
+      "ownerDomain": "S&M",
       "duration": 90,
       "priority": 9,
       "status": "active",
       "participants": [
         {
           "name": "Jenni Tamminen",
-          "domain": "S&M/B2B",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Ida Soini",
+          "domain": "S&M",
           "team": "",
           "required": true
         },
@@ -1129,7 +1139,7 @@
       "participantListReady": false
     },
     {
-      "id": "session-27",
+      "id": "session-24",
       "topic": "B2B Prio 8, MSS PRIO 5: Medialle natiivimainonnalla parempi kuluttajakokemus sekä parempi mainonnan vaikuttavuus sekä yield",
       "topicFull": "B2B Prio 8, MSS PRIO 5: Medialle natiivimainonnalla parempi kuluttajakokemus sekä parempi mainonnan vaikuttavuus sekä yield\r\nNatiivistrategian rakentaminen: natiivin julkaisujärjestelmän evaluaatio",
       "owner": "Ria Vaahto & Petra Saikku",
@@ -1193,8 +1203,14 @@
           "required": true
         },
         {
+          "name": "Tuukka Antikainen",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
           "name": "Aki Salonen",
-          "domain": "MSS",
+          "domain": "DG",
           "team": "",
           "required": true
         }
@@ -1202,8 +1218,8 @@
       "participantListReady": false
     },
     {
-      "id": "session-28",
-      "topic": "Ratkaisunrakentaja visio --> ei riippuvuussuunnitteluun,  Mikko N. kontaktoi erikseen tarpeiden keskustelua",
+      "id": "session-25",
+      "topic": "Ratkaisunrakentaja visio --> ei riippuvuussuunnitteluun, Mikko N. kontaktoi erikseen tarpeiden keskustelua",
       "topicFull": "Ratkaisunrakentaja visio --> ei riippuvuussuunnitteluun,  Mikko N. kontaktoi erikseen tarpeiden keskustelua\r\n- insight tuotteiden huomioiminen\r\n- AI Risto kytkös?",
       "owner": "TBD",
       "ownerDomain": "DSE",
@@ -1213,7 +1229,13 @@
       "participants": [
         {
           "name": "Rolf Sormo",
-          "domain": "DSE&A",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Jaana Jamalainen",
+          "domain": "MS&S",
           "team": "",
           "required": true
         }
@@ -1221,12 +1243,12 @@
       "participantListReady": false
     },
     {
-      "id": "session-29",
-      "topic": "AI Platform & Operating model",
-      "topicFull": "AI Platform & Operating model\r\n- API uudistuksen PoC tukemaan AI kehitystä",
+      "id": "session-26",
+      "topic": "API uudistuksen PoC tukemaan AI kehitystä",
+      "topicFull": "API uudistuksen PoC tukemaan AI kehitystä",
       "owner": "Filip Holmberg",
       "ownerDomain": "DSE",
-      "duration": 60,
+      "duration": 90,
       "priority": 4,
       "status": "internal",
       "participants": [
@@ -1237,112 +1259,93 @@
           "required": true
         },
         {
-          "name": "Jero Karppinen",
+          "name": "Jero Liimatainen",
           "domain": "DSE",
           "team": "",
           "required": true
         },
         {
           "name": "Heidi Falenius",
-          "domain": "Digital & AI",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
           "name": "Antero Karttunen",
-          "domain": "Core & Sales Reporting",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
           "name": "Bilal Gill",
-          "domain": "Core & Sales Reporting",
-          "team": "",
-          "required": true
-        }
-      ],
-      "participantListReady": false
-    },
-    {
-      "id": "session-30",
-      "topic": "Yhteinen kaupallinen johtamismalli:",
-      "topicFull": "Yhteinen kaupallinen johtamismalli: \r\n- prospektoinnin ja skoutti pelikaverin kehittäminen",
-      "owner": "Antti Ovaska",
-      "ownerDomain": "DSE",
-      "duration": 90,
-      "priority": 10,
-      "status": "active",
-      "participants": [
-        {
-          "name": "Antti Ovaska",
-          "domain": "DSE",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Juhana Rautavirta",
-          "domain": "DSE",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Vesa Lindqvist",
           "domain": "DSE",
           "team": "",
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
-      "id": "session-31",
+      "id": "session-27",
       "topic": "TagomoAI agenttinen Ad Manager bookkaus: Toiminnallisuus, jossa automaagisesti päivitettään agency-advertiser relaatiota tiettyjen toimistojen osalta.",
       "topicFull": "TagomoAI agenttinen Ad Manager bookkaus: Toiminnallisuus, jossa automaagisesti päivitettään agency-advertiser relaatiota tiettyjen toimistojen osalta.",
       "owner": "Hanna Jalonen",
-      "ownerDomain": "other",
+      "ownerDomain": "B2B",
       "duration": 90,
       "priority": 99,
       "status": "active",
       "participants": [
         {
           "name": "Hanna Jalonen",
-          "domain": "other",
+          "domain": "B2B",
           "team": "",
           "required": true
         },
         {
           "name": "Jaana Tanskanen",
-          "domain": "other",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
           "name": "Filip Holmberg",
-          "domain": "other",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Toni Törnqvist",
+          "domain": "B2B",
           "team": "",
           "required": true
         },
         {
           "name": "Janne Mikkola",
-          "domain": "other",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Bilal Gill",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
           "name": "Antero Karttunen",
-          "domain": "other",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
           "name": "Maiju Häkkinen",
-          "domain": "other",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
           "name": "Sini Hartikka",
-          "domain": "other",
+          "domain": "S&M",
           "team": "",
           "required": true
         }
@@ -1350,18 +1353,18 @@
       "participantListReady": false
     },
     {
-      "id": "session-32",
+      "id": "session-28",
       "topic": "Raportointi: Matillion uudistus",
       "topicFull": "Raportointi: Matillion uudistus",
       "owner": "Janne Nikkilä",
-      "ownerDomain": "other",
+      "ownerDomain": "B2B",
       "duration": 90,
       "priority": 99,
       "status": "active",
       "participants": [
         {
           "name": "Janne Nikkilä",
-          "domain": "other",
+          "domain": "B2B",
           "team": "",
           "required": true
         },
@@ -1387,7 +1390,7 @@
       "participantListReady": false
     },
     {
-      "id": "session-33",
+      "id": "session-29",
       "topic": "Display material automation in Ad Manager.",
       "topicFull": "Display material automation in Ad Manager.\r\nGo-live with Ad Manager quick campaign launch and enable more formats to be brought into the automated process.",
       "owner": "Toni Törnqvist",
@@ -1401,12 +1404,48 @@
           "domain": "DG",
           "team": "",
           "required": true
+        },
+        {
+          "name": "Tuomas Waris",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Janne Mikkonen",
+          "domain": "Ad Manager",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Anniina Hautala",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Sini Lähdemäki",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Asko Sälli",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Airi Viljamaa",
+          "domain": "DG",
+          "team": "",
+          "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
-      "id": "session-34",
+      "id": "session-30",
       "topic": "Missing Creative AI Capabilities (HTML5 and tags.)",
       "topicFull": "Missing Creative AI Capabilities (HTML5 and tags.)",
       "owner": "Toni Törnqvist",
@@ -1420,12 +1459,48 @@
           "domain": "DG",
           "team": "",
           "required": true
+        },
+        {
+          "name": "Tuomas Waris",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Janne Mikkonen",
+          "domain": "Ad Manager",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Anniina Hautala",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Sini Lähdemäki",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Asko Sälli",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Airi Viljamaa",
+          "domain": "DG",
+          "team": "",
+          "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
-      "id": "session-35",
+      "id": "session-31",
       "topic": "Goal-based purchase flow",
       "topicFull": "Goal-based purchase flow\r\nLaunch goal-based display and outstream products with defined product specs, pricing logic, and campaign setup flows. Internal launch readiness for products and prices is 21 October, customer communication starts in November, booking must be possible in November, and campaigns must be ready to deliver from 1 January 2027. Products must be available through direct sales and the Ad Manager self-service tool.",
       "owner": "Emmy Ramsay",
@@ -1439,17 +1514,131 @@
           "domain": "DG",
           "team": "",
           "required": true
+        },
+        {
+          "name": "Anniina Hautala",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Toni Törnqvist",
+          "domain": "Ad Manager Product",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Jonne Ansamaa",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Pilvi Rimmanen",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Heidi Falenius",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Airi Viljamaa",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Juho Pöyhönen",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Sini Lähdemäki",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Vesa Lindqvist",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Anu Ollikainen",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Minna Kruhse",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Ritva Lassila",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Johannes Hocksell",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Hanna Jalonen",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Tiina Kosonen",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Maiju Toivonen",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Netta Aavikko",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Tuukka Antikainen",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Johan Korsbäck",
+          "domain": "YDP",
+          "team": "",
+          "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
-      "id": "session-36",
+      "id": "session-32",
       "topic": "Instream to Ad Manager (Productization, technical requirements, and Booking API work)",
       "topicFull": "Instream to Ad Manager (Productization, technical requirements, and Booking API work)",
       "owner": "Toni Törnqvist",
       "ownerDomain": "DG",
-      "duration": 60,
+      "duration": 90,
       "priority": 8,
       "status": "active",
       "participants": [
@@ -1460,19 +1649,19 @@
           "required": true
         },
         {
-          "name": "Teemu",
+          "name": "Anu Linden",
           "domain": "TM",
           "team": "",
           "required": true
         },
         {
-          "name": "Laura",
+          "name": "Teemu Ihalainen",
           "domain": "TM",
           "team": "",
           "required": true
         },
         {
-          "name": "Tuomas",
+          "name": "Tuomas Waris",
           "domain": "DG",
           "team": "",
           "required": true
@@ -1484,60 +1673,28 @@
           "required": true
         },
         {
-          "name": "Janne",
+          "name": "Janne Mikkonen",
           "domain": "DG",
           "team": "",
           "required": true
         },
         {
           "name": "Satu Raatikainen",
-          "domain": "DG",
+          "domain": "S&M",
           "team": "",
           "required": true
-        }
-      ],
-      "participantListReady": false
-    },
-    {
-      "id": "session-37",
-      "topic": "Sanoma Pixel ready for retarteing use case & conversion approach teste+agreed",
-      "topicFull": "Sanoma Pixel ready for retarteing use case & conversion approach teste+agreed\r\n3P cookie based retargeting should be moved to Sanoma Pixel solution + decided how to activate them. Guidelines for Pixel implementation to advertisers. POC conversation data collection & agree what kind of a data product should be created for this",
-      "owner": "Niko Hovilainen",
-      "ownerDomain": "DG",
-      "duration": 90,
-      "priority": 3,
-      "status": "internal",
-      "participants": [
+        },
         {
-          "name": "Niko Hovilainen",
+          "name": "Sami Malmi",
           "domain": "DG",
           "team": "",
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
-      "id": "session-38",
-      "topic": "Assume ownership of creative categorisation flow & run discovery for redesigned solution",
-      "topicFull": "Assume ownership of creative categorisation flow & run discovery for redesigned solution\r\nMake the existing categorization dataflow according to our best practises. Evaluate and POC AI categorisation possibilities. Solve who owns the screenshot process.",
-      "owner": "Niko Hovilainen",
-      "ownerDomain": "DG",
-      "duration": 90,
-      "priority": 9,
-      "status": "internal",
-      "participants": [
-        {
-          "name": "Niko Hovilainen",
-          "domain": "DG",
-          "team": "",
-          "required": true
-        }
-      ],
-      "participantListReady": false
-    },
-    {
-      "id": "session-39",
+      "id": "session-33",
       "topic": "Performance Data Product - faster discovery and development",
       "topicFull": "Performance Data Product - faster discovery and development\r\nSpeed up data-based discovery and enable faster DS work. Add in-view time data verified through IAS attention data. Gold-level data made available and usable for PMs in DG. Personalization team as internal customer. Enabler to report campaign performance to customers and proof results",
       "owner": "Johannes Hocksell",
@@ -1548,6 +1705,12 @@
       "participants": [
         {
           "name": "Johannes Hocksell",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Muhammad Faizan",
           "domain": "DG",
           "team": "",
           "required": true
@@ -1565,20 +1728,32 @@
           "required": true
         },
         {
+          "name": "Netta Aavikko",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
           "name": "Jonne Ansamaa",
-          "domain": "CPR",
+          "domain": "DG",
           "team": "",
           "required": true
         },
         {
           "name": "Janne Eränen",
-          "domain": "CPR",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Maximillian Koppaz",
+          "domain": "Personalization",
           "team": "",
           "required": true
         },
         {
           "name": "Lukas Artig",
-          "domain": "DG",
+          "domain": "Personalization",
           "team": "",
           "required": true
         },
@@ -1589,10 +1764,10 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
-      "id": "session-40",
+      "id": "session-34",
       "topic": "Soft launch (?) new RT-optimized CPC productization",
       "topicFull": "Soft launch (?) new RT-optimized CPC productization\r\nNew CPC productization that is more effective in directing traffic to customer sites. To be discussed how should this be progressed in Ad Manager, how it fits the goal based productization, reporting needs and Advendio products and GTM.",
       "owner": "Johannes Hocksell",
@@ -1611,7 +1786,7 @@
       "participantListReady": false
     },
     {
-      "id": "session-41",
+      "id": "session-35",
       "topic": "Proof of results trough attention measurement",
       "topicFull": "Proof of results trough attention measurement\r\nDevelop scalable attention measurement capabilities that strengthen campaign-effectiveness proof and differentiate Sanoma's advertising products. Define and document a validated Sanoma Attention Score methodology leveraging in-view and other engagement signals. Identify, validate and pilot a scalable solution for measuring attention in Outstream inventory",
       "owner": "Netta Aavikko",
@@ -1627,13 +1802,37 @@
           "required": true
         },
         {
+          "name": "Heidi Falenius",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Johannes Hocksell",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
           "name": "Janne Eränen",
-          "domain": "CPR",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Jonne Ansamaa",
+          "domain": "DG",
           "team": "",
           "required": true
         },
         {
           "name": "Juho Pöyhönen",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Mikko Vartiainen",
           "domain": "DG",
           "team": "",
           "required": true
@@ -1645,7 +1844,7 @@
           "required": true
         },
         {
-          "name": "Maiju Toivinen",
+          "name": "Maiju Toivonen",
           "domain": "DG",
           "team": "",
           "required": true
@@ -1658,26 +1857,26 @@
         },
         {
           "name": "Anniina Hautala",
-          "domain": "Ad Manager Product",
+          "domain": "DG",
           "team": "",
           "required": true
         },
         {
           "name": "Ritva Lassila",
-          "domain": "Marketing",
+          "domain": "S&M",
           "team": "",
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
-      "id": "session-42",
+      "id": "session-36",
       "topic": "Discovery: Video hosting and templates",
       "topicFull": "Discovery: Video hosting and templates\r\nControl of Outstream user experience plus cost-savings from video hosting in GAM / Adssets. Primarily an efficiency/operational improvement",
       "owner": "Zahoor Khan",
       "ownerDomain": "DG",
-      "duration": 60,
+      "duration": 90,
       "priority": 99,
       "status": "active",
       "participants": [
@@ -1689,26 +1888,44 @@
         },
         {
           "name": "Asko Sälli",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Zeeshan Rais",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Janne Eränen",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Martti Halme",
           "domain": "Creative AI",
           "team": "",
           "required": true
         },
         {
-          "name": "Zeeshan",
-          "domain": "Creative AI",
+          "name": "Netta Aavikko",
+          "domain": "DG",
           "team": "",
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
-      "id": "session-43",
-      "topic": "Data Product work - huom! Varmistetaan Data Council ohjausmalli \"miten\" tehdään on huomioituna suunnittelussa",
-      "topicFull": "Data Product work - huom! Varmistetaan Data Council ohjausmalli \"miten\" tehdään on huomioituna suunnittelussa",
+      "id": "session-37",
+      "topic": "Optimizing the flow between Snowflake and Claude",
+      "topicFull": "Optimizing the flow between Snowflake and Claude",
       "owner": "Jonne Ansamaa",
       "ownerDomain": "DG",
-      "duration": 90,
+      "duration": 60,
       "priority": 99,
       "status": "active",
       "participants": [
@@ -1717,116 +1934,41 @@
           "domain": "DG",
           "team": "",
           "required": true
-        }
-      ],
-      "participantListReady": false
-    },
-    {
-      "id": "session-44",
-      "topic": "Optimizing the flow between Snowflake and Claude",
-      "topicFull": "Optimizing the flow between Snowflake and Claude",
-      "owner": "Jonne Ansamaa",
-      "ownerDomain": "DG/B2B",
-      "duration": 60,
-      "priority": 99,
-      "status": "active",
-      "participants": [
-        {
-          "name": "Jonne Ansamaa",
-          "domain": "DG/B2B",
-          "team": "",
-          "required": true
         },
         {
           "name": "Sami Luutikivi",
-          "domain": "DG/B2B",
+          "domain": "DG",
           "team": "",
           "required": true
         },
         {
           "name": "Janne Eränen",
-          "domain": "DG/B2B",
+          "domain": "DG",
           "team": "",
           "required": true
         },
         {
           "name": "Niko Kotiniemi",
-          "domain": "DG/B2B",
+          "domain": "DG",
           "team": "",
           "required": true
         },
         {
           "name": "Jani Väisänen",
-          "domain": "DG/B2B",
+          "domain": "DG",
           "team": "",
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
-      "id": "session-45",
-      "topic": "Printtitarjoama osaksi vaalien monimediaista itseostamisen kanavaa​ (Print Products & Operation)",
-      "topicFull": "Printtitarjoama osaksi vaalien monimediaista itseostamisen kanavaa​ (Print Products & Operation)",
-      "owner": "Päivi Vaittinen",
-      "ownerDomain": "TM",
-      "duration": 90,
-      "priority": 99,
-      "status": "active",
-      "participants": [
-        {
-          "name": "Päivi Vaittinen",
-          "domain": "TM",
-          "team": "",
-          "required": true
-        }
-      ],
-      "participantListReady": false
-    },
-    {
-      "id": "session-46",
-      "topic": "Skaalautuvat operatiiviset hoitomallit asiakasryhmittäin​",
-      "topicFull": "Skaalautuvat operatiiviset hoitomallit asiakasryhmittäin​",
-      "owner": "Mari Härkisaari",
-      "ownerDomain": "TM",
-      "duration": 90,
-      "priority": 99,
-      "status": "active",
-      "participants": [
-        {
-          "name": "Mari Härkisaari",
-          "domain": "TM",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Anu Ollikainen",
-          "domain": "TM",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Heidi Falenius",
-          "domain": "TM",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Niina Grönholm",
-          "domain": "TM",
-          "team": "",
-          "required": true
-        }
-      ],
-      "participantListReady": false
-    },
-    {
-      "id": "session-47",
-      "topic": "AV  Maestro",
-      "topicFull": "AV  Maestro",
+      "id": "session-38",
+      "topic": "AV Maestro, meeting 1",
+      "topicFull": "AV  Maestro, meeting 1",
       "owner": "Panu Hyryläinen",
       "ownerDomain": "TM",
-      "duration": 90,
+      "duration": 60,
       "priority": 99,
       "status": "active",
       "participants": [
@@ -1835,17 +1977,214 @@
           "domain": "TM",
           "team": "",
           "required": true
+        },
+        {
+          "name": "Annika Palm",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Joonas Imeläinen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Anu Linden",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Pia Viinikainen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Heidi Falenius",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Juho Pöyhönen",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Antero Karttunen",
+          "domain": "DSE",
+          "team": "",
+          "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true,
+      "group": "AV Maestro",
+      "groupOrder": 0
     },
     {
-      "id": "session-48",
+      "id": "session-39",
+      "topic": "AV Maestro, meeting 2",
+      "topicFull": "AV  Maestro, meeting 2",
+      "owner": "Panu Hyryläinen",
+      "ownerDomain": "TM",
+      "duration": 60,
+      "priority": 99,
+      "status": "active",
+      "participants": [
+        {
+          "name": "Panu Hyryläinen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Annika Palm",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Joonas Imeläinen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Mikko Eskelinen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Tina Åström",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Anu Linden",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Sari Moilanen",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Jonne Ansamaa",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Janne Eränen",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        }
+      ],
+      "participantListReady": true,
+      "group": "AV Maestro",
+      "groupOrder": 1
+    },
+    {
+      "id": "session-40",
+      "topic": "AV Maestro, meeting 3",
+      "topicFull": "AV  Maestro, meeting 3",
+      "owner": "Panu Hyryläinen",
+      "ownerDomain": "TM",
+      "duration": 60,
+      "priority": 99,
+      "status": "active",
+      "participants": [
+        {
+          "name": "Panu Hyryläinen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Annika Palm",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Joonas Imeläinen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Mari Härkisaari",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        }
+      ],
+      "participantListReady": true,
+      "group": "AV Maestro",
+      "groupOrder": 2
+    },
+    {
+      "id": "session-41",
+      "topic": "AV Maestro, meeting 3",
+      "topicFull": "AV  Maestro, meeting 3",
+      "owner": "Panu Hyryläinen",
+      "ownerDomain": "TM",
+      "duration": 30,
+      "priority": 99,
+      "status": "active",
+      "participants": [
+        {
+          "name": "Panu Hyryläinen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Annika Palm",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Joonas Imeläinen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Sini Lähdemäki",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Airi Viljamaa",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        }
+      ],
+      "participantListReady": true,
+      "group": "AV Maestro",
+      "groupOrder": 3
+    },
+    {
+      "id": "session-42",
       "topic": "AV Manager, rahapelaaminen, tuotteiden konfigurointi & myynnin rajoitteet",
       "topicFull": "AV Manager, rahapelaaminen, tuotteiden konfigurointi & myynnin rajoitteet",
       "owner": "Anu Linden",
       "ownerDomain": "TM",
-      "duration": 60,
+      "duration": 120,
       "priority": 99,
       "status": "active",
       "participants": [
@@ -1856,76 +2195,57 @@
           "required": true
         },
         {
+          "name": "Heidi Falenius",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
           "name": "Juho Pöyhönen",
-          "domain": "B2B",
+          "domain": "DSE",
           "team": "",
           "required": true
         },
         {
           "name": "Annika Palm",
-          "domain": "B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Teemu Ihalainen",
-          "domain": "B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Sina Reunala",
-          "domain": "B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Petri Lahikainen",
-          "domain": "B2B",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Roope Hämäläinen",
-          "domain": "B2B",
-          "team": "",
-          "required": true
-        }
-      ],
-      "participantListReady": false
-    },
-    {
-      "id": "session-49",
-      "topic": "2027 tuotteistus ja hinnoittelun loppuun vieminen ja myyntiin saaminen​",
-      "topicFull": "2027 tuotteistus ja hinnoittelun loppuun vieminen ja myyntiin saaminen​",
-      "owner": "Mikko Eskelinen",
-      "ownerDomain": "TM",
-      "duration": 90,
-      "priority": 99,
-      "status": "active",
-      "participants": [
-        {
-          "name": "Mikko Eskelinen",
           "domain": "TM",
           "team": "",
           "required": true
         },
         {
-          "name": "Heidi Falenius",
-          "domain": "DSE",
+          "name": "Teemu Ihalainen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Sina Reunala",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Petri Lahikainen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Roope Hämäläinen",
+          "domain": "TM",
           "team": "",
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
-      "id": "session-50",
-      "topic": "TV Beat",
-      "topicFull": "TV Beat",
+      "id": "session-43",
+      "topic": "TV Beat, meeting 1",
+      "topicFull": "TV Beat, meeting 1",
       "owner": "Mikko Eskelinen",
       "ownerDomain": "TM",
-      "duration": 90,
+      "duration": 60,
       "priority": 99,
       "status": "active",
       "participants": [
@@ -1942,16 +2262,87 @@
           "required": true
         },
         {
-          "name": "Bilal Gill",
-          "domain": "DSE",
+          "name": "Jonne Ansamaa",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Janne Eränen",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Panu Hyryläinen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Tapani Kuokkanen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Pasi Korhonen",
+          "domain": "TM",
           "team": "",
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true,
+      "group": "TV Beat",
+      "groupOrder": 0
     },
     {
-      "id": "session-51",
+      "id": "session-44",
+      "topic": "TV Beat, meeting 2",
+      "topicFull": "TV Beat, meeting 2",
+      "owner": "Mikko Eskelinen",
+      "ownerDomain": "TM",
+      "duration": 30,
+      "priority": 99,
+      "status": "active",
+      "participants": [
+        {
+          "name": "Mikko Eskelinen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Heidi Falenius",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Juho Pöyhönen",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Bilal Gill",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Panu Hyryläinen",
+          "domain": "TM",
+          "team": "",
+          "required": true
+        }
+      ],
+      "participantListReady": true,
+      "group": "TV Beat",
+      "groupOrder": 1
+    },
+    {
+      "id": "session-45",
       "topic": "SMF tieto-omaisuuden (”data”) hallinta ja kehitys B2B:n näkökulmasta. Aloitetaan natiivin tukemisesta.​",
       "topicFull": "SMF tieto-omaisuuden (”data”) hallinta ja kehitys B2B:n näkökulmasta. Aloitetaan natiivin tukemisesta.​",
       "owner": "Janne Nikkilä",
@@ -1970,18 +2361,24 @@
       "participantListReady": false
     },
     {
-      "id": "session-52",
+      "id": "session-46",
       "topic": "Raportointi tarpeet S3:selle.",
       "topicFull": "Raportointi tarpeet S3:selle.",
       "owner": "Pia Viinikainen",
       "ownerDomain": "TM",
-      "duration": 60,
+      "duration": 180,
       "priority": 99,
       "status": "active",
       "participants": [
         {
           "name": "Pia Viinikainen",
           "domain": "TM",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Jonne Ansamaa",
+          "domain": "DG",
           "team": "",
           "required": true
         },
@@ -1993,19 +2390,31 @@
         },
         {
           "name": "Sari Moilanen",
-          "domain": "TM",
+          "domain": "DG",
           "team": "",
           "required": true
         },
         {
           "name": "Pilvi Rimmanen",
-          "domain": "TM",
+          "domain": "DG",
           "team": "",
           "required": true
         },
         {
           "name": "Heidi Falenius",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Sampsa Näkki",
           "domain": "Core & Sales Reporting",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Anu Linden",
+          "domain": "TM",
           "team": "",
           "required": true
         },
@@ -2064,7 +2473,110 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     }
-  ]
+  ],
+  "personDomains": {
+    "Jaakko Kuivalainen": "DG",
+    "Tuuli Rikama": "DG",
+    "Tuukka Antikainen": "DG",
+    "Anniina Hautala": "DG",
+    "Janne Mikkola": "DG",
+    "Sini Lähdemäki": "DG",
+    "Birgitta Kursi": "DG",
+    "Anu Ollikainen": "DG",
+    "Rosa Forsell": "DG",
+    "Jonne Ansamaa": "DG",
+    "Airi Viljamaa": "DG",
+    "Mikko Vartiainen": "DG",
+    "Johannes Hocksell": "DG",
+    "Emmy Ramsay": "DG",
+    "Aki Salonen": "DG",
+    "Janne Eränen": "DG",
+    "Tuomas Waris": "DG",
+    "Asko Sälli": "DG",
+    "Pilvi Rimmanen": "DG",
+    "Muhammad Faizan": "DG",
+    "Mikhail Shmakov": "DG",
+    "Fabio La Torre": "DG",
+    "Netta Aavikko": "DG",
+    "Maiju Toivonen": "DG",
+    "Zeeshan Rais": "DG",
+    "Sari Moilanen": "DG",
+    "Satu Raatikainen": "S&M",
+    "Leena Koskinen": "S&M",
+    "Hanna Jalonen": "S&M",
+    "Tiina Virtanen": "S&M",
+    "Juhana Rautavirta": "S&M",
+    "Antti Ovaska": "S&M",
+    "Pia Laine": "S&M",
+    "Pia Hauskaviita": "S&M",
+    "Janne Nurmisto": "S&M",
+    "Tuomo Sinkkonen": "S&M",
+    "Lotta Monten": "S&M",
+    "Minna Kruhse": "S&M",
+    "Riku Talvitie": "S&M",
+    "Tiina Kosonen": "S&M",
+    "Kati Alijoki": "S&M",
+    "Nea Särkikoski": "S&M",
+    "Petteri Varho": "S&M",
+    "Ida Soini": "S&M",
+    "Sini Hartikka": "S&M",
+    "Ritva Lassila": "S&M",
+    "Suvi Vesanen": "MS&S",
+    "Jani Moisiola": "MS&S",
+    "Tarja Viljanen": "MS&S",
+    "Jaana Jamalainen": "MS&S",
+    "Sari Kärki": "MS&S",
+    "Minna Kaitala": "MS&S",
+    "Ria Vaahto": "MS&S",
+    "Petra Saikku": "MS&S",
+    "Päivi Vaittinen": "TM",
+    "Niina Grönholm": "TM",
+    "Harri Lilja": "TM",
+    "Anu Linden": "TM",
+    "Teemu Ihalainen": "TM",
+    "Laura Kangas": "TM",
+    "Pia Viinikainen": "TM",
+    "Annika Palm": "TM",
+    "Panu Hyryläinen": "TM",
+    "Joonas Imeläinen": "TM",
+    "Mikko Eskelinen": "TM",
+    "Tina Åström": "TM",
+    "Erik Keski-Ojala": "TM",
+    "Mari Härkisaari": "TM",
+    "Sina Reunala": "TM",
+    "Petri Lahikainen": "TM",
+    "Roope Hämäläinen": "TM",
+    "Mikko Neva": "DSE",
+    "Jaana Tynys": "DSE",
+    "Heidi Falenius": "DSE",
+    "Vesa Lindqvist": "DSE",
+    "Tanja Kaikkonen": "DSE",
+    "Bilal Gill": "DSE",
+    "Juho Pöyhönen": "DSE",
+    "Maiju Häkkinen": "DSE",
+    "Antero Karttunen": "DSE",
+    "Maria Meurman": "DSE",
+    "Jaana Tanskanen": "DSE",
+    "Filip Holmberg": "DSE",
+    "Emilia Vuorentausta": "DSE",
+    "Kalle Nisula": "DSE",
+    "Rolf Sormo": "DSE",
+    "Jero Liimatainen": "DSE"
+  },
+  "domainDescriptions": {
+    "DG": "Digital Growth",
+    "S&M": "Sales and Marketing",
+    "MS&S": "Marketing Solutions & Services",
+    "TM": "Transformative Media",
+    "DSE": "Digital Sales Excellence",
+    "CPR": "Campaign Performance and Reporting",
+    "PP": "Performance Products",
+    "YDP": "Yield and Display Products",
+    "CAI": "Creative AI",
+    "DO": "Digital Operations",
+    "AP": "Audience Products",
+    "ADMP": "Ad Manager Product"
+  }
 }
