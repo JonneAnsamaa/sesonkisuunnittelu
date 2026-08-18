@@ -149,6 +149,10 @@ function selectRoom(session, startTime, endTime, day, schedule) {
 
 function sortSessions(sessions) {
   return [...sessions].sort((a, b) => {
+    const aInt = a.status === 'internal' ? 1 : 0;
+    const bInt = b.status === 'internal' ? 1 : 0;
+    if (aInt !== bInt) return aInt - bInt;
+
     const aRequired = a.participants.filter((p) => p.required).length;
     const bRequired = b.participants.filter((p) => p.required).length;
     if (bRequired !== aRequired) return bRequired - aRequired;
@@ -162,7 +166,8 @@ function sortSessions(sessions) {
 }
 
 function schedule() {
-  const sorted = sortSessions(sessions);
+  const active = sessions.filter(s => s.status !== 'cancelled');
+  const sorted = sortSessions(active);
   const timeSlots = buildTimeSlots();
   const scheduled = [];
   const allConflicts = [];

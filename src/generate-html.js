@@ -57,6 +57,14 @@ const html = `<!DOCTYPE html>
     .controls button.active { background: var(--text); color: white; border-color: var(--text); }
     .controls select { min-width: 200px; }
 
+    .filter-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .filter-label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+    #person-filter { padding: 0.6rem 2rem 0.6rem 1rem; border: 1px solid var(--border); border-radius: 24px; font-size: 0.9rem; background: var(--card-bg); min-width: 240px; cursor: pointer; }
+    .day-btn-group { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .day-btn-group .day-btn { padding: 0.5rem 1rem; border: none; border-left: 1px solid var(--border); background: var(--card-bg); cursor: pointer; font-size: 0.85rem; white-space: nowrap; }
+    .day-btn-group .day-btn:first-child { border-left: none; }
+    .day-btn-group .day-btn.active { background: var(--text); color: white; }
+
     .legend { display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
     .legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; }
     .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
@@ -85,18 +93,21 @@ const html = `<!DOCTYPE html>
 
     /* Grid */
     .grid-view { overflow-x: auto; }
-    .timetable { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); min-width: 600px; }
-    .timetable .time-label { background: var(--bg); padding: 0.25rem 0.5rem; font-size: 0.75rem; font-variant-numeric: tabular-nums; text-align: right; border-right: 2px solid var(--border); }
+    .timetable { display: grid; column-gap: 1px; row-gap: 0; background: var(--border); border: 1px solid var(--border); min-width: 600px; }
+    .timetable .time-label { background: var(--bg); padding: 0 0.5rem; font-size: 0.75rem; font-variant-numeric: tabular-nums; text-align: right; border-right: 2px solid var(--border); display: flex; align-items: center; justify-content: flex-end; }
+    .timetable .time-label.slot-30 { border-top: 1px solid var(--border); }
     .timetable .room-header { background: var(--text); color: white; padding: 0.5rem; text-align: center; font-weight: 600; font-size: 0.85rem; }
     .timetable .cell { background: var(--card-bg); min-height: 28px; position: relative; }
-    .session-block { position: absolute; left: 2px; right: 2px; top: 1px; border-radius: 4px; padding: 0.35rem 0.5rem; font-size: 0.8rem; overflow: hidden; cursor: pointer; border-left: 4px solid; transition: opacity 0.2s; z-index: 1; }
-    .session-block .block-topic { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .session-block .block-owner { font-size: 0.7rem; opacity: 0.8; }
-    .session-block .block-time { font-size: 0.7rem; opacity: 0.7; }
+    .timetable .cell.slot-30 { border-top: 1px solid var(--border); }
+    .session-block { position: absolute; left: 2px; right: 2px; top: 1px; border-radius: 6px; padding: 0.25rem 0.35rem; font-size: 0.62rem; overflow: hidden; cursor: pointer; border-left: 4px solid; transition: opacity 0.2s; z-index: 1; display: flex; flex-direction: column; }
+    .session-block .block-topic { font-weight: 600; line-height: 1.2; }
+    .session-block .block-time { font-size: 0.6rem; opacity: 0.7; }
+    .session-block .block-meta { display: flex; align-items: center; gap: 0.3rem; font-size: 0.58rem; opacity: 0.85; margin-top: auto; }
     .session-block.dimmed { opacity: var(--dimmed-opacity); }
     .session-block.highlighted { box-shadow: 0 0 0 2px var(--highlight-border); z-index: 2; }
     .session-block.conflict { box-shadow: 0 0 0 2px var(--conflict-border); z-index: 3; }
     .lunch-row { background: repeating-linear-gradient(45deg, #f9f9f9, #f9f9f9 10px, #f0f0f0 10px, #f0f0f0 20px); text-align: center; color: var(--text-muted); font-size: 0.8rem; padding: 0.25rem; }
+    .lunch-row.slot-30 { border-top: 1px solid var(--border); }
 
     /* Conflicts */
     .conflicts-view { max-width: 900px; margin: 0 auto; }
@@ -211,6 +222,12 @@ const html = `<!DOCTYPE html>
     .list-card-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem; flex-wrap: wrap; }
     .list-card-title { font-size: 1rem; font-weight: 600; }
     .domain-badge { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; padding: 0.12rem 0.45rem; border-radius: 4px; color: white; white-space: nowrap; }
+    .status-badge { font-size: 0.65rem; font-weight: 700; padding: 0.12rem 0.45rem; border-radius: 4px; white-space: nowrap; }
+    .status-badge.st-cancelled { background: #f0f0f0; color: #999; }
+    .status-badge.st-internal { background: #e8f4fd; color: #2980b9; }
+    .session-card.is-cancelled { opacity: 0.55; }
+    .session-card.is-cancelled .sc-title { text-decoration: line-through; color: var(--text-muted); }
+    .list-card.is-internal { border-left-style: dashed; }
     .list-card-meta { font-size: 0.82rem; color: var(--text-muted); display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
     .list-card-participants { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .participant-chip { display: inline-flex; align-items: center; gap: 0.3rem; background: #f5f5f5; border: 1px solid #e8e8e8; border-radius: 20px; padding: 0.15rem 0.55rem 0.15rem 0.15rem; font-size: 0.72rem; white-space: nowrap; }
@@ -287,12 +304,15 @@ const html = `<!DOCTYPE html>
 <div id="stats-bar" class="stats-bar"></div>
 <div id="status-bar" class="status-bar"></div>
 
-<div id="filter-bar" style="max-width:960px;margin:0 auto 1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
-  <div style="display:flex;align-items:center;gap:0.5rem;">
-    <label id="person-label" for="person-filter" style="font-size:0.85rem;font-weight:600;">Henkilö:</label>
-    <select id="person-filter" onchange="filterPerson(this.value)" style="padding:0.5rem 0.75rem;border:1px solid var(--border);border-radius:6px;font-size:0.9rem;background:var(--card-bg);min-width:220px;"></select>
+<div id="filter-bar" style="max-width:960px;margin:0 auto 1rem;display:flex;align-items:flex-start;gap:2rem;flex-wrap:wrap;">
+  <div class="filter-group">
+    <label id="person-label" class="filter-label">Henkilöfiltteri</label>
+    <select id="person-filter" onchange="filterPerson(this.value)"></select>
   </div>
-  <div id="day-buttons" style="display:flex;align-items:center;gap:0.5rem;"></div>
+  <div class="filter-group">
+    <label id="day-label" class="filter-label">Päiväfiltteri</label>
+    <div id="day-buttons" class="day-btn-group"></div>
+  </div>
 </div>
 
 <div id="view-list" class="list-view"></div>
@@ -326,7 +346,8 @@ const TR = {
   fi: {
     list:'Lista', grid:'Lukujärjestys', conflicts:'Päällekkäisyydet',
     sessions:'Sessiot', settings:'Asetukset', rescheduleBtn:'\\u21bb Aikatauluta',
-    person:'Henkilö', all:'Kaikki', dayLabel:'Päivä',
+    person:'Henkilö', all:'Kaikki', allPersons:'Kaikki henkilöt', dayLabel:'Päivä',
+    personFilter:'Henkilöfiltteri', dayFilter:'Päiväfiltteri',
     statsSessions:'Suunnittelusettejä', statsTime:'Suunnitteluaikaa',
     statsParticipants:'Osallistujia', statsHours:'Yhteistunteja',
     statsDays:'päivää', statsCalTotal:'kalenteriaikaa yhteensä',
@@ -338,13 +359,15 @@ const TR = {
     overlapWith:'päällekkäin',
     pw:'Salasana', pwOpen:'Avaa aikataulu', pwWrong:'Väärä salasana',
     lunch:'Lounas',
+    statusLabel:'Tila', statusActive:'Aktiivinen', statusInternal:'Domainin sisäinen', statusCancelled:'Ei tarvita',
     statusScheduled:'sessiota aikataulutettu', statusRooms:'neukkaria',
     statusDays:'päivää', statusPersons:'henkilöä',
   },
   en: {
     list:'List', grid:'Timetable', conflicts:'Conflicts',
     sessions:'Sessions', settings:'Settings', rescheduleBtn:'\\u21bb Schedule',
-    person:'Person', all:'All', dayLabel:'Day',
+    person:'Person', all:'All', allPersons:'All persons', dayLabel:'Day',
+    personFilter:'Person filter', dayFilter:'Day filter',
     statsSessions:'Planning sessions', statsTime:'Planning time',
     statsParticipants:'Participants', statsHours:'Total hours',
     statsDays:'days', statsCalTotal:'calendar time in total',
@@ -356,6 +379,7 @@ const TR = {
     overlapWith:'overlaps with',
     pw:'Password', pwOpen:'Open schedule', pwWrong:'Wrong password',
     lunch:'Lunch',
+    statusLabel:'Status', statusActive:'Active', statusInternal:'Domain internal', statusCancelled:'Not needed',
     statusScheduled:'sessions scheduled', statusRooms:'rooms',
     statusDays:'days', statusPersons:'participants',
   }
@@ -433,7 +457,7 @@ let schedule = [];
 let conflicts = [];
 let domainColors = {};
 let currentView = 'list';
-let currentDay = 1;
+let currentDay = 0;
 let currentPerson = '';
 
 // === SCHEDULER (selaimessa) ===
@@ -481,7 +505,10 @@ function selectRoom(session,start,end,day,scheduled) {
   return null;
 }
 function runScheduler() {
-  const sorted=[...sessions].sort((a,b)=>{
+  const active=sessions.filter(s=>s.status!=='cancelled');
+  const sorted=[...active].sort((a,b)=>{
+    const ai=a.status==='internal'?1:0, bi=b.status==='internal'?1:0;
+    if(ai!==bi)return ai-bi;
     const ar=a.participants.filter(p=>p.required).length,br=b.participants.filter(p=>p.required).length;
     if(br!==ar)return br-ar; if(b.participants.length!==a.participants.length)return b.participants.length-a.participants.length; return a.priority-b.priority;
   });
@@ -536,22 +563,24 @@ function rebuildUI() {
   document.getElementById('legend').innerHTML=doms.map(d=>'<div class="legend-item"><div class="legend-dot" style="background:'+domainColors[d]+'"></div>'+d+'</div>').join('');
   // Person dropdown
   const sel=document.getElementById('person-filter');
-  const prev=sel.value; sel.innerHTML='<option value="">'+t('all')+'</option>'+allParticipants().map(p=>'<option value="'+p+'">'+p+'</option>').join('');
+  const prev=sel.value; sel.innerHTML='<option value="">'+t('allPersons')+'</option>'+allParticipants().map(p=>'<option value="'+p+'">'+p+'</option>').join('');
   sel.value=prev;
-  document.getElementById('person-label').textContent=t('person')+':';
+  document.getElementById('person-label').textContent=t('personFilter');
+  document.getElementById('day-label').textContent=t('dayFilter');
   // Day buttons
   const db=document.getElementById('day-buttons');
-  db.innerHTML='<label style="font-size:0.85rem;font-weight:600;">'+t('dayLabel')+':</label>'+config.days.map(d=>'<button class="day-btn'+(d.day===currentDay?' active':'')+'" data-day="'+d.day+'" onclick="selectDay('+d.day+')">'+d.label+'</button>').join('');
+  db.innerHTML='<button class="day-btn'+(currentDay===0?' active':'')+'" data-day="0" onclick="selectDay(0)">'+t('all')+'</button>'+config.days.map(d=>'<button class="day-btn'+(d.day===currentDay?' active':'')+'" data-day="'+d.day+'" onclick="selectDay('+d.day+')">'+d.label+'</button>').join('');
   // Conflict count
   document.getElementById('btn-conflicts').textContent=t('conflicts')+(conflicts.length?' ('+conflicts.length+')':'');
   // Stats bar
+  const activeSess=sessions.filter(s=>s.status!=='cancelled');
   const ap=allParticipants();
-  const totalMin=sessions.reduce((s,x)=>s+x.duration,0);
-  const totalPersonMin=sessions.reduce((s,x)=>s+x.duration*x.participants.length,0);
+  const totalMin=activeSess.reduce((s,x)=>s+x.duration,0);
+  const totalPersonMin=activeSess.reduce((s,x)=>s+x.duration*x.participants.length,0);
   const totalH=Math.round(totalMin/60);
   const totalPersonH=Math.round(totalPersonMin/60);
   document.getElementById('stats-bar').innerHTML=
-    '<div class="stat-card"><div class="stat-label">\\ud83d\\udcc5 '+t('statsSessions')+'</div><div class="stat-value">'+sessions.length+'</div><div class="stat-sub">'+config.days.length+' '+t('statsDays')+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label">\\ud83d\\udcc5 '+t('statsSessions')+'</div><div class="stat-value">'+activeSess.length+'</div><div class="stat-sub">'+config.days.length+' '+t('statsDays')+'</div></div>'+
     '<div class="stat-card"><div class="stat-label">\\u23f1 '+t('statsTime')+'</div><div class="stat-value">'+totalH+' '+t('h')+'</div><div class="stat-sub">'+t('statsCalTotal')+'</div></div>'+
     '<div class="stat-card"><div class="stat-label">\\ud83d\\udc65 '+t('statsParticipants')+'</div><div class="stat-value">'+ap.length+'</div><div class="stat-sub">'+t('statsUnique')+'</div></div>'+
     '<div class="stat-card"><div class="stat-label">\\ud83e\\udd1d '+t('statsHours')+'</div><div class="stat-value">'+totalPersonH+' '+t('h')+'</div><div class="stat-sub">'+t('statsWorkTotal')+'</div></div>';
@@ -567,7 +596,8 @@ function showView(v) {
   currentView=v;
   ['list','grid','conflicts','sessions','admin'].forEach(id=>{document.getElementById('view-'+id).classList.add('hidden');document.getElementById('btn-'+id).classList.remove('active');});
   document.getElementById('view-'+v).classList.remove('hidden'); document.getElementById('btn-'+v).classList.add('active');
-  document.getElementById('day-buttons').style.display=v==='grid'?'flex':'none';
+  document.getElementById('stats-bar').style.display=v==='list'?'none':'grid';
+  if(v==='grid'&&currentDay===0){currentDay=1;document.querySelectorAll('.day-btn').forEach(b=>b.classList.toggle('active',+b.dataset.day===1));}
   render();
 }
 function selectDay(d) { currentDay=d; document.querySelectorAll('.day-btn').forEach(b=>b.classList.toggle('active',+b.dataset.day===d)); render(); }
@@ -584,19 +614,23 @@ function render() {
 
 function renderList() {
   const el=document.getElementById('view-list'); let h='';
-  for(const day of config.days) {
+  const daysToShow=currentDay>0?config.days.filter(d=>d.day===currentDay):config.days;
+  for(const day of daysToShow) {
     const ds=schedule.filter(s=>s.day===day.day).sort((a,b)=>a.startTime.localeCompare(b.startTime));
     h+='<div class="day-group"><h2>'+day.label+(day.date?' — '+day.date:'')+'</h2>';
     for(const s of ds) {
+      const sess=sessions.find(x=>x.id===s.id);
+      const isInternal=sess&&sess.status==='internal';
       let cls='list-card';
+      if(isInternal)cls+=' is-internal';
       if(currentPerson){if(isIn(s.id,currentPerson)){cls+=hasConf(s.id,currentPerson)?' conflict':' highlighted';}else cls+=' dimmed';}
       const dc=domainColors[s.ownerDomain]||'#999';
       h+='<div class="'+cls+'" style="border-left-color:'+dc+'">';
       const dur=timeToMin(s.endTime)-timeToMin(s.startTime);
-      h+='<div class="list-card-time"><span class="time-start">'+s.startTime+'</span><span class="time-end">'+s.endTime+'</span><span class="time-dur">'+dur+' '+t('min')+'</span></div>';
+      h+='<div class="list-card-time"><span class="domain-badge" style="background:'+dc+';font-size:0.6rem;padding:0.1rem 0.35rem;">'+s.ownerDomain+'</span><span class="time-start">'+s.startTime+'</span><span class="time-end">'+s.endTime+'</span><span class="time-dur">'+dur+' '+t('min')+'</span></div>';
       h+='<div class="list-card-header">';
       h+='<span class="list-card-title">'+schedTopicText(s)+'</span>';
-      h+='<span class="domain-badge" style="background:'+dc+'">'+s.ownerDomain+'</span>';
+      if(isInternal)h+='<span class="status-badge st-internal">'+t('statusInternal')+'</span>';
       h+='</div>';
       const parts=getSessionParts(s.id);
       const roomLabel=(s.roomFloor?s.roomFloor+' ':'')+s.roomName;
@@ -627,27 +661,35 @@ function renderList() {
 
 function renderGrid() {
   const el=document.getElementById('view-grid');
+  const gridDay=currentDay||1;
   const ds=timeToMin(config.dayStartTime),de=timeToMin(config.dayEndTime),ls=timeToMin(config.lunchStart),le=timeToMin(config.lunchEnd),g=config.slotGranularity;
   const slots=[]; for(let t=ds;t<de;t+=g)slots.push(t);
-  const dayS=schedule.filter(s=>s.day===currentDay);
+  const dayS=schedule.filter(s=>s.day===gridDay);
   const usedRoomIds=new Set(dayS.map(s=>s.room));
-  const dayRooms=rooms.filter(r=>(!r.availableDays||r.availableDays.includes(currentDay))&&usedRoomIds.has(r.id));
+  const dayRooms=rooms.filter(r=>(!r.availableDays||r.availableDays.includes(gridDay))&&usedRoomIds.has(r.id));
   const rc=dayRooms.length;
   let h='<div class="timetable" style="grid-template-columns:60px repeat('+rc+',1fr)">';
   h+='<div class="room-header"></div>'; dayRooms.forEach(r=>{h+='<div class="room-header">'+r.name+'<br><small>'+r.floor+' \\u00b7 '+r.capacity+' '+t('ppl')+'</small></div>';});
   for(const slot of slots) {
     const ts=minToTime(slot);
-    if(slot>=ls&&slot<le){h+='<div class="time-label">'+ts+'</div>';for(let i=0;i<rc;i++)h+='<div class="lunch-row">'+(slot===ls?t('lunch'):'')+'</div>';continue;}
-    h+='<div class="time-label">'+ts+'</div>';
+    const is30=slot%30===0;
+    const sc=is30?' slot-30':'';
+    if(slot>=ls&&slot<le){h+='<div class="time-label'+sc+'">'+(is30?ts:'')+'</div>';for(let i=0;i<rc;i++)h+='<div class="lunch-row'+sc+'">'+(slot===ls?t('lunch'):'')+'</div>';continue;}
+    h+='<div class="time-label'+sc+'">'+(is30?ts:'')+'</div>';
     for(const room of dayRooms) {
-      h+='<div class="cell">';
+      h+='<div class="cell'+sc+'">';
       const sh=dayS.find(s=>s.room===room.id&&timeToMin(s.startTime)===slot);
       if(sh) {
-        const dur=timeToMin(sh.endTime)-timeToMin(sh.startTime), hs=dur/g, ht=(hs*29)-2, col=domainColors[sh.ownerDomain]||'#999';
+        const dur=timeToMin(sh.endTime)-timeToMin(sh.startTime), hs=dur/g, ht=(hs*28)-2, col=domainColors[sh.ownerDomain]||'#999';
+        const rm=dayRooms.find(r=>r.id===sh.room);
+        const cap=rm?rm.capacity:'?';
         let c='session-block';
         if(currentPerson){if(isIn(sh.id,currentPerson)){c+=hasConf(sh.id,currentPerson)?' conflict':' highlighted';}else c+=' dimmed';}
         h+='<div class="'+c+'" style="height:'+ht+'px;background:'+col+'18;border-left-color:'+col+'" onclick="showBlockPopup(event,\\''+sh.id+'\\')">';
-        h+='<div class="block-topic">'+schedTopicText(sh)+'</div><div class="block-owner">'+sh.owner+'</div><div class="block-time">'+sh.startTime+'\\u2013'+sh.endTime+'</div></div>';
+        h+='<div class="block-topic">'+schedTopicText(sh)+'</div>';
+        h+='<div class="block-time">'+sh.startTime+'\\u2013'+sh.endTime+'</div>';
+        h+='<div class="block-meta"><span class="domain-badge" style="background:'+col+'">'+sh.ownerDomain+'</span><span>\\ud83d\\udc65'+sh.participantCount+'/'+cap+'</span></div>';
+        h+='</div>';
       }
       h+='</div>';
     }
@@ -689,6 +731,8 @@ function renderAdmin() {
   h+='<li><span class="rule-num">3.</span> <strong>Neukkarikapasiteetti</strong> — isoimmat sessiot (eniten osallistujia) isoimpiin neukkareihin.</li>';
   h+='<li><span class="rule-num">4.</span> <strong>Prioriteettijärjestys</strong> — korkeamman prioriteetin sessiot sijoitetaan ensin.</li>';
   h+='<li><span class="rule-num">5.</span> <strong>Toivotut osallistujat</strong> — minimoidaan päällekkäisyyksiä, mutta sallitaan tarvittaessa.</li>';
+  h+='<li><span class="rule-num">6.</span> <strong>"Ei tarvita" -sessiot</strong> — merkittyjä sessioita ei aikatauluteta lainkaan.</li>';
+  h+='<li><span class="rule-num">7.</span> <strong>Domainin sisäiset sessiot</strong> — sijoitetaan viimeisenä, kun kaikki muut sessiot on ensin aikataulutettu.</li>';
   h+='</ol></div>';
 
   // Päivät
@@ -827,7 +871,7 @@ function renderSessions() {
     const scheduled=schedule.find(x=>x.id===s.id);
     const isNew=justAddedId===s.id;
 
-    h+='<div class="session-card'+(isOpen?' open':'')+(isNew?' just-added':'')+'" id="card-'+s.id+'" style="border-left:4px solid '+dc+'">';
+    h+='<div class="session-card'+(isOpen?' open':'')+(isNew?' just-added':'')+(s.status==='cancelled'?' is-cancelled':'')+'" id="card-'+s.id+'" style="border-left:4px solid '+dc+'">';
 
     h+='<div class="session-card-header" onclick="toggleSession(\\''+s.id+'\\')">';
     h+='<span class="sc-domain" style="background:'+dc+'">'+(s.ownerDomain||'–')+'</span>';
@@ -838,6 +882,8 @@ function renderSessions() {
     h+='<span>'+s.participants.length+' hlö</span>';
     h+='<span>'+s.duration+' min</span>';
     if(s.priority<99)h+='<span>Prio '+s.priority+'</span>';
+    if(s.status==='cancelled')h+='<span class="status-badge st-cancelled">'+t('statusCancelled')+'</span>';
+    if(s.status==='internal')h+='<span class="status-badge st-internal">'+t('statusInternal')+'</span>';
     h+='</span>';
     h+='</div>';
     if(scheduled){const dl=config.days.find(d=>d.day===scheduled.day);h+='<span class="sc-schedule">'+scheduled.startTime+'–'+scheduled.endTime+'<br>'+(dl?dl.label:'Päivä '+scheduled.day)+', '+(scheduled.roomFloor?scheduled.roomFloor+' ':'')+scheduled.roomName+'</span>';}
@@ -850,6 +896,7 @@ function renderSessions() {
     h+='<div class="sc-field"><label>Aihe</label><input type="text" value="'+escHtml(s.topic)+'" onchange="updateSession('+si+',\\'topic\\',this.value)"></div>';
     h+='<div class="sc-field"><label>Omistaja</label><input type="text" value="'+escHtml(s.owner)+'" onchange="updateSession('+si+',\\'owner\\',this.value)"></div>';
     h+='<div class="sc-field"><label>Domain</label><input type="text" value="'+escHtml(s.ownerDomain)+'" onchange="updateSession('+si+',\\'ownerDomain\\',this.value)"></div>';
+    h+='<div class="sc-field"><label>'+t('statusLabel')+'</label><select onchange="updateSession('+si+',\\'status\\',this.value)"><option value="active"'+((!s.status||s.status==='active')?' selected':'')+'>'+t('statusActive')+'</option><option value="internal"'+(s.status==='internal'?' selected':'')+'>'+t('statusInternal')+'</option><option value="cancelled"'+(s.status==='cancelled'?' selected':'')+'>'+t('statusCancelled')+'</option></select></div>';
     h+='<div class="sc-field"><label>Kesto (min)</label><input type="number" value="'+s.duration+'" min="15" step="15" onchange="updateSession('+si+',\\'duration\\',+this.value)"></div>';
     h+='<div class="sc-field"><label>Prioriteetti</label><input type="number" value="'+s.priority+'" min="1" max="99" onchange="updateSession('+si+',\\'priority\\',+this.value)"></div>';
 

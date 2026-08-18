@@ -38,6 +38,7 @@ Jokainen suunnittelusessio sisältää:
 | `ownerDomain` | string | Omistajan domain-lyhenne |
 | `duration` | number | Kesto minuuteissa (omistajan määrittämä) |
 | `priority` | number | Domainin prioriteetti (1 = korkein) |
+| `status` | string | `"active"` (oletus), `"internal"` (domainin sisäinen) tai `"cancelled"` (ei tarvita) |
 | `participants` | array | Lista tarvittavista henkilöistä |
 | `participants[].name` | string | Henkilön nimi |
 | `participants[].domain` | string | Henkilön domain-lyhenne |
@@ -80,7 +81,13 @@ Jokainen suunnittelusessio sisältää:
 ## Osallistujien roolit
 
 - **Pakollinen** (`required: true`) — henkilön PITÄÄ olla sessiossa. Algoritmi ei sijoita sessiota aikaan jolloin pakollinen osallistuja on estynyt tai toisessa sessiossa.
-- **Nice-to-have** (`required: false`) — henkilön toivotaan osallistuvan. Algoritmi yrittää minimoida näiden päällekkäisyyksiä, mutta sallii ne tarvittaessa.
+- **Toivottu** (`required: false`) — henkilön toivotaan osallistuvan. Algoritmi yrittää minimoida näiden päällekkäisyyksiä, mutta sallii ne tarvittaessa.
+
+## Session tilat
+
+- **Aktiivinen** (`status: "active"`, oletus) — normaali sessio, aikataulutetaan normaalisti.
+- **Domainin sisäinen** (`status: "internal"`) — sijoitetaan viimeisenä, kun kaikki aktiiviset sessiot on ensin aikataulutettu.
+- **Ei tarvita** (`status: "cancelled"`) — sessiota ei aikatauluteta lainkaan. Näkyy sessiolistassa yliviivattuna.
 
 ---
 
@@ -92,7 +99,9 @@ Jokainen suunnittelusessio sisältää:
 2. **Pakollisten osallistujien päällekkäisyydet** — sama pakollinen henkilö ei saa olla kahdessa sessiossa yhtä aikaa.
 3. **Neukkarikapasiteetin optimointi** — isoimmat sessiot isoimpiin neukkareihin.
 4. **Prioriteettijärjestys** — korkeamman prioriteetin sessiot aikaisemmin agendalla.
-5. **Nice-to-have osallistujat** — minimoidaan esteiden ja päällekkäisyyksien vaikutus, mutta näistä voidaan joustaa.
+5. **Toivotut osallistujat** — minimoidaan esteiden ja päällekkäisyyksien vaikutus, mutta näistä voidaan joustaa.
+6. **"Ei tarvita" -sessiot** — merkittyjä sessioita ei aikatauluteta lainkaan.
+7. **Domainin sisäiset sessiot** — sijoitetaan viimeisenä, kun kaikki muut sessiot on ensin aikataulutettu.
 
 ### Päivien rakenne
 
