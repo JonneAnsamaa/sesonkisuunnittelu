@@ -279,7 +279,6 @@ const html = `<!DOCTYPE html>
   <button id="btn-conflicts" onclick="showView('conflicts')">Päällekkäisyydet</button>
   <button id="btn-sessions" class="admin-only" onclick="showView('sessions')">Sessiot</button>
   <button id="btn-admin" class="admin-only" onclick="showView('admin')">Asetukset</button>
-  <button class="admin-only" style="background:#27AE60;color:white;border-color:#27AE60;font-weight:600" onclick="rebuildUI();showToast('Aikataulu rakennettu uudelleen!')" title="Aja aikataulutusalgoritmi uudelleen">&#x21bb; Aikatauluta</button>
 
 
 </div>
@@ -679,6 +678,8 @@ function renderConflicts() {
 function renderAdmin() {
   const el=document.getElementById('view-admin');
   let h='';
+
+  h+='<div style="margin-bottom:1.5rem;"><button style="width:100%;padding:0.75rem;background:#27AE60;color:white;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;" onclick="rebuildUI();showToast(\\'Aikataulu rakennettu uudelleen!\\')">&#x21bb; Aikatauluta kaikki uudelleen</button></div>';
 
   // Säännöt
   h+='<div class="admin-section"><h2>Aikataulutussäännöt</h2>';
