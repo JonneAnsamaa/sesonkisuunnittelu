@@ -134,7 +134,7 @@ function splitMultiOwner(ownerStr) {
 }
 
 function parseDuration(raw) {
-  if (!raw) return 60;
+  if (!raw) return 90;
   const str = String(raw).trim().toLowerCase();
   const match = str.match(/([\d,.]+)/);
   if (!match) return 60;
@@ -212,7 +212,7 @@ function parseRow(row, index) {
     ownerDomain: domain,
     duration: parseDuration(row[COL.duration]),
     priority: parsePriority(row[COL.priority]),
-    internalOnly,
+    status: internalOnly ? 'internal' : 'active',
     participants,
     participantListReady: row[COL.participantListReady] === true,
   };
@@ -229,9 +229,8 @@ for (let i = DATA_START; i < rows.length; i++) {
   const session = parseRow(row, sessionCounter);
   if (!session) continue;
 
-  if (session.internalOnly) {
+  if (session.status === 'internal') {
     skippedInternal.push(session.topic);
-    continue;
   }
 
   sessions.push(session);
