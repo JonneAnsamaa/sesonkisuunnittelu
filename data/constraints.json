@@ -1,4 +1,4 @@
 [
-  { "person": "Heidi Falenius", "day": 1, "startTime": "14:00", "endTime": "16:00", "reason": "Johtoryhmän kokous" },
-  { "person": "Filip Holmberg", "day": 2, "startTime": "09:00", "endTime": "11:00", "reason": "Asiakastapaaminen" }
+  { "person": "Toni Törnqvist", "day": 1, "startTime": "14:00", "endTime": "15:00", "reason": "Lähtee toimistolta 14:00" },
+  { "person": "Toni Törnqvist", "day": 3, "startTime": "14:00", "endTime": "15:00", "reason": "Lähtee toimistolta 14:00" }
 ]

@@ -334,8 +334,8 @@ const TR = {
     statsUnique:'eri henkilöä mukana', statsWorkTotal:'kaikkien työpanos yhteensä',
     owner:'Vetäjä', min:'min', ppl:'hlö', h:'h',
     noConflicts:'Ei päällekkäisyyksiä!',
-    reqConflicts:'pakollista konfliktia', nthConflicts:'nice-to-have konfliktia',
-    badgeBlocked:'ESTE', badgeRequired:'PAKOLLINEN', badgeNth:'Nice-to-have',
+    reqConflicts:'pakollista konfliktia', nthConflicts:'toivottujen konfliktia',
+    badgeBlocked:'ESTE', badgeRequired:'PAKOLLINEN', badgeNth:'TOIVOTTU',
     overlapWith:'päällekkäin',
     pw:'Salasana', pwOpen:'Avaa aikataulu', pwWrong:'Väärä salasana',
     lunch:'Lounas',
@@ -352,8 +352,8 @@ const TR = {
     statsUnique:'unique participants', statsWorkTotal:'total effort across all',
     owner:'Facilitator', min:'min', ppl:'ppl', h:'h',
     noConflicts:'No conflicts!',
-    reqConflicts:'required conflicts', nthConflicts:'nice-to-have conflicts',
-    badgeBlocked:'BLOCKED', badgeRequired:'REQUIRED', badgeNth:'Nice-to-have',
+    reqConflicts:'required conflicts', nthConflicts:'optional conflicts',
+    badgeBlocked:'BLOCKED', badgeRequired:'REQUIRED', badgeNth:'OPTIONAL',
     overlapWith:'overlaps with',
     pw:'Password', pwOpen:'Open schedule', pwWrong:'Wrong password',
     lunch:'Lunch',
@@ -361,6 +361,47 @@ const TR = {
     statusDays:'days', statusPersons:'participants',
   }
 };
+const TOPIC_EN = {
+'session-1':'Parliamentary elections growth: cross-cutting commercial concept development from identity perspective, prioritized as part of DSE Prio 11',
+'session-2':'Parliamentary elections growth - revenue targets, marketing & productization',
+'session-3':'Parliamentary elections growth - digital buying & operations, transparency notice',
+'session-4':'Parliamentary elections growth - login & identity',
+'session-5':'Parliamentary elections growth - multimedia buying & operations',
+'session-6':'Salesforce-Monday integration - automated project creation - data - time savings TBD',
+'session-7':'MSS Prio 9: Insight as a Service monthly pilot for customer interface',
+'session-8':'MSS Prio 7: Deployment of renewed Sanoma segments',
+'session-9':'DSE Prio 10: Shared commercial management model: Developing prospecting and Skoutti game-builder',
+'session-10':'MS&S Prio 4: Videolle brand controlled phase-out',
+'session-11':'Marketing area minor development',
+'session-12':'Marketing area minor development',
+'session-13':'Performance: Creating customer-centric product hierarchy layer for customer interface (\\"under the hood\\" - no changes to product hierarchy this season)',
+'session-14':'Performance: Next steps for goal & measurement model and impacts on different domains',
+'session-15':'Performance: Advancing co-development model in S3 - selected end-to-end pilots (RevOps & performance model)',
+'session-16':'Strategic segmentation and ICP - phase 2 implementation',
+'session-17':'Discovery: continuous service products for booking (Growth Service Starter, Google, Meta)',
+'session-18':'Discovery: growth service planning team tools & systems development, Salesforce utilization',
+'session-19':'Discovery: enriching growth service customer ad data to improve results',
+'session-20':'Discovery: e-commerce segment product opportunities',
+'session-21':'B2B Prio 8, MSS Prio 5: Better consumer experience and ad effectiveness through native advertising',
+'session-22':'Shared commercial management model',
+'session-23':'TagomoAI agentic Ad Manager booking: automated agency-advertiser relationship updates',
+'session-24':'Reporting: Matillion renewal',
+'session-32':'Print offering as part of elections multimedia self-service channel (Print Products & Operation)',
+'session-33':'Scalable operational service models by customer segment',
+'session-35':'AV Manager, gambling, product configuration & sales restrictions',
+'session-36':'2027 productization and pricing finalization & launch to sales',
+'session-38':'SMF data asset management & development from B2B perspective - starting with native support',
+'session-39':'Reporting needs for S3',
+};
+function topicText(session) {
+  if(lang==='en'&&TOPIC_EN[session.id])return TOPIC_EN[session.id];
+  return session.topic;
+}
+function schedTopicText(s) {
+  if(lang==='en'&&TOPIC_EN[s.id])return TOPIC_EN[s.id];
+  return s.topic;
+}
+
 let lang = 'fi';
 function t(k) { return (TR[lang]&&TR[lang][k])||k; }
 
@@ -555,7 +596,7 @@ function renderList() {
       const dur=timeToMin(s.endTime)-timeToMin(s.startTime);
       h+='<div class="list-card-time"><span class="time-start">'+s.startTime+'</span><span class="time-end">'+s.endTime+'</span><span class="time-dur">'+dur+' '+t('min')+'</span></div>';
       h+='<div class="list-card-header">';
-      h+='<span class="list-card-title">'+s.topic+'</span>';
+      h+='<span class="list-card-title">'+schedTopicText(s)+'</span>';
       h+='<span class="domain-badge" style="background:'+dc+'">'+s.ownerDomain+'</span>';
       h+='</div>';
       const parts=getSessionParts(s.id);
@@ -607,7 +648,7 @@ function renderGrid() {
         let c='session-block';
         if(currentPerson){if(isIn(sh.id,currentPerson)){c+=hasConf(sh.id,currentPerson)?' conflict':' highlighted';}else c+=' dimmed';}
         h+='<div class="'+c+'" style="height:'+ht+'px;background:'+col+'18;border-left-color:'+col+'" onclick="showBlockPopup(event,\\''+sh.id+'\\')">';
-        h+='<div class="block-topic">'+sh.topic+'</div><div class="block-owner">'+sh.owner+'</div><div class="block-time">'+sh.startTime+'\\u2013'+sh.endTime+'</div></div>';
+        h+='<div class="block-topic">'+schedTopicText(sh)+'</div><div class="block-owner">'+sh.owner+'</div><div class="block-time">'+sh.startTime+'\\u2013'+sh.endTime+'</div></div>';
       }
       h+='</div>';
     }
@@ -646,7 +687,7 @@ function renderAdmin() {
   h+='<li><span class="rule-num">2.</span> <strong>Pakollisten päällekkäisyydet</strong> — pakollinen henkilö ei saa olla kahdessa sessiossa yhtä aikaa.</li>';
   h+='<li><span class="rule-num">3.</span> <strong>Neukkarikapasiteetti</strong> — isoimmat sessiot (eniten osallistujia) isoimpiin neukkareihin.</li>';
   h+='<li><span class="rule-num">4.</span> <strong>Prioriteettijärjestys</strong> — korkeamman prioriteetin sessiot sijoitetaan ensin.</li>';
-  h+='<li><span class="rule-num">5.</span> <strong>Nice-to-have</strong> — minimoidaan päällekkäisyyksiä, mutta sallitaan tarvittaessa.</li>';
+  h+='<li><span class="rule-num">5.</span> <strong>Toivotut osallistujat</strong> — minimoidaan päällekkäisyyksiä, mutta sallitaan tarvittaessa.</li>';
   h+='</ol></div>';
 
   // Päivät
@@ -819,7 +860,7 @@ function renderSessions() {
       h+='<tr>';
       h+='<td><input type="text" value="'+escHtml(p.name)+'" onchange="updateParticipant('+si+','+pi+',\\'name\\',this.value)"></td>';
       h+='<td><input type="text" value="'+escHtml(p.domain)+'" style="width:80px" onchange="updateParticipant('+si+','+pi+',\\'domain\\',this.value)"></td>';
-      h+='<td><button class="toggle-required '+(p.required?'on':'off')+'" onclick="toggleRequired('+si+','+pi+')">'+(p.required?'Pakollinen':'Nice-to-have')+'</button></td>';
+      h+='<td><button class="toggle-required '+(p.required?'on':'off')+'" onclick="toggleRequired('+si+','+pi+')">'+(p.required?'Pakollinen':'Toivottu')+'</button></td>';
       h+='<td><button class="btn btn-danger" style="padding:0.2rem 0.5rem;font-size:0.75rem" onclick="removeParticipant('+si+','+pi+')">&#x2715;</button></td>';
       h+='</tr>';
     }
@@ -920,7 +961,7 @@ function moveSession(si){
 
   const el=document.getElementById('move-conflicts-'+si);
   if(allC.length>0){
-    el.innerHTML='<div style="margin-top:0.5rem;padding:0.5rem;background:var(--conflict-bg);border-radius:4px;"><strong>Konfliktit:</strong><ul style="margin:0.25rem 0 0 1rem;">'+allC.map(c=>'<li>'+c.person+' — '+(c.type==='availability'?c.reason:'päällekkäin: '+c.otherSessionTopic)+(c.requiredInThis?' <span class="badge required">PAKOLLINEN</span>':' <span class="badge optional">Nice-to-have</span>')+'</li>').join('')+'</ul></div>';
+    el.innerHTML='<div style="margin-top:0.5rem;padding:0.5rem;background:var(--conflict-bg);border-radius:4px;"><strong>Konfliktit:</strong><ul style="margin:0.25rem 0 0 1rem;">'+allC.map(c=>'<li>'+c.person+' — '+(c.type==='availability'?c.reason:'päällekkäin: '+c.otherSessionTopic)+(c.requiredInThis?' <span class="badge required">PAKOLLINEN</span>':' <span class="badge optional">TOIVOTTU</span>')+'</li>').join('')+'</ul></div>';
   } else { el.innerHTML='<div style="margin-top:0.5rem;color:#27AE60;font-weight:600;">&#10003; Ei konflikteja</div>'; }
 
   buildDomainColors();
@@ -1035,7 +1076,7 @@ function showBlockPopup(ev,id){
   h+='<div><span class="domain-badge" style="background:'+dc+'">'+s.ownerDomain+'</span></div>';
   h+='<button onclick="closeBlockPopup()" style="background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--text-muted);padding:0 0.25rem;">\\u2715</button>';
   h+='</div>';
-  h+='<div style="font-weight:600;font-size:1rem;margin-bottom:0.35rem;">'+s.topic+'</div>';
+  h+='<div style="font-weight:600;font-size:1rem;margin-bottom:0.35rem;">'+topicText(s)+'</div>';
   if(sc){h+='<div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">\\u23f1 '+sc.startTime+'\\u2013'+sc.endTime+' \\u00b7 '+s.duration+' '+t('min')+' \\u00b7 \\ud83d\\udccd '+(sc.roomFloor?sc.roomFloor+' ':'')+sc.roomName+'</div>';}
   h+='<div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:0.5rem;">'+t('owner')+': <strong>'+s.owner+'</strong></div>';
   h+='<div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.35rem;">\\ud83d\\udc65 '+s.participants.length+' '+t('ppl')+'</div>';
