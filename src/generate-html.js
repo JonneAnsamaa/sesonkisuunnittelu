@@ -1,4 +1,5 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { createHash } from 'crypto';
 
 const input = JSON.parse(readFileSync('data/input.json', 'utf-8'));
 const roomsData = JSON.parse(readFileSync('data/rooms.json', 'utf-8'));
@@ -15,6 +16,11 @@ const { sessions, season, personDomains, domainDescriptions } = input;
 const bgImagePath = 'data/app-background.jpg';
 const bgBase64 = existsSync(bgImagePath)
   ? readFileSync(bgImagePath).toString('base64')
+  : '';
+
+const memePath = 'data/this-is-fine.webp';
+const memeBase64 = existsSync(memePath)
+  ? readFileSync(memePath).toString('base64')
   : '';
 
 const fontPath = 'data/UnicaOne-Regular.ttf';
@@ -119,7 +125,7 @@ const html = `<!DOCTYPE html>
     .timetable .time-label { background: var(--bg); padding: 0 0.5rem; font-size: 0.75rem; font-variant-numeric: tabular-nums; text-align: right; border-right: 2px solid var(--border); display: flex; align-items: center; justify-content: flex-end; }
     .timetable .time-label.slot-30 { border-top: 1px solid var(--border); }
     .timetable .room-header { background: var(--text); color: white; padding: 0.5rem; text-align: center; font-weight: 600; font-size: 0.85rem; }
-    .timetable .cell { background: var(--card-bg); min-height: 28px; position: relative; }
+    .timetable .cell { background: var(--card-bg); min-height: 40px; position: relative; }
     .timetable .cell.slot-30 { border-top: 1px solid var(--border); }
     .session-block { position: absolute; left: 2px; right: 2px; top: 1px; border-radius: 6px; padding: 0.25rem 0.35rem; font-size: 0.62rem; overflow: hidden; cursor: pointer; border-left: 4px solid; transition: opacity 0.2s, box-shadow 0.15s; z-index: 1; display: flex; flex-direction: column; }
     .session-block:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 4; }
@@ -369,6 +375,7 @@ const html = `<!DOCTYPE html>
 <script id="init-rooms" type="application/json">${JSON.stringify(rooms)}</script>
 <script id="init-constraints" type="application/json">${JSON.stringify(constraints)}</script>
 <script id="init-preferences" type="application/json">${JSON.stringify(preferences)}</script>
+<script id="init-schedule" type="application/json">${JSON.stringify((() => { try { const s = JSON.parse(readFileSync('data/schedule.json','utf-8')); return { schedule: s.schedule, conflicts: s.conflicts }; } catch(e) { return { schedule: [], conflicts: [] }; } })())}</script>
 
 <script>
 // === DATA (muokattava) ===
@@ -553,8 +560,9 @@ function nameColor(name) {
   return '#999';
 }
 
-let schedule = [];
-let conflicts = [];
+const _initSched = JSON.parse(document.getElementById('init-schedule').textContent);
+let schedule = _initSched.schedule || [];
+let conflicts = _initSched.conflicts || [];
 let domainColors = {};
 let currentView = 'list';
 let currentDay = 0;
@@ -715,8 +723,10 @@ function allParticipants() {
   const s=new Set(); sessions.forEach(se=>se.participants.forEach(p=>s.add(p.name))); return [...s].sort((a,b)=>a.localeCompare(b,'fi'));
 }
 
-function rebuildUI() {
-  buildDomainColors(); runScheduler();
+function rebuildUI(rerunSchedule) {
+  buildDomainColors();
+  if(rerunSchedule) runScheduler();
+  else if(!schedule.length) runScheduler();
   // Nav labels
   document.getElementById('btn-list').textContent=t('list');
   document.getElementById('btn-grid').textContent=t('grid');
@@ -727,7 +737,7 @@ function rebuildUI() {
   document.getElementById('legend').innerHTML=doms.map(d=>'<div class="legend-item"><div class="legend-tooltip">'+(domainDescriptions[d]||d)+'</div><div class="legend-dot" style="background:'+domainColors[d]+'"></div>'+d+'</div>').join('');
   // Person dropdown
   const sel=document.getElementById('person-filter');
-  const prev=sel.value; sel.innerHTML='<option value="">'+t('allPersons')+'</option>'+allParticipants().map(p=>'<option value="'+p+'">'+p+'</option>').join('');
+  const prev=sel.value; sel.innerHTML='<option value="">'+t('allPersons')+'</option>'+allParticipants().map(p=>'<option value="'+p+'">'+p+'</option>').join('')+'<option value="Aku Ankka">\\ud83e\\udd86 Aku Ankka</option>';
   sel.value=prev;
   document.getElementById('person-label').textContent=t('personFilter');
   document.getElementById('domain-label').textContent=t('domainFilter');
@@ -740,7 +750,7 @@ function rebuildUI() {
   const db=document.getElementById('day-buttons');
   db.innerHTML='<button class="day-btn'+(currentDay===0?' active':'')+'" data-day="0" onclick="selectDay(0)">'+t('all')+'</button>'+config.days.map(d=>'<button class="day-btn'+(d.day===currentDay?' active':'')+'" data-day="'+d.day+'" onclick="selectDay('+d.day+')">'+d.label+'</button>').join('');
   // Conflict count
-  document.getElementById('btn-conflicts').textContent=t('conflicts')+(conflicts.length?' ('+conflicts.length+')':'');
+  document.getElementById('btn-conflicts').textContent=t('conflicts')+(conflicts.length?' ('+conflicts.reduce((n,c)=>n+c.conflicts.length,0)+')':'');
   // Stats bar
   const activeSess=sessions.filter(s=>s.status!=='cancelled');
   const ap=allParticipants();
@@ -767,12 +777,45 @@ function showView(v) {
   document.getElementById('view-'+v).classList.remove('hidden'); document.getElementById('btn-'+v).classList.add('active');
   document.getElementById('stats-bar').style.display=(v==='list'||v==='sessions')?'grid':'none';
   document.getElementById('status-bar').style.display='none';
+  document.getElementById('filter-bar').style.display=(v==='conflicts')?'none':'flex';
   if(v==='grid'&&currentDay===0){currentDay=1;document.querySelectorAll('.day-btn').forEach(b=>b.classList.toggle('active',+b.dataset.day===1));}
-  document.querySelectorAll('.day-btn').forEach(b=>{if(+b.dataset.day===0){b.disabled=v==='grid';b.style.opacity=v==='grid'?'0.4':'';b.style.cursor=v==='grid'?'not-allowed':'pointer';}});
+  document.querySelectorAll('.day-btn').forEach(b=>{if(+b.dataset.day===0){b.disabled=false;b.style.opacity=v==='grid'?'0.4':'';b.style.cursor=v==='grid'?'not-allowed':'pointer';b.style.pointerEvents='auto';}});
   render();
 }
-function selectDay(d) { currentDay=d; document.querySelectorAll('.day-btn').forEach(b=>b.classList.toggle('active',+b.dataset.day===d)); render(); }
+let disabledClicks=0;let disabledTimer=null;
+function selectDay(d) {
+  if(d===0&&currentView==='grid'){
+    disabledClicks++;clearTimeout(disabledTimer);disabledTimer=setTimeout(function(){disabledClicks=0;},2000);
+    if(disabledClicks>=3){
+      disabledClicks=0;
+      document.body.style.transition='transform 0.8s ease';
+      document.body.style.transform='rotate(360deg)';
+      var toast=document.getElementById('toast');
+      if(toast){toast.textContent='\\ud83c\\udf00 Ei. Kaikki-n\\u00e4kym\\u00e4\\u00e4 ei ole. Lopeta.';toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},4500);}
+      setTimeout(function(){document.body.style.transform='';setTimeout(function(){document.body.style.transition='';},800);},800);
+    }
+    return;
+  }
+  currentDay=d; document.querySelectorAll('.day-btn').forEach(b=>b.classList.toggle('active',+b.dataset.day===d)); render();
+}
+const DUCK_NAMES=['Aku Ankka','Roope Ankka','Hannu Hanhi','Iines Ankka','Tupu','Hupu','Lupu','Hessu Hansen','Pelle Peloton','Magica de Spell','Kulta Ankka','Mummo Ankka'];
+let duckMode=false;
 function filterPerson(n) {
+  if(n==='Aku Ankka'){
+    const toast=document.getElementById('toast');
+    if(toast){toast.innerHTML='\\ud83e\\udd86 Aku Ankka on estynyt \\u2014 h\\u00e4n on Ankkalinnassa kokouksessa Roope-sed\\u00e4n kanssa';toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},5000);}
+    duckMode=true;
+    currentPerson='';render();
+    document.querySelectorAll('.participant-chip, .owner-name, .list-card-owner').forEach(function(el){
+      el.dataset.origText=el.textContent;
+      el.textContent=DUCK_NAMES[Math.floor(Math.random()*DUCK_NAMES.length)];
+    });
+    setTimeout(function(){
+      duckMode=false;
+      render();
+    },6000);
+    return;
+  }
   currentPerson=n; render();
   if(n){
     const first=document.querySelector('.list-card.highlighted,.list-card.conflict');
@@ -859,7 +902,7 @@ function renderGrid() {
       h+='<div class="cell'+sc+'">';
       const sh=dayS.find(s=>s.room===room.id&&timeToMin(s.startTime)===slot);
       if(sh) {
-        const dur=timeToMin(sh.endTime)-timeToMin(sh.startTime), hs=dur/g, ht=(hs*28)-2, col=domainColors[sh.ownerDomain]||'#999';
+        const dur=timeToMin(sh.endTime)-timeToMin(sh.startTime), hs=dur/g, ht=(hs*40)-2, col=domainColors[sh.ownerDomain]||'#999';
         let c='session-block';
         if(currentDomain&&sh.ownerDomain!==currentDomain)c+=' dimmed';
         else if(currentPerson){if(isIn(sh.id,currentPerson)){c+=hasConf(sh.id,currentPerson)?' conflict':' highlighted';}else c+=' dimmed';}
@@ -881,7 +924,7 @@ function renderConflicts() {
   if(!conflicts.length){el.innerHTML='<p style="text-align:center;color:var(--text-muted);padding:2rem;">'+t('noConflicts')+'</p>';return;}
   const reqCount=conflicts.reduce((n,c)=>n+c.conflicts.filter(x=>x.requiredInThis).length,0);
   const optCount=conflicts.reduce((n,c)=>n+c.conflicts.filter(x=>!x.requiredInThis).length,0);
-  let h='<div style="margin-bottom:1rem;text-align:center;"><strong>'+reqCount+'</strong> '+t('reqConflicts')+' \\u00b7 <strong>'+optCount+'</strong> '+t('nthConflicts')+'</div>';
+  let h='<div id="conflict-summary" style="margin-bottom:1rem;text-align:center;cursor:default;" onclick="thisIsFineClick()"><strong>'+reqCount+'</strong> '+t('reqConflicts')+' \\u00b7 <strong>'+optCount+'</strong> '+t('nthConflicts')+'</div>';
   for(const c of conflicts) {
     h+='<div class="conflict-card"><h3>'+c.sessionTopic+'</h3><ul>';
     for(const cf of c.conflicts) {
@@ -900,7 +943,7 @@ function renderAdmin() {
   const el=document.getElementById('view-admin');
   let h='';
 
-  h+='<div style="margin-bottom:1.5rem;"><button style="width:100%;padding:0.75rem;background:#27AE60;color:white;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;" onclick="rebuildUI();showToast(\\'Aikataulu rakennettu uudelleen!\\')">&#x21bb; Aikatauluta kaikki uudelleen</button></div>';
+  h+='<div style="margin-bottom:1.5rem;"><button style="width:100%;padding:0.75rem;background:#27AE60;color:white;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;" onclick="rebuildUI(true);showToast(\\'Aikataulu rakennettu uudelleen!\\')">&#x21bb; Aikatauluta kaikki uudelleen</button></div>';
 
   // Säännöt
   h+='<div class="admin-section"><h2>Aikataulutussäännöt</h2>';
@@ -929,11 +972,11 @@ function renderAdmin() {
 
   // Kellonajat
   h+='<div class="admin-section"><h2>Kellonajat</h2>';
-  h+='<div class="form-row"><label>Päivä alkaa</label><input type="time" value="'+config.dayStartTime+'" onchange="config.dayStartTime=this.value;rebuildUI()"></div>';
-  h+='<div class="form-row"><label>Päivä loppuu</label><input type="time" value="'+config.dayEndTime+'" onchange="config.dayEndTime=this.value;rebuildUI()"></div>';
-  h+='<div class="form-row"><label>Lounas alkaa</label><input type="time" value="'+config.lunchStart+'" onchange="config.lunchStart=this.value;rebuildUI()"></div>';
-  h+='<div class="form-row"><label>Lounas loppuu</label><input type="time" value="'+config.lunchEnd+'" onchange="config.lunchEnd=this.value;rebuildUI()"></div>';
-  h+='<div class="form-row"><label>Tauko (min)</label><input type="number" value="'+config.breakBetweenSessions+'" min="0" max="60" onchange="config.breakBetweenSessions=+this.value;rebuildUI()"></div>';
+  h+='<div class="form-row"><label>Päivä alkaa</label><input type="time" value="'+config.dayStartTime+'" onchange="config.dayStartTime=this.value;rebuildUI(true)"></div>';
+  h+='<div class="form-row"><label>Päivä loppuu</label><input type="time" value="'+config.dayEndTime+'" onchange="config.dayEndTime=this.value;rebuildUI(true)"></div>';
+  h+='<div class="form-row"><label>Lounas alkaa</label><input type="time" value="'+config.lunchStart+'" onchange="config.lunchStart=this.value;rebuildUI(true)"></div>';
+  h+='<div class="form-row"><label>Lounas loppuu</label><input type="time" value="'+config.lunchEnd+'" onchange="config.lunchEnd=this.value;rebuildUI(true)"></div>';
+  h+='<div class="form-row"><label>Tauko (min)</label><input type="number" value="'+config.breakBetweenSessions+'" min="0" max="60" onchange="config.breakBetweenSessions=+this.value;rebuildUI(true)"></div>';
   h+='</div>';
 
   // Neukkarit
@@ -943,9 +986,9 @@ function renderAdmin() {
     const days=r.availableDays||config.days.map(d=>d.day);
     const dayLabels=days.map(d=>{const dd=config.days.find(x=>x.day===d);return dd?dd.label:'P'+d;}).join(', ');
     h+='<tr>';
-    h+='<td><input type="text" value="'+(r.floor||'')+'" onchange="rooms['+i+'].floor=this.value;rebuildUI()" style="width:50px;border:1px solid var(--border);padding:0.3rem;border-radius:3px;"></td>';
-    h+='<td><input type="text" value="'+r.name+'" onchange="rooms['+i+'].name=this.value;rebuildUI()" style="width:100%;border:1px solid var(--border);padding:0.3rem;border-radius:3px;"></td>';
-    h+='<td><input type="number" value="'+r.capacity+'" min="1" onchange="rooms['+i+'].capacity=+this.value;rebuildUI()" style="width:55px;border:1px solid var(--border);padding:0.3rem;border-radius:3px;"></td>';
+    h+='<td><input type="text" value="'+(r.floor||'')+'" onchange="rooms['+i+'].floor=this.value;rebuildUI(true)" style="width:50px;border:1px solid var(--border);padding:0.3rem;border-radius:3px;"></td>';
+    h+='<td><input type="text" value="'+r.name+'" onchange="rooms['+i+'].name=this.value;rebuildUI(true)" style="width:100%;border:1px solid var(--border);padding:0.3rem;border-radius:3px;"></td>';
+    h+='<td><input type="number" value="'+r.capacity+'" min="1" onchange="rooms['+i+'].capacity=+this.value;rebuildUI(true)" style="width:55px;border:1px solid var(--border);padding:0.3rem;border-radius:3px;"></td>';
     h+='<td style="font-size:0.8rem;">'+dayLabels+'</td>';
     h+='<td><button class="btn btn-danger" onclick="removeRoom('+i+')">Poista</button></td>';
     h+='</tr>';
@@ -1192,7 +1235,7 @@ function moveSession(si){
   } else { el.innerHTML='<div style="margin-top:0.5rem;color:#27AE60;font-weight:600;">&#10003; Ei konflikteja</div>'; }
 
   buildDomainColors();
-  document.getElementById('btn-conflicts').textContent='Päällekkäisyydet'+(conflicts.length?' ('+conflicts.length+')':'');
+  document.getElementById('btn-conflicts').textContent='Päällekkäisyydet'+(conflicts.length?' ('+conflicts.reduce((n,c)=>n+c.conflicts.length,0)+')':'');
   document.getElementById('status-bar').innerHTML='<strong>'+schedule.length+'</strong>/'+sessions.length+' sessiota aikataulutettu · <strong>'+rooms.length+'</strong> neukkaria · <strong>'+config.days.length+'</strong> päivää · <strong>'+allParticipants().length+'</strong> henkilöä';
   showToast(s.topic+' siirretty!');
   renderSessions();
@@ -1234,18 +1277,18 @@ function autoScheduleOne(si){
   const dl=config.days.find(d=>d.day===best.day);
   showToast(s.topic+' → '+(dl?dl.label:'Päivä '+best.day)+' '+best.startTime+', '+best.roomName);
   buildDomainColors();
-  document.getElementById('btn-conflicts').textContent='Päällekkäisyydet'+(conflicts.length?' ('+conflicts.length+')':'');
+  document.getElementById('btn-conflicts').textContent='Päällekkäisyydet'+(conflicts.length?' ('+conflicts.reduce((n,c)=>n+c.conflicts.length,0)+')':'');
   document.getElementById('status-bar').innerHTML='<strong>'+schedule.length+'</strong>/'+sessions.length+' sessiota aikataulutettu · <strong>'+rooms.length+'</strong> neukkaria · <strong>'+config.days.length+'</strong> päivää · <strong>'+allParticipants().length+'</strong> henkilöä';
   renderSessions();
 }
 
-function updateSession(si,field,val){sessions[si][field]=val;rebuildUI();}
+function updateSession(si,field,val){sessions[si][field]=val;rebuildUI(true);}
 
-function toggleRequired(si,pi){sessions[si].participants[pi].required=!sessions[si].participants[pi].required;rebuildUI();}
+function toggleRequired(si,pi){sessions[si].participants[pi].required=!sessions[si].participants[pi].required;rebuildUI(true);}
 
-function updateParticipant(si,pi,field,val){sessions[si].participants[pi][field]=val;rebuildUI();}
+function updateParticipant(si,pi,field,val){sessions[si].participants[pi][field]=val;rebuildUI(true);}
 
-function removeParticipant(si,pi){sessions[si].participants.splice(pi,1);rebuildUI();}
+function removeParticipant(si,pi){sessions[si].participants.splice(pi,1);rebuildUI(true);}
 
 function addParticipant(si){
   const nameEl=document.getElementById('new-p-name-'+si);
@@ -1253,7 +1296,7 @@ function addParticipant(si){
   const name=nameEl.value.trim(), domain=domEl.value.trim();
   if(!name)return;
   sessions[si].participants.push({name:name,domain:domain||sessions[si].ownerDomain,required:true});
-  rebuildUI();
+  rebuildUI(true);
 }
 
 function addSession(){
@@ -1261,37 +1304,37 @@ function addSession(){
   sessions.unshift({id:id,topic:'Uusi sessio',owner:'',ownerDomain:'',duration:60,priority:99,participants:[]});
   openSessionId=id;
   justAddedId=id;
-  rebuildUI();
+  rebuildUI(true);
 }
 
 function removeSession(si){
   if(!confirm('Poistetaanko sessio "'+sessions[si].topic+'"?'))return;
   if(openSessionId===sessions[si].id)openSessionId=null;
   sessions.splice(si,1);
-  rebuildUI();
+  rebuildUI(true);
 }
 
 // === ADMIN ACTIONS ===
-function updateDay(i,val){config.days[i].date=val;rebuildUI();}
-function updateDayLabel(i,val){config.days[i].label=val;rebuildUI();}
-function addDay(){const n=config.days.length+1;config.days.push({day:n,date:'',label:'Päivä '+n});rebuildUI();}
-function removeDay(i){config.days.splice(i,1);config.days.forEach((d,j)=>{d.day=j+1;});rebuildUI();}
-function addRoom(){const n=rooms.length+1;rooms.push({id:'room-'+n,name:'Neukkari '+n,floor:'',capacity:10,availableDays:config.days.map(d=>d.day)});rebuildUI();}
-function removeRoom(i){rooms.splice(i,1);rebuildUI();}
+function updateDay(i,val){config.days[i].date=val;rebuildUI(true);}
+function updateDayLabel(i,val){config.days[i].label=val;rebuildUI(true);}
+function addDay(){const n=config.days.length+1;config.days.push({day:n,date:'',label:'Päivä '+n});rebuildUI(true);}
+function removeDay(i){config.days.splice(i,1);config.days.forEach((d,j)=>{d.day=j+1;});rebuildUI(true);}
+function addRoom(){const n=rooms.length+1;rooms.push({id:'room-'+n,name:'Neukkari '+n,floor:'',capacity:10,availableDays:config.days.map(d=>d.day)});rebuildUI(true);}
+function removeRoom(i){rooms.splice(i,1);rebuildUI(true);}
 function addConstraint(){
   const p=document.getElementById('c-person').value,d=+document.getElementById('c-day').value,s=document.getElementById('c-start').value,e=document.getElementById('c-end').value,r=document.getElementById('c-reason').value;
   if(p&&d&&s&&e)constraints.push({person:p,day:d,startTime:s,endTime:e,reason:r});
-  rebuildUI();
+  rebuildUI(true);
 }
-function removeConstraint(i){constraints.splice(i,1);rebuildUI();}
+function removeConstraint(i){constraints.splice(i,1);rebuildUI(true);}
 function addPreference(){
   const p=document.getElementById('pref-person').value;
   const days=[...document.querySelectorAll('.pref-day-cb:checked')].map(cb=>+cb.value);
   const r=document.getElementById('pref-reason').value;
   if(p&&days.length)preferences.push({person:p,type:'prefer-day',days:days,reason:r});
-  rebuildUI();
+  rebuildUI(true);
 }
-function removePreference(i){preferences.splice(i,1);rebuildUI();}
+function removePreference(i){preferences.splice(i,1);rebuildUI(true);}
 
 // === GRID POPUP ===
 function showBlockPopup(ev,id){
@@ -1360,7 +1403,7 @@ function clearLocalData(){
   rooms=JSON.parse(document.getElementById('init-rooms').textContent);
   constraints=JSON.parse(document.getElementById('init-constraints').textContent);
   preferences=JSON.parse(document.getElementById('init-preferences').textContent);
-  rebuildUI();
+  rebuildUI(true);
   showToast('Palautettu oletusdata');
 }
 
@@ -1400,7 +1443,7 @@ function importFile(target){
         else if(target==='rooms'){if(data.rooms){rooms=data.rooms;if(data.config)config=data.config;}else rooms=data;showToast('Neukkarit tuotu ('+rooms.length+')');}
         else if(target==='constraints'){constraints=data;showToast('Esteet tuotu ('+constraints.length+')');}
         else if(target==='preferences'){preferences=data;showToast('Toiveet tuotu ('+preferences.length+')');}
-        rebuildUI();
+        rebuildUI(true);
       }catch(e){alert('Tiedoston luku epäonnistui: '+e.message);}
     };
     reader.readAsText(file);
@@ -1409,25 +1452,29 @@ function importFile(target){
 }
 
 // === PASSWORD & MODE ===
-const VIEW_PW = 'luottokumppani';
-const ADMIN_PW = 'luottokumppaniadmin';
+const VIEW_HASH = '${createHash('sha256').update('luottokumppani').digest('hex')}';
+const ADMIN_HASH = '${createHash('sha256').update('luottokumppaniadmin').digest('hex')}';
 let isAdmin = false;
 
-function checkPw(){
+async function sha256(str){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function checkPw(){
   const val=document.getElementById('pw-input').value;
-  if(val===ADMIN_PW){isAdmin=true;unlock();}
-  else if(val===VIEW_PW){isAdmin=false;unlock();}
+  const hash=await sha256(val);
+  if(hash===ADMIN_HASH){isAdmin=true;sessionStorage.setItem('sesonki-mode','admin');unlock();}
+  else if(hash===VIEW_HASH){isAdmin=false;sessionStorage.setItem('sesonki-mode','view');unlock();}
   else{document.getElementById('pw-error').style.display='block';document.getElementById('pw-input').value='';document.getElementById('pw-input').focus();}
 }
 function unlock(){
-  sessionStorage.setItem('sesonki-mode',isAdmin?'admin':'view');
   document.getElementById('login-gate').style.display='none';
   document.getElementById('app-content').style.display='block';
   document.body.classList.add('has-bg');
   document.getElementById('lang-fi').classList.toggle('active',lang==='fi');
   document.getElementById('lang-en').classList.toggle('active',lang==='en');
   applyMode();
-  rebuildUI();
+  rebuildUI(true);
 }
 function applyMode(){
   document.body.classList.toggle('is-admin',isAdmin);
@@ -1439,6 +1486,134 @@ loadFromLocal();
 // Auto-unlock if already authenticated this session
 const savedMode=sessionStorage.getItem('sesonki-mode');
 if(savedMode){isAdmin=savedMode==='admin';unlock();}
+
+// === HEADER CLICK EASTER EGG (7 clicks → meeting ranking) ===
+(function(){
+  let clicks=0;let timer=null;
+  const h=document.querySelector('header h1');
+  if(!h)return;
+  h.style.cursor='default';
+  h.addEventListener('click',function(){
+    clicks++;
+    clearTimeout(timer);
+    timer=setTimeout(function(){clicks=0;},2000);
+    if(clicks>=7){
+      clicks=0;
+      const counts={};
+      sessions.forEach(function(s){s.participants.forEach(function(p){counts[p.name]=(counts[p.name]||0)+1;});});
+      const ranked=Object.entries(counts).sort(function(a,b){return b[1]-a[1];}).slice(0,10);
+      const medals=['🥇','🥈','🥉'];
+      let html='<div style="position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:10000;display:flex;justify-content:center;align-items:center;" onclick="this.remove()">';
+      html+='<div style="background:white;border-radius:16px;padding:2rem;max-width:420px;width:90%;text-align:center;" onclick="event.stopPropagation()">';
+      html+='<h2 style="margin-bottom:1rem;">🏆 Kokouskuningas/-kuningatar</h2>';
+      html+='<p style="font-size:0.8rem;opacity:0.6;margin-bottom:1rem;">Eniten sessioita</p>';
+      ranked.forEach(function(r,i){
+        const medal=medals[i]||(i+1+'.').padStart(3,' ');
+        html+='<div style="display:flex;justify-content:space-between;padding:0.4rem 0.5rem;border-bottom:1px solid #eee;font-size:0.95rem;">';
+        html+='<span>'+medal+' '+r[0]+'</span><span style="font-weight:700;">'+r[1]+' sessiota</span></div>';
+      });
+      html+='<p style="margin-top:1rem;font-size:0.75rem;opacity:0.5;">Klikkaa sulkeaksesi</p>';
+      html+='</div></div>';
+      const el=document.createElement('div');el.innerHTML=html;document.body.appendChild(el.firstChild);
+    }
+  });
+})();
+
+// === THIS IS FINE EASTER EGG ===
+let tifClicks=0;let tifTimer=null;
+function thisIsFineClick(){
+  tifClicks++;clearTimeout(tifTimer);tifTimer=setTimeout(function(){tifClicks=0;},2500);
+  if(tifClicks>=5){
+    tifClicks=0;
+    const overlay=document.createElement('div');
+    overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0);z-index:20000;display:flex;justify-content:center;align-items:center;cursor:pointer;transition:background 1.5s ease;';
+    overlay.onclick=function(){overlay.style.opacity='0';overlay.style.transition='opacity 0.5s';setTimeout(function(){overlay.remove();},500);};
+    const img=document.createElement('img');
+    img.src='data:image/webp;base64,${memeBase64}';
+    img.style.cssText='max-width:70vw;max-height:70vh;border-radius:12px;box-shadow:0 0 60px rgba(255,100,0,0.6);transform:scale(0.1);opacity:0;transition:transform 2s cubic-bezier(0.34,1.56,0.64,1),opacity 1.5s ease;';
+    overlay.appendChild(img);
+    document.body.appendChild(overlay);
+    requestAnimationFrame(function(){
+      overlay.style.background='rgba(0,0,0,0.85)';
+      img.style.opacity='1';img.style.transform='scale(1)';
+    });
+  }
+}
+
+// === MATRIX EASTER EGG ===
+(function(){
+  let buf='';
+  document.addEventListener('keypress',function(e){
+    buf+=e.key.toLowerCase();
+    if(buf.length>10)buf=buf.slice(-10);
+    if(buf.endsWith('neo')){buf='';startMatrix();}
+  });
+  function startMatrix(){
+    const canvas=document.createElement('canvas');
+    canvas.style.cssText='position:fixed;inset:0;z-index:30000;pointer-events:none;';
+    canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+    document.body.appendChild(canvas);
+    const ctx=canvas.getContext('2d');
+    const cols=Math.floor(canvas.width/14);
+    const drops=Array(cols).fill(1);
+    const chars='\\u30a2\\u30a4\\u30a6\\u30a8\\u30aa\\u30ab\\u30ad\\u30af\\u30b1\\u30b3\\u30b5\\u30b7\\u30b9\\u30bb\\u30bd\\u30bf\\u30c1\\u30c4\\u30c6\\u30c8ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let frame=0;
+    const iv=setInterval(function(){
+      ctx.fillStyle='rgba(0,0,0,0.05)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle='#0f0';ctx.font='14px monospace';
+      for(let i=0;i<drops.length;i++){
+        const ch=chars[Math.floor(Math.random()*chars.length)];
+        ctx.fillText(ch,i*14,drops[i]*14);
+        if(drops[i]*14>canvas.height&&Math.random()>0.975)drops[i]=0;
+        drops[i]++;
+      }
+      frame++;
+      if(frame>200){clearInterval(iv);canvas.style.transition='opacity 1s';canvas.style.opacity='0';setTimeout(function(){canvas.remove();},1000);}
+    },33);
+    const toast=document.getElementById('toast');
+    if(toast){toast.textContent='Wake up, Neo...';toast.style.color='#0f0';toast.style.background='#000';toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');toast.style.color='';toast.style.background='';},3000);}
+  }
+})();
+
+// === KONAMI CODE EASTER EGG ===
+(function(){
+  const seq=[38,38,40,40,37,39,37,39,66,65];
+  let pos=0;
+  let discoOn=false;
+  let discoInterval=null;
+  document.addEventListener('keydown',function(e){
+    if(e.keyCode===seq[pos]){pos++;if(pos===seq.length){pos=0;toggleDisco();}}else{pos=e.keyCode===seq[0]?1:0;}
+  });
+  function toggleDisco(){
+    discoOn=!discoOn;
+    const h=document.querySelector('header h1');
+    if(discoOn){
+      if(h)h.dataset.origText=h.textContent;
+      if(h)h.innerHTML='\\u{1f389} SESONKI 3 HYPE \\u{1f389}';
+      let hue=0;
+      discoInterval=setInterval(function(){
+        hue=(hue+15)%360;
+        document.querySelectorAll('.list-card,.session-block').forEach(function(el,i){
+          el.style.transition='background 0.3s';
+          el.style.background='hsl('+((hue+i*30)%360)+',70%,85%)';
+        });
+        if(h)h.style.color='hsl('+hue+',80%,40%)';
+      },200);
+      const t=document.getElementById('toast');
+      if(t){t.textContent='\\u{1f57a} DISCO MODE ACTIVATED \\u{1f483}';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2000);}
+    }else{
+      clearInterval(discoInterval);
+      discoInterval=null;
+      document.querySelectorAll('.list-card,.session-block').forEach(function(el){el.style.background='';el.style.transition='';});
+      const h2=document.querySelector('header h1');
+      if(h2&&h2.dataset.origText)h2.textContent=h2.dataset.origText;
+      if(h2)h2.style.color='';
+      const t=document.getElementById('toast');
+      if(t){t.textContent='Disco mode off';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},1500);}
+    }
+  }
+})();
 </script>
 </body>
 </html>`;
