@@ -1111,6 +1111,7 @@ function renderSessions() {
     if(s.priority<99)h+='<span>Prio '+s.priority+'</span>';
     if(s.status==='cancelled')h+='<span class="status-badge st-cancelled">'+t('statusCancelled')+'</span>';
     if(s.status==='internal')h+='<span class="status-badge st-internal">'+t('statusInternal')+'</span>';
+    if(s.locked)h+='<span style="font-size:0.75rem;opacity:0.7;" title="Lukittu aikataulu">\\ud83d\\udd12</span>';
     h+='</span>';
     h+='</div>';
     if(scheduled){const dl=config.days.find(d=>d.day===scheduled.day);h+='<span class="sc-schedule">'+scheduled.startTime+'–'+scheduled.endTime+'<br>'+(dl?dl.label:'Päivä '+scheduled.day)+', '+(scheduled.roomFloor?scheduled.roomFloor+' ':'')+scheduled.roomName+'</span>';}
@@ -1177,7 +1178,8 @@ function renderSessions() {
     h+='<div id="move-conflicts-'+si+'" style="font-size:0.8rem"></div>';
     h+='</div>';
 
-    h+='<div class="session-card-actions">';
+    h+='<div class="session-card-actions" style="display:flex;gap:0.5rem;align-items:center;">';
+    h+='<button class="btn '+(s.locked?'btn-primary':'btn-secondary')+'" onclick="toggleLock('+si+')">'+(s.locked?'\\ud83d\\udd12 Lukittu':'\\ud83d\\udd13 Lukitse aikataulu')+'</button>';
     h+='<button class="btn btn-danger" onclick="removeSession('+si+')">Poista sessio</button>';
     h+='</div>';
 
@@ -1287,6 +1289,12 @@ function autoScheduleOne(si){
   renderSessions();
 }
 
+function toggleLock(si){
+  sessions[si].locked=!sessions[si].locked;
+  const msg=sessions[si].locked?'\\ud83d\\udd12 Sessio lukittu — aikataulu säilyy seuraavassa ajossa':'\\ud83d\\udd13 Lukitus poistettu';
+  showToast(msg);
+  renderSessions();
+}
 function updateSession(si,field,val){sessions[si][field]=val;rebuildUI(true);}
 
 function toggleRequired(si,pi){sessions[si].participants[pi].required=!sessions[si].participants[pi].required;rebuildUI(true);}

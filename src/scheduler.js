@@ -12,6 +12,10 @@ const preferences = existsSync('data/preferences.json')
 const { config, rooms } = roomsData;
 const { sessions } = input;
 
+const prevSchedule = existsSync('data/schedule.json')
+  ? JSON.parse(readFileSync('data/schedule.json', 'utf-8'))
+  : null;
+
 function timeToMinutes(time) {
   const [h, m] = time.split(':').map(Number);
   return h * 60 + m;
@@ -242,6 +246,40 @@ function scheduleWithOrder(sorted, active) {
   const scheduled = [];
   const allConflicts = [];
   const scheduledIds = new Set();
+
+  // Pre-place locked sessions from previous schedule
+  if (prevSchedule && prevSchedule.schedule) {
+    for (const prev of prevSchedule.schedule) {
+      const session = active.find(s => s.id === prev.id);
+      if (!session || !session.locked) continue;
+      const startTime = timeToMinutes(prev.startTime);
+      const endTime = timeToMinutes(prev.endTime);
+      const availConflicts = getAvailabilityConflicts(session, startTime, endTime, prev.day);
+      const overlapConflicts = getPersonConflicts(session, startTime, endTime, prev.day, scheduled);
+      const allC = [...availConflicts, ...overlapConflicts];
+      scheduled.push({
+        id: session.id,
+        topic: session.topic,
+        owner: session.owner,
+        ownerDomain: session.ownerDomain,
+        day: prev.day,
+        startTime: prev.startTime,
+        endTime: prev.endTime,
+        room: prev.room,
+        roomName: prev.roomName,
+        participantCount: session.participants.length,
+        conflicts: allC,
+        locked: true,
+      });
+      scheduledIds.add(session.id);
+      if (allC.length > 0) {
+        allConflicts.push({ sessionId: session.id, sessionTopic: session.topic, conflicts: allC });
+      }
+    }
+    if (scheduledIds.size > 0) {
+      console.log(`Lukittu ${scheduledIds.size} sessiota edellisestä aikataulusta`);
+    }
+  }
 
   const groups = {};
   for (const s of active) {

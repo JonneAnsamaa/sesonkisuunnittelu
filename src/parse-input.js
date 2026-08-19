@@ -325,6 +325,17 @@ function parseRow(row, index) {
   return session;
 }
 
+// Lue edellinen input.json lukitustietojen säilyttämiseksi
+const prevInput = existsSync('data/input.json')
+  ? JSON.parse(readFileSync('data/input.json', 'utf-8'))
+  : null;
+const prevLocked = {};
+if (prevInput && prevInput.sessions) {
+  for (const s of prevInput.sessions) {
+    if (s.locked) prevLocked[s.topic] = true;
+  }
+}
+
 const sessions = [];
 const skippedInternal = [];
 let sessionCounter = 1;
@@ -336,6 +347,8 @@ for (let i = DATA_START; i < rows.length; i++) {
 
   const session = parseRow(row, sessionCounter);
   if (!session) continue;
+
+  if (prevLocked[session.topic]) session.locked = true;
 
   if (session.group) {
     if (!(session.group in groupCounters)) groupCounters[session.group] = 0;

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(open \"/Users/jonne.ansamaa/Claude projektit/Sesonkisuunnittelu/ui/index.html\")",
+      "Bash(open ui/index.html)"
+    ]
+  }
+}
