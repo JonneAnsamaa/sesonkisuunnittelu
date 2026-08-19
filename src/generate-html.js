@@ -670,6 +670,8 @@ function selectRoomForGroup(placements,day,scheduled) {
 function runScheduler() {
   const s3=sessions.find(s=>s.id==='session-3');
   if(s3){const t=s3.participants.find(p=>p.name==='Toni Törnqvist');if(t)t.required=false;}
+  const s13=sessions.find(s=>s.id==='session-13');
+  if(s13)s13.status='cancelled';
   const active=sessions.filter(s=>s.status!=='cancelled');
   const sorted=[...active].sort((a,b)=>{
     const ai=a.status==='internal'?1:0, bi=b.status==='internal'?1:0;

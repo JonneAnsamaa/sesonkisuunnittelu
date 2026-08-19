@@ -19,6 +19,10 @@ if (s3) {
   if (toni) toni.required = false;
 }
 
+// Session-13 peruutettu (Markkinoinnin osa-alueen pienkehitys, hoidettu erikseen)
+const s13 = sessions.find(s => s.id === 'session-13');
+if (s13) s13.status = 'cancelled';
+
 const prevSchedule = existsSync('data/schedule.json')
   ? JSON.parse(readFileSync('data/schedule.json', 'utf-8'))
   : null;
