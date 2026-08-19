@@ -419,6 +419,16 @@ const TR = {
     statusScheduled:'sessiota aikataulutettu', statusRooms:'neukkaria',
     statusDays:'päivää', statusPersons:'henkilöä',
     mainTitle:'Sesonkisuunnittelu: Sesonki', cyclesTitle:'S3/26 syklit',
+    eggDuck:'\\ud83e\\udd86 Aku Ankka on estynyt \\u2014 h\\u00e4n on Ankkalinnassa kokouksessa Roope-sed\\u00e4n kanssa',
+    eggDuckNames:'Aku Ankka muutti kaikki nimet! Palautuu kohta...',
+    eggRankTitle:'\\ud83c\\udfc6 Kokouskuningas/-kuningatar',
+    eggRankSub:'Eniten sessioita',
+    eggRankUnit:'sessiota',
+    eggRankClose:'Klikkaa sulkeaksesi',
+    eggSpin:'\\ud83c\\udf00 Ei. Kaikki-n\\u00e4kym\\u00e4\\u00e4 ei ole. Lopeta.',
+    eggDiscoOn:'\\ud83d\\udd7a DISCO MODE ACTIVATED \\ud83d\\udc83',
+    eggDiscoOff:'Disco mode off',
+    eggDiscoTitle:'\\ud83c\\udf89 SESONKI 3 HYPE \\ud83c\\udf89',
   },
   en: {
     list:'\\ud83d\\udccb List', grid:'\\ud83d\\udcc5 Timetable', conflicts:'\\u26a0\\ufe0f Conflicts',
@@ -446,6 +456,16 @@ const TR = {
     statusScheduled:'sessions scheduled', statusRooms:'rooms',
     statusDays:'days', statusPersons:'participants',
     mainTitle:'Season Planning: Season', cyclesTitle:'S3/26 cycles',
+    eggDuck:'\\ud83e\\udd86 Donald Duck is unavailable \\u2014 he\\'s in a meeting with Uncle Scrooge in Duckburg',
+    eggDuckNames:'Donald Duck changed all names! Reverting soon...',
+    eggRankTitle:'\\ud83c\\udfc6 Meeting King/Queen',
+    eggRankSub:'Most sessions',
+    eggRankUnit:'sessions',
+    eggRankClose:'Click to close',
+    eggSpin:'\\ud83c\\udf00 Nope. There is no All view. Stop it.',
+    eggDiscoOn:'\\ud83d\\udd7a DISCO MODE ACTIVATED \\ud83d\\udc83',
+    eggDiscoOff:'Disco mode off',
+    eggDiscoTitle:'\\ud83c\\udf89 SEASON 3 HYPE \\ud83c\\udf89',
   }
 };
 const TOPIC_EN = {
@@ -742,7 +762,7 @@ function rebuildUI(rerunSchedule) {
   document.getElementById('legend').innerHTML=doms.map(d=>'<div class="legend-item"><div class="legend-tooltip">'+(domainDescriptions[d]||d)+'</div><div class="legend-dot" style="background:'+domainColors[d]+'"></div>'+d+'</div>').join('');
   // Person dropdown
   const sel=document.getElementById('person-filter');
-  const prev=sel.value; sel.innerHTML='<option value="">'+t('allPersons')+'</option>'+allParticipants().map(p=>'<option value="'+p+'">'+p+'</option>').join('')+'<option value="Aku Ankka">\\ud83e\\udd86 Aku Ankka</option>';
+  const prev=sel.value; sel.innerHTML='<option value="">'+t('allPersons')+'</option>'+allParticipants().map(p=>'<option value="'+p+'">'+p+'</option>').join('')+'<option value="Aku Ankka">\\ud83e\\udd86 '+(lang==='en'?'Donald Duck':'Aku Ankka')+'</option>';
   sel.value=prev;
   document.getElementById('person-label').textContent=t('personFilter');
   document.getElementById('domain-label').textContent=t('domainFilter');
@@ -796,24 +816,26 @@ function selectDay(d) {
       document.body.style.transition='transform 0.8s ease';
       document.body.style.transform='rotate(360deg)';
       var toast=document.getElementById('toast');
-      if(toast){toast.textContent='\\ud83c\\udf00 Ei. Kaikki-n\\u00e4kym\\u00e4\\u00e4 ei ole. Lopeta.';toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},4500);}
+      if(toast){toast.textContent=t('eggSpin');toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},4500);}
       setTimeout(function(){document.body.style.transform='';setTimeout(function(){document.body.style.transition='';},800);},800);
     }
     return;
   }
   currentDay=d; document.querySelectorAll('.day-btn').forEach(b=>b.classList.toggle('active',+b.dataset.day===d)); render();
 }
-const DUCK_NAMES=['Aku Ankka','Roope Ankka','Hannu Hanhi','Iines Ankka','Tupu','Hupu','Lupu','Hessu Hansen','Pelle Peloton','Magica de Spell','Kulta Ankka','Mummo Ankka'];
+const DUCK_NAMES_FI=['Aku Ankka','Roope Ankka','Hannu Hanhi','Iines Ankka','Tupu','Hupu','Lupu','Hessu Hansen','Pelle Peloton','Magica de Spell','Kulta Ankka','Mummo Ankka'];
+const DUCK_NAMES_EN=['Donald Duck','Scrooge McDuck','Gladstone Gander','Daisy Duck','Huey','Dewey','Louie','Goofy','Gyro Gearloose','Magica de Spell','Goldie O\\'Gilt','Grandma Duck'];
+function duckNames(){return lang==='en'?DUCK_NAMES_EN:DUCK_NAMES_FI;}
 let duckMode=false;
 function filterPerson(n) {
   if(n==='Aku Ankka'){
     const toast=document.getElementById('toast');
-    if(toast){toast.innerHTML='\\ud83e\\udd86 Aku Ankka on estynyt \\u2014 h\\u00e4n on Ankkalinnassa kokouksessa Roope-sed\\u00e4n kanssa';toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},5000);}
+    if(toast){toast.innerHTML=t('eggDuck');toast.classList.add('show');setTimeout(function(){toast.classList.remove('show');},5000);}
     duckMode=true;
     currentPerson='';render();
     document.querySelectorAll('.participant-chip, .owner-name, .list-card-owner').forEach(function(el){
       el.dataset.origText=el.textContent;
-      el.textContent=DUCK_NAMES[Math.floor(Math.random()*DUCK_NAMES.length)];
+      el.textContent=duckNames()[Math.floor(Math.random()*duckNames().length)];
     });
     setTimeout(function(){
       duckMode=false;
@@ -1518,14 +1540,14 @@ if(savedMode){isAdmin=savedMode==='admin';unlock();}
       const medals=['🥇','🥈','🥉'];
       let html='<div style="position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:10000;display:flex;justify-content:center;align-items:center;" onclick="this.remove()">';
       html+='<div style="background:white;border-radius:16px;padding:2rem;max-width:420px;width:90%;text-align:center;" onclick="event.stopPropagation()">';
-      html+='<h2 style="margin-bottom:1rem;">🏆 Kokouskuningas/-kuningatar</h2>';
-      html+='<p style="font-size:0.8rem;opacity:0.6;margin-bottom:1rem;">Eniten sessioita</p>';
+      html+='<h2 style="margin-bottom:1rem;">'+t('eggRankTitle')+'</h2>';
+      html+='<p style="font-size:0.8rem;opacity:0.6;margin-bottom:1rem;">'+t('eggRankSub')+'</p>';
       ranked.forEach(function(r,i){
         const medal=medals[i]||(i+1+'.').padStart(3,' ');
         html+='<div style="display:flex;justify-content:space-between;padding:0.4rem 0.5rem;border-bottom:1px solid #eee;font-size:0.95rem;">';
-        html+='<span>'+medal+' '+r[0]+'</span><span style="font-weight:700;">'+r[1]+' sessiota</span></div>';
+        html+='<span>'+medal+' '+r[0]+'</span><span style="font-weight:700;">'+r[1]+' '+t('eggRankUnit')+'</span></div>';
       });
-      html+='<p style="margin-top:1rem;font-size:0.75rem;opacity:0.5;">Klikkaa sulkeaksesi</p>';
+      html+='<p style="margin-top:1rem;font-size:0.75rem;opacity:0.5;">'+t('eggRankClose')+'</p>';
       html+='</div></div>';
       const el=document.createElement('div');el.innerHTML=html;document.body.appendChild(el.firstChild);
     }
@@ -1605,7 +1627,7 @@ function thisIsFineClick(){
     const h=document.querySelector('header h1');
     if(discoOn){
       if(h)h.dataset.origText=h.textContent;
-      if(h)h.innerHTML='\\u{1f389} SESONKI 3 HYPE \\u{1f389}';
+      if(h)h.innerHTML=t('eggDiscoTitle');
       let hue=0;
       discoInterval=setInterval(function(){
         hue=(hue+15)%360;
@@ -1616,8 +1638,8 @@ function thisIsFineClick(){
         if(h)h.style.color='hsl('+hue+',80%,40%)';
       },200);
       discoAudio.currentTime=0;discoAudio.play().catch(function(){});
-      const t=document.getElementById('toast');
-      if(t){t.textContent='\\u{1f57a} DISCO MODE ACTIVATED \\u{1f483}';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2000);}
+      var tt=document.getElementById('toast');
+      if(tt){tt.textContent=t('eggDiscoOn');tt.classList.add('show');setTimeout(function(){tt.classList.remove('show');},2000);}
     }else{
       discoAudio.pause();discoAudio.currentTime=0;
       clearInterval(discoInterval);
@@ -1626,8 +1648,8 @@ function thisIsFineClick(){
       const h2=document.querySelector('header h1');
       if(h2&&h2.dataset.origText)h2.textContent=h2.dataset.origText;
       if(h2)h2.style.color='';
-      const t=document.getElementById('toast');
-      if(t){t.textContent='Disco mode off';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},1500);}
+      var tt2=document.getElementById('toast');
+      if(tt2){tt2.textContent=t('eggDiscoOff');tt2.classList.add('show');setTimeout(function(){tt2.classList.remove('show');},1500);}
     }
   }
 })();
