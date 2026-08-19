@@ -673,6 +673,7 @@ function runScheduler() {
   const s13=sessions.find(s=>s.id==='session-13');
   if(s13)s13.status='cancelled';
   const s23=sessions.find(s=>s.id==='session-23');if(s23)s23.duration=60;
+  const s37=sessions.find(s=>s.id==='session-37');if(s37)s37.topic=s37.topic.replace('meeting 3','meeting 4');
   const active=sessions.filter(s=>s.status!=='cancelled');
   const sorted=[...active].sort((a,b)=>{
     const ai=a.status==='internal'?1:0, bi=b.status==='internal'?1:0;

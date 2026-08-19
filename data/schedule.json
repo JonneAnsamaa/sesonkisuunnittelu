@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T16:34:21.651Z",
+  "generatedAt": "2026-08-19T16:38:17.347Z",
   "season": {
     "number": 3,
     "startDate": "2026-08-31",
@@ -2560,7 +2560,7 @@
     },
     {
       "id": "session-37",
-      "topic": "AV Maestro, meeting 3",
+      "topic": "AV Maestro, meeting 4",
       "topicFull": "AV  Maestro, meeting 3",
       "owner": "Panu Hyryläinen",
       "ownerDomain": "TM",
@@ -3317,7 +3317,7 @@
     },
     {
       "id": "session-37",
-      "topic": "AV Maestro, meeting 3",
+      "topic": "AV Maestro, meeting 4",
       "owner": "Panu Hyryläinen",
       "ownerDomain": "TM",
       "day": 3,
