@@ -14,5 +14,6 @@
   { "person": "Tuuli Rikama", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
   { "person": "Aki Salonen", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
   { "person": "Riku Talvitie", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
-  { "person": "Tuukka Antikainen", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" }
+  { "person": "Tuukka Antikainen", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
+  { "person": "Janne Eränen", "day": 1, "startTime": "13:00", "endTime": "14:00", "reason": "" }
 ]

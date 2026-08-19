@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T08:03:47.410Z",
+  "generatedAt": "2026-08-19T11:25:37.667Z",
   "season": {
     "number": 3,
     "startDate": "2026-08-31",
@@ -417,7 +417,7 @@
       "topicFull": "Eduskuntavaaleista kasvua - tulostavoitteet ja markkinointi, tuotteistus\r\n- kaupallinen kulma - tulostavoitteet ja näiden mittaus, kohderyhmä ja kuka vastaa \r\n- kampanjasivusto\r\n- markkinoinnin automaation rooli ja henkilöroolitus\r\n- tuotepaketit\r\n- Analytiikka",
       "owner": "Satu Raatikainen",
       "ownerDomain": "S&M",
-      "duration": 90,
+      "duration": 120,
       "priority": 2,
       "status": "active",
       "participants": [
@@ -430,6 +430,18 @@
         {
           "name": "Heidi Falenius",
           "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Konsta Raussi",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Tiina Kosonen",
+          "domain": "S&M",
           "team": "",
           "required": true
         },
@@ -494,18 +506,36 @@
           "required": true
         },
         {
-          "name": "Tiina Kosonen",
+          "name": "Ria Vaahto",
+          "domain": "MS&S",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Suvi Vesanen",
+          "domain": "MS&S",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Sampsa Näkki",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Jutta Kangas",
           "domain": "S&M",
           "team": "",
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-3",
       "topic": "Eduskuntavaaleista kasvua - digin ostaminen & operaatiot. avoimuusilmoitus",
-      "topicFull": "Eduskuntavaaleista kasvua -  digin ostaminen & operaatiot. avoimuusilmoitus\r\n- vaalituotteistuspaketit myyntikanavasta tekniseen tuotteistukseen vaalipiiri geo-kohdennuksella\r\n- digi avoimuusilmoitus - DG Tuuli Rikama?\r\n- aineistoprosessi, digi aineistobannerikoneen linkitys\r\n- Advendio-Adnuntius integraatio, APIt \r\n- luottokorttimaksaminen vs. nykyinen malli laskulla\r\n- kampanjaraportti\r\n- asiakastuki\r\n- palevlunhallinta Adnuntius, - consentin ja vendorlistin  päivitys",
+      "topicFull": "Eduskuntavaaleista kasvua -  digin ostaminen & operaatiot. avoimuusilmoitus\r\n- vaalituotteistuspaketit myyntikanavasta tekniseen tuotteistukseen vaalipiiri geo-kohdennuksella\r\n- digi avoimuusilmoitus - DG Tuuli Rikama?\r\n- aineistoprosessi, digi aineistobannerikoneen linkitys\r\n- Advendio-Adnuntius integraatio, APIt \r\n- kampanjaraportti, - delivery data & FINA prosessi\r\n- asiakastuki\r\n- palevlunhallinta Adnuntius, - consentin ja vendorlistin  päivitys",
       "owner": "Tuuli Rikama",
       "ownerDomain": "DG",
       "duration": 180,
@@ -515,12 +545,6 @@
         {
           "name": "Tuuli Rikama",
           "domain": "DG",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Bilal Gill",
-          "domain": "DSE",
           "team": "",
           "required": true
         },
@@ -543,6 +567,24 @@
           "required": true
         },
         {
+          "name": "Hanna Majanmaa",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Roope Malho",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Anne Salo",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
           "name": "Anniina Hautala",
           "domain": "DG",
           "team": "",
@@ -555,7 +597,7 @@
           "required": true
         },
         {
-          "name": "Janne Mikkola",
+          "name": "Janne Mikkonen",
           "domain": "DG",
           "team": "",
           "required": true
@@ -598,6 +640,12 @@
         },
         {
           "name": "Mikko Vartiainen",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Asko Sälli",
           "domain": "DG",
           "team": "",
           "required": true
@@ -666,7 +714,7 @@
       "topicFull": "Eduskuntavaaleista kasvua -  monimediallinen ostaminen & operaatiot\r\n- Design\r\n- Ad Manager Print integraatio\r\n- APIt\r\n- aineistoilmoitusten monikanavainen generointi ja manageeraus\r\n- operaatiot (ilmoitusten julkaisupäätökset, tekoälyn validointi)",
       "owner": "Heidi Falenius",
       "ownerDomain": "DSE",
-      "duration": 90,
+      "duration": 180,
       "priority": 2,
       "status": "active",
       "participants": [
@@ -684,6 +732,24 @@
         },
         {
           "name": "Vesa Lindqvist",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Maiju Häkkinen",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Roope Malho",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Anne Salo",
           "domain": "DSE",
           "team": "",
           "required": true
@@ -714,6 +780,36 @@
         },
         {
           "name": "Sini Lähdemäki",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Tuuli Rikama",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Jonne Ansamaa",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Birgitta Kursi",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Anu Ollikainen",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Rosa Forsell",
           "domain": "DG",
           "team": "",
           "required": true
@@ -755,13 +851,31 @@
           "required": true
         },
         {
+          "name": "Asko Sälli",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Tuomas Waris",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
           "name": "Jero Liimatainen",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Juho Pöyhönen",
           "domain": "DSE",
           "team": "",
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-6",
@@ -1209,7 +1323,7 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-16",
@@ -1356,7 +1470,7 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-19",
@@ -1405,7 +1519,7 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-20",
@@ -1479,12 +1593,6 @@
           "required": true
         },
         {
-          "name": "Jonne Ansamaa",
-          "domain": "DG",
-          "team": "",
-          "required": true
-        },
-        {
           "name": "Timo Rinne",
           "domain": "N&F",
           "team": "",
@@ -1492,18 +1600,6 @@
         },
         {
           "name": "Anssi Hämäläinen",
-          "domain": "N&F",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Teemu Hauhia",
-          "domain": "N&F",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Sanna Wirkkala",
           "domain": "N&F",
           "team": "",
           "required": true
@@ -1521,7 +1617,7 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-22",
@@ -1601,7 +1697,7 @@
           "required": true
         },
         {
-          "name": "Janne Mikkola",
+          "name": "Janne Mikkonen",
           "domain": "DG",
           "team": "",
           "required": true
@@ -1694,7 +1790,7 @@
         },
         {
           "name": "Janne Mikkonen",
-          "domain": "Ad Manager",
+          "domain": "DG",
           "team": "",
           "required": true
         },
@@ -1749,7 +1845,7 @@
         },
         {
           "name": "Janne Mikkonen",
-          "domain": "Ad Manager",
+          "domain": "DG",
           "team": "",
           "required": true
         },
@@ -2564,6 +2660,12 @@
           "domain": "TM",
           "team": "",
           "required": true
+        },
+        {
+          "name": "Jukka Siltakorpi",
+          "domain": "B2B",
+          "team": "",
+          "required": true
         }
       ],
       "participantListReady": true
@@ -2794,19 +2896,6 @@
   ],
   "schedule": [
     {
-      "id": "session-27",
-      "topic": "Goal-based purchase flow",
-      "owner": "Emmy Ramsay",
-      "ownerDomain": "DG",
-      "day": 1,
-      "startTime": "09:00",
-      "endTime": "10:30",
-      "room": "k1-04",
-      "roomName": "K.J.Ståhlberg",
-      "participantCount": 20,
-      "conflicts": []
-    },
-    {
       "id": "session-3",
       "topic": "Eduskuntavaaleista kasvua - digin ostaminen & operaatiot. avoimuusilmoitus",
       "owner": "Tuuli Rikama",
@@ -2816,7 +2905,7 @@
       "endTime": "15:00",
       "room": "k1-04",
       "roomName": "K.J.Ståhlberg",
-      "participantCount": 19,
+      "participantCount": 22,
       "conflicts": []
     },
     {
@@ -2833,29 +2922,42 @@
       "conflicts": []
     },
     {
-      "id": "session-5",
-      "topic": "Eduskuntavaaleista kasvua - monimediallinen ostaminen & operaatiot",
-      "owner": "Heidi Falenius",
-      "ownerDomain": "DSE",
-      "day": 2,
-      "startTime": "09:00",
-      "endTime": "10:30",
-      "room": "k1-04",
-      "roomName": "K.J.Ståhlberg",
-      "participantCount": 15,
-      "conflicts": []
-    },
-    {
       "id": "session-2",
       "topic": "Eduskuntavaaleista kasvua - tulostavoitteet ja markkinointi, tuotteistus",
       "owner": "Satu Raatikainen",
       "ownerDomain": "S&M",
+      "day": 1,
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "room": "k1-04",
+      "roomName": "K.J.Ståhlberg",
+      "participantCount": 18,
+      "conflicts": []
+    },
+    {
+      "id": "session-38",
+      "topic": "AV Manager, rahapelaaminen, tuotteiden konfigurointi & myynnin rajoitteet",
+      "owner": "Anu Linden",
+      "ownerDomain": "TM",
+      "day": 2,
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "room": "k1-04",
+      "roomName": "K.J.Ståhlberg",
+      "participantCount": 9,
+      "conflicts": []
+    },
+    {
+      "id": "session-4",
+      "topic": "Eduskuntavaaleista kasvua - kirjautuminen , identiteetti",
+      "owner": "Jaana Tanskanen",
+      "ownerDomain": "DSE",
       "day": 3,
-      "startTime": "12:00",
-      "endTime": "13:30",
+      "startTime": "09:00",
+      "endTime": "10:30",
       "room": "k1-13",
       "roomName": "Arvid Järnefelt",
-      "participantCount": 13,
+      "participantCount": 3,
       "conflicts": []
     },
     {
@@ -2866,126 +2968,91 @@
       "day": 3,
       "startTime": "12:00",
       "endTime": "13:30",
-      "room": "k1-01",
-      "roomName": "Ilkka Malmberg",
+      "room": "k1-13",
+      "roomName": "Arvid Järnefelt",
       "participantCount": 12,
-      "conflicts": [
-        {
-          "person": "Heidi Falenius",
-          "domain": "DSE",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-2",
-          "otherSessionTopic": "Eduskuntavaaleista kasvua - tulostavoitteet ja markkinointi, tuotteistus"
-        }
-      ]
+      "conflicts": []
     },
     {
-      "id": "session-34",
-      "topic": "AV Maestro, meeting 1",
-      "owner": "Panu Hyryläinen",
-      "ownerDomain": "TM",
-      "day": 3,
-      "startTime": "09:00",
-      "endTime": "10:00",
-      "room": "k1-02",
-      "roomName": "Irene Huurre",
-      "participantCount": 8,
-      "conflicts": [],
-      "group": "AV Maestro"
-    },
-    {
-      "id": "session-35",
-      "topic": "AV Maestro, meeting 2",
-      "owner": "Panu Hyryläinen",
-      "ownerDomain": "TM",
-      "day": 3,
-      "startTime": "10:00",
-      "endTime": "11:00",
-      "room": "k1-02",
-      "roomName": "Irene Huurre",
-      "participantCount": 9,
-      "conflicts": [],
-      "group": "AV Maestro"
-    },
-    {
-      "id": "session-36",
-      "topic": "AV Maestro, meeting 3",
-      "owner": "Panu Hyryläinen",
-      "ownerDomain": "TM",
-      "day": 3,
+      "id": "session-12",
+      "topic": "MS&S Prio 4: Videolle –brändin hallittu alasajo",
+      "owner": "Minna Kaitala",
+      "ownerDomain": "MSS",
+      "day": 1,
       "startTime": "12:00",
-      "endTime": "13:00",
-      "room": "k1-02",
-      "roomName": "Irene Huurre",
-      "participantCount": 5,
-      "conflicts": [],
-      "group": "AV Maestro"
-    },
-    {
-      "id": "session-37",
-      "topic": "AV Maestro, meeting 3",
-      "owner": "Panu Hyryläinen",
-      "ownerDomain": "TM",
-      "day": 3,
-      "startTime": "13:00",
       "endTime": "13:30",
-      "room": "k1-02",
-      "roomName": "Irene Huurre",
-      "participantCount": 5,
-      "conflicts": [],
-      "group": "AV Maestro"
+      "room": "k1-12",
+      "roomName": "Eino Leino",
+      "participantCount": 4,
+      "conflicts": []
     },
     {
-      "id": "session-38",
-      "topic": "AV Manager, rahapelaaminen, tuotteiden konfigurointi & myynnin rajoitteet",
-      "owner": "Anu Linden",
-      "ownerDomain": "TM",
+      "id": "session-21",
+      "topic": "B2B Prio 8, MSS PRIO 5: Medialle natiivimainonnalla parempi vaikuttavuus sekä yield",
+      "owner": "Ria Vaahto",
+      "ownerDomain": "MSS",
       "day": 2,
       "startTime": "09:00",
-      "endTime": "11:00",
+      "endTime": "10:30",
       "room": "k1-01",
       "roomName": "Ilkka Malmberg",
       "participantCount": 8,
-      "conflicts": [
-        {
-          "person": "Heidi Falenius",
-          "domain": "DSE",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-5",
-          "otherSessionTopic": "Eduskuntavaaleista kasvua - monimediallinen ostaminen & operaatiot"
-        }
-      ]
+      "conflicts": []
     },
     {
-      "id": "session-30",
-      "topic": "Soft launch (?) new RT-optimized CPC productization",
-      "owner": "Johannes Hocksell",
+      "id": "session-10",
+      "topic": "MSS PRIO 7: Uusittujen Sanoma segmenttien käyttöönotto",
+      "owner": "Jaana Jamalainen",
+      "ownerDomain": "MSS",
+      "day": 1,
+      "startTime": "09:00",
+      "endTime": "10:30",
+      "room": "k1-12",
+      "roomName": "Eino Leino",
+      "participantCount": 5,
+      "conflicts": []
+    },
+    {
+      "id": "session-27",
+      "topic": "Goal-based purchase flow",
+      "owner": "Emmy Ramsay",
       "ownerDomain": "DG",
       "day": 1,
       "startTime": "12:00",
-      "endTime": "13:00",
-      "room": "k1-12",
-      "roomName": "Eino Leino",
-      "participantCount": 7,
+      "endTime": "13:30",
+      "room": "k1-01",
+      "roomName": "Ilkka Malmberg",
+      "participantCount": 20,
       "conflicts": [
-        {
-          "person": "Heidi Falenius",
-          "domain": "DSE",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-41",
-          "otherSessionTopic": "Raportointi tarpeet S3:selle."
-        },
         {
           "person": "Jonne Ansamaa",
           "domain": "DG",
           "requiredInThis": true,
           "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
+          "type": "overlap",
+          "otherSessionId": "session-41",
+          "otherSessionTopic": "Raportointi tarpeet S3:selle."
+        },
+        {
+          "person": "Pilvi Rimmanen",
+          "domain": "DG",
+          "requiredInThis": true,
+          "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
+          "type": "overlap",
+          "otherSessionId": "session-41",
+          "otherSessionTopic": "Raportointi tarpeet S3:selle."
+        },
+        {
+          "person": "Heidi Falenius",
+          "domain": "DSE",
+          "requiredInThis": true,
+          "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
           "type": "overlap",
           "otherSessionId": "session-41",
           "otherSessionTopic": "Raportointi tarpeet S3:selle."
@@ -3006,124 +3073,17 @@
       "conflicts": []
     },
     {
-      "id": "session-13",
-      "topic": "Markkinoinnin osa-alueen pienkehitys:",
-      "owner": "Leena Koskinen",
-      "ownerDomain": "S&M",
-      "day": 3,
-      "startTime": "09:00",
-      "endTime": "10:30",
-      "room": "k1-13",
-      "roomName": "Arvid Järnefelt",
-      "participantCount": 6,
-      "conflicts": [
-        {
-          "person": "Heidi Falenius",
-          "domain": "DSE",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-34",
-          "otherSessionTopic": "AV Maestro, meeting 1"
-        }
-      ]
-    },
-    {
-      "id": "session-39",
-      "topic": "TV Beat, meeting 1",
-      "owner": "Mikko Eskelinen",
-      "ownerDomain": "TM",
-      "day": 1,
-      "startTime": "09:30",
-      "endTime": "10:30",
-      "room": "k1-12",
-      "roomName": "Eino Leino",
-      "participantCount": 8,
-      "conflicts": [
-        {
-          "person": "Jonne Ansamaa",
-          "domain": "DG",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-27",
-          "otherSessionTopic": "Goal-based purchase flow"
-        }
-      ],
-      "group": "TV Beat"
-    },
-    {
-      "id": "session-40",
-      "topic": "TV Beat, meeting 2",
-      "owner": "Mikko Eskelinen",
-      "ownerDomain": "TM",
-      "day": 1,
-      "startTime": "10:30",
-      "endTime": "11:00",
-      "room": "k1-12",
-      "roomName": "Eino Leino",
-      "participantCount": 5,
-      "conflicts": [],
-      "group": "TV Beat"
-    },
-    {
       "id": "session-18",
       "topic": "Discovery: jatkuvat palvelutuotteet varattaviksi (Kasvupalvelu Startti, Google, Meta)",
       "owner": "Jenni Tamminen",
       "ownerDomain": "S&M",
-      "day": 1,
+      "day": 3,
       "startTime": "09:00",
       "endTime": "10:30",
       "room": "k1-01",
       "roomName": "Ilkka Malmberg",
       "participantCount": 4,
-      "conflicts": [
-        {
-          "person": "Heidi Falenius",
-          "domain": "DSE",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-27",
-          "otherSessionTopic": "Goal-based purchase flow"
-        }
-      ]
-    },
-    {
-      "id": "session-21",
-      "topic": "B2B Prio 8, MSS PRIO 5: Medialle natiivimainonnalla parempi vaikuttavuus sekä yield",
-      "owner": "Ria Vaahto",
-      "ownerDomain": "MSS",
-      "day": 3,
-      "startTime": "13:30",
-      "endTime": "15:00",
-      "room": "k1-01",
-      "roomName": "Ilkka Malmberg",
-      "participantCount": 11,
       "conflicts": []
-    },
-    {
-      "id": "session-15",
-      "topic": "Tuloksellisuus. Tavoite ja mittarimallin seuraavat vaiheet & vaikutukset eri domaineille (odotukset painottuen S1, mutta domainien odotetaan arvioivan ja huomioivan vaikutuksia jo S3 nykyisessä tekemisessä)",
-      "owner": "Tiina Kosonen",
-      "ownerDomain": "S&M",
-      "day": 1,
-      "startTime": "13:00",
-      "endTime": "14:00",
-      "room": "k1-12",
-      "roomName": "Eino Leino",
-      "participantCount": 10,
-      "conflicts": [
-        {
-          "person": "Jonne Ansamaa",
-          "domain": "DG",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-41",
-          "otherSessionTopic": "Raportointi tarpeet S3:selle."
-        }
-      ]
     },
     {
       "id": "session-19",
@@ -3136,69 +3096,27 @@
       "room": "k1-02",
       "roomName": "Irene Huurre",
       "participantCount": 6,
-      "conflicts": [
-        {
-          "person": "Jaana Tanskanen",
-          "domain": "DSE",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-5",
-          "otherSessionTopic": "Eduskuntavaaleista kasvua - monimediallinen ostaminen & operaatiot"
-        }
-      ]
-    },
-    {
-      "id": "session-33",
-      "topic": "Optimizing the flow between Snowflake and Claude",
-      "owner": "Jonne Ansamaa",
-      "ownerDomain": "DG",
-      "day": 3,
-      "startTime": "09:00",
-      "endTime": "10:00",
-      "room": "k1-01",
-      "roomName": "Ilkka Malmberg",
-      "participantCount": 5,
       "conflicts": []
     },
     {
-      "id": "session-23",
-      "topic": "TagomoAI agenttinen Ad Manager bookkaus: Toiminnallisuus, jossa automaagisesti päivitettään agency-advertiser relaatiota tiettyjen toimistojen osalta.",
-      "owner": "Hanna Jalonen",
-      "ownerDomain": "B2B",
-      "day": 3,
-      "startTime": "12:00",
-      "endTime": "13:30",
-      "room": "k1-07",
-      "roomName": "Yrjö Niiniluoto",
-      "participantCount": 9,
-      "conflicts": [
-        {
-          "person": "Jaana Tanskanen",
-          "domain": "DSE",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-2",
-          "otherSessionTopic": "Eduskuntavaaleista kasvua - tulostavoitteet ja markkinointi, tuotteistus"
-        },
-        {
-          "person": "Toni Törnqvist",
-          "domain": "B2B",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-31",
-          "otherSessionTopic": "Proof of results trough attention measurement"
-        }
-      ]
+      "id": "session-20",
+      "topic": "Discovery: verkkokauppasegmentin tuotemahdollisuudet",
+      "owner": "Jenni Tamminen",
+      "ownerDomain": "S&M",
+      "day": 1,
+      "startTime": "13:30",
+      "endTime": "15:00",
+      "room": "k1-12",
+      "roomName": "Eino Leino",
+      "participantCount": 4,
+      "conflicts": []
     },
     {
       "id": "session-11",
       "topic": "DSE Prio 10: Yhteinen kaupallinen johtamismalli: Kehitämme prospektointia ja Skoutti –pelinrakentajaa.",
       "owner": "Antti Ovaska",
       "ownerDomain": "DSE",
-      "day": 2,
+      "day": 3,
       "startTime": "12:00",
       "endTime": "13:30",
       "room": "k1-01",
@@ -3212,70 +3130,73 @@
       "owner": "Jaana Tynys",
       "ownerDomain": "DSE",
       "day": 1,
-      "startTime": "09:00",
-      "endTime": "10:30",
+      "startTime": "12:00",
+      "endTime": "13:30",
       "room": "k1-02",
       "roomName": "Irene Huurre",
       "participantCount": 5,
       "conflicts": []
     },
     {
-      "id": "session-4",
-      "topic": "Eduskuntavaaleista kasvua - kirjautuminen , identiteetti",
-      "owner": "Jaana Tanskanen",
-      "ownerDomain": "DSE",
-      "day": 2,
+      "id": "session-13",
+      "topic": "Markkinoinnin osa-alueen pienkehitys:",
+      "owner": "Leena Koskinen",
+      "ownerDomain": "S&M",
+      "day": 1,
       "startTime": "13:30",
       "endTime": "15:00",
       "room": "k1-01",
       "roomName": "Ilkka Malmberg",
-      "participantCount": 3,
-      "conflicts": []
-    },
-    {
-      "id": "session-28",
-      "topic": "Instream to Ad Manager (Productization, technical requirements, and Booking API work)",
-      "owner": "Toni Törnqvist",
-      "ownerDomain": "DG",
-      "day": 1,
-      "startTime": "09:00",
-      "endTime": "10:30",
-      "room": "k1-08",
-      "roomName": "Teo Mertanen",
-      "participantCount": 9,
+      "participantCount": 6,
       "conflicts": [
         {
-          "person": "Toni Törnqvist",
-          "domain": "DG",
+          "person": "Heidi Falenius",
+          "domain": "DSE",
           "requiredInThis": true,
           "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
           "type": "overlap",
-          "otherSessionId": "session-27",
-          "otherSessionTopic": "Goal-based purchase flow"
-        },
-        {
-          "person": "Anniina Hautala",
-          "domain": "DG",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-27",
-          "otherSessionTopic": "Goal-based purchase flow"
+          "otherSessionId": "session-41",
+          "otherSessionTopic": "Raportointi tarpeet S3:selle."
         }
       ]
     },
     {
-      "id": "session-32",
-      "topic": "Discovery: Video hosting and templates",
-      "owner": "Zahoor Khan",
-      "ownerDomain": "DG",
-      "day": 1,
-      "startTime": "12:00",
-      "endTime": "13:30",
-      "room": "k1-01",
-      "roomName": "Ilkka Malmberg",
-      "participantCount": 6,
-      "conflicts": []
+      "id": "session-23",
+      "topic": "TagomoAI agenttinen Ad Manager bookkaus: Toiminnallisuus, jossa automaagisesti päivitettään agency-advertiser relaatiota tiettyjen toimistojen osalta.",
+      "owner": "Hanna Jalonen",
+      "ownerDomain": "B2B",
+      "day": 2,
+      "startTime": "09:00",
+      "endTime": "10:30",
+      "room": "k1-07",
+      "roomName": "Yrjö Niiniluoto",
+      "participantCount": 9,
+      "conflicts": [
+        {
+          "person": "Jaana Tanskanen",
+          "domain": "DSE",
+          "requiredInThis": true,
+          "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
+          "type": "overlap",
+          "otherSessionId": "session-19",
+          "otherSessionTopic": "Discovery: kasvupalvelun suunnittelutiimin työkalujen ja järjestelmien pienkehitystyö ja suunnittelu miten kannattaisi hyödyntää esim. SalesForcea"
+        },
+        {
+          "person": "Filip Holmberg",
+          "domain": "DSE",
+          "requiredInThis": true,
+          "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
+          "type": "overlap",
+          "otherSessionId": "session-19",
+          "otherSessionTopic": "Discovery: kasvupalvelun suunnittelutiimin työkalujen ja järjestelmien pienkehitystyö ja suunnittelu miten kannattaisi hyödyntää esim. SalesForcea"
+        }
+      ]
     },
     {
       "id": "session-24",
@@ -3283,12 +3204,88 @@
       "owner": "Janne Nikkilä",
       "ownerDomain": "B2B",
       "day": 1,
-      "startTime": "13:30",
-      "endTime": "15:00",
+      "startTime": "09:00",
+      "endTime": "10:30",
       "room": "k1-01",
       "roomName": "Ilkka Malmberg",
       "participantCount": 4,
       "conflicts": []
+    },
+    {
+      "id": "session-32",
+      "topic": "Discovery: Video hosting and templates",
+      "owner": "Zahoor Khan",
+      "ownerDomain": "DG",
+      "day": 2,
+      "startTime": "09:00",
+      "endTime": "10:30",
+      "room": "k1-08",
+      "roomName": "Teo Mertanen",
+      "participantCount": 6,
+      "conflicts": []
+    },
+    {
+      "id": "session-15",
+      "topic": "Tuloksellisuus. Tavoite ja mittarimallin seuraavat vaiheet & vaikutukset eri domaineille (odotukset painottuen S1, mutta domainien odotetaan arvioivan ja huomioivan vaikutuksia jo S3 nykyisessä tekemisessä)",
+      "owner": "Tiina Kosonen",
+      "ownerDomain": "S&M",
+      "day": 2,
+      "startTime": "12:00",
+      "endTime": "13:00",
+      "room": "k1-01",
+      "roomName": "Ilkka Malmberg",
+      "participantCount": 10,
+      "conflicts": [
+        {
+          "person": "Jonne Ansamaa",
+          "domain": "DG",
+          "requiredInThis": true,
+          "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
+          "type": "overlap",
+          "otherSessionId": "session-3",
+          "otherSessionTopic": "Eduskuntavaaleista kasvua - digin ostaminen & operaatiot. avoimuusilmoitus"
+        }
+      ]
+    },
+    {
+      "id": "session-17",
+      "topic": "(Strateginen segmentointi) ICP:n eli ideal customer profilen luominen",
+      "owner": "Tiina Kosonen",
+      "ownerDomain": "S&M",
+      "day": 3,
+      "startTime": "09:00",
+      "endTime": "10:00",
+      "room": "k1-02",
+      "roomName": "Irene Huurre",
+      "participantCount": 7,
+      "conflicts": []
+    },
+    {
+      "id": "session-30",
+      "topic": "Soft launch (?) new RT-optimized CPC productization",
+      "owner": "Johannes Hocksell",
+      "ownerDomain": "DG",
+      "day": 1,
+      "startTime": "09:00",
+      "endTime": "10:00",
+      "room": "k1-02",
+      "roomName": "Irene Huurre",
+      "participantCount": 7,
+      "conflicts": [
+        {
+          "person": "Heidi Falenius",
+          "domain": "DSE",
+          "requiredInThis": true,
+          "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
+          "type": "overlap",
+          "otherSessionId": "session-2",
+          "otherSessionTopic": "Eduskuntavaaleista kasvua - tulostavoitteet ja markkinointi, tuotteistus"
+        }
+      ]
     },
     {
       "id": "session-6",
@@ -3298,96 +3295,116 @@
       "day": 1,
       "startTime": "09:00",
       "endTime": "10:00",
-      "room": "k1-09",
-      "roomName": "E.O.Sjöberg",
+      "room": "k1-08",
+      "roomName": "Teo Mertanen",
       "participantCount": 7,
       "conflicts": []
     },
     {
-      "id": "session-16",
-      "topic": "Tuloksellisuus. Yhteiskehittämisen mallin edistäminen S3. Valitut end-to-end yhteiskehittämisen mallin mukaiset pilotit (revops & tuloksellisuuden malli). Miten data tallennetaan, varmistetaan, että toimitaan S3 mallin edistämiseksi fiksusti vaikka sen ympärillä ei teknisempää kehitystä.",
-      "owner": "Tiina Kosonen",
-      "ownerDomain": "S&M",
-      "day": 1,
-      "startTime": "10:30",
-      "endTime": "11:00",
-      "room": "k1-04",
-      "roomName": "K.J.Ståhlberg",
-      "participantCount": 7,
-      "conflicts": []
-    },
-    {
-      "id": "session-17",
-      "topic": "(Strateginen segmentointi) ICP:n eli ideal customer profilen luominen",
-      "owner": "Tiina Kosonen",
-      "ownerDomain": "S&M",
-      "day": 1,
-      "startTime": "12:00",
-      "endTime": "13:00",
-      "room": "k1-02",
-      "roomName": "Irene Huurre",
-      "participantCount": 7,
-      "conflicts": []
-    },
-    {
-      "id": "session-10",
-      "topic": "MSS PRIO 7: Uusittujen Sanoma segmenttien käyttöönotto",
-      "owner": "Jaana Jamalainen",
-      "ownerDomain": "MSS",
-      "day": 1,
-      "startTime": "13:00",
-      "endTime": "14:30",
-      "room": "k1-02",
-      "roomName": "Irene Huurre",
+      "id": "session-33",
+      "topic": "Optimizing the flow between Snowflake and Claude",
+      "owner": "Jonne Ansamaa",
+      "ownerDomain": "DG",
+      "day": 3,
+      "startTime": "09:00",
+      "endTime": "10:00",
+      "room": "k1-07",
+      "roomName": "Yrjö Niiniluoto",
       "participantCount": 5,
       "conflicts": []
     },
     {
-      "id": "session-12",
-      "topic": "MS&S Prio 4: Videolle –brändin hallittu alasajo",
-      "owner": "Minna Kaitala",
-      "ownerDomain": "MSS",
-      "day": 1,
+      "id": "session-34",
+      "topic": "AV Maestro, meeting 1",
+      "owner": "Panu Hyryläinen",
+      "ownerDomain": "TM",
+      "day": 3,
       "startTime": "09:00",
-      "endTime": "10:30",
-      "room": "k1-15",
-      "roomName": "Ari Joutsi",
-      "participantCount": 4,
-      "conflicts": []
+      "endTime": "10:00",
+      "room": "k1-08",
+      "roomName": "Teo Mertanen",
+      "participantCount": 8,
+      "conflicts": [
+        {
+          "person": "Heidi Falenius",
+          "domain": "DSE",
+          "requiredInThis": true,
+          "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
+          "type": "overlap",
+          "otherSessionId": "session-18",
+          "otherSessionTopic": "Discovery: jatkuvat palvelutuotteet varattaviksi (Kasvupalvelu Startti, Google, Meta)"
+        }
+      ],
+      "group": "AV Maestro"
     },
     {
-      "id": "session-20",
-      "topic": "Discovery: verkkokauppasegmentin tuotemahdollisuudet",
-      "owner": "Jenni Tamminen",
-      "ownerDomain": "S&M",
-      "day": 1,
+      "id": "session-35",
+      "topic": "AV Maestro, meeting 2",
+      "owner": "Panu Hyryläinen",
+      "ownerDomain": "TM",
+      "day": 3,
+      "startTime": "10:00",
+      "endTime": "11:00",
+      "room": "k1-08",
+      "roomName": "Teo Mertanen",
+      "participantCount": 9,
+      "conflicts": [],
+      "group": "AV Maestro"
+    },
+    {
+      "id": "session-36",
+      "topic": "AV Maestro, meeting 3",
+      "owner": "Panu Hyryläinen",
+      "ownerDomain": "TM",
+      "day": 3,
       "startTime": "12:00",
+      "endTime": "13:00",
+      "room": "k1-08",
+      "roomName": "Teo Mertanen",
+      "participantCount": 5,
+      "conflicts": [],
+      "group": "AV Maestro"
+    },
+    {
+      "id": "session-37",
+      "topic": "AV Maestro, meeting 3",
+      "owner": "Panu Hyryläinen",
+      "ownerDomain": "TM",
+      "day": 3,
+      "startTime": "13:00",
       "endTime": "13:30",
       "room": "k1-08",
       "roomName": "Teo Mertanen",
-      "participantCount": 4,
-      "conflicts": [
-        {
-          "person": "Jenni Tamminen",
-          "domain": "S&M",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-15",
-          "otherSessionTopic": "Tuloksellisuus. Tavoite ja mittarimallin seuraavat vaiheet & vaikutukset eri domaineille (odotukset painottuen S1, mutta domainien odotetaan arvioivan ja huomioivan vaikutuksia jo S3 nykyisessä tekemisessä)"
-        }
-      ]
+      "participantCount": 5,
+      "conflicts": [],
+      "group": "AV Maestro"
     },
     {
-      "id": "session-22",
-      "topic": "API uudistuksen PoC tukemaan AI kehitystä",
-      "owner": "Filip Holmberg",
-      "ownerDomain": "DSE",
-      "day": 1,
-      "startTime": "14:00",
+      "id": "session-39",
+      "topic": "TV Beat, meeting 1",
+      "owner": "Mikko Eskelinen",
+      "ownerDomain": "TM",
+      "day": 3,
+      "startTime": "13:30",
+      "endTime": "14:30",
+      "room": "k1-01",
+      "roomName": "Ilkka Malmberg",
+      "participantCount": 8,
+      "conflicts": [],
+      "group": "TV Beat"
+    },
+    {
+      "id": "session-40",
+      "topic": "TV Beat, meeting 2",
+      "owner": "Mikko Eskelinen",
+      "ownerDomain": "TM",
+      "day": 3,
+      "startTime": "14:30",
       "endTime": "15:00",
-      "room": "k1-12",
-      "roomName": "Eino Leino",
+      "room": "k1-01",
+      "roomName": "Ilkka Malmberg",
       "participantCount": 5,
       "conflicts": [
         {
@@ -3395,11 +3412,27 @@
           "domain": "DSE",
           "requiredInThis": true,
           "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
           "type": "overlap",
-          "otherSessionId": "session-41",
-          "otherSessionTopic": "Raportointi tarpeet S3:selle."
+          "otherSessionId": "session-7",
+          "otherSessionTopic": "MSS Prio 9: Insight as a Service -kuukausipalvelun pilotointi asiakasrajapintaan"
         }
-      ]
+      ],
+      "group": "TV Beat"
+    },
+    {
+      "id": "session-16",
+      "topic": "Tuloksellisuus. Yhteiskehittämisen mallin edistäminen S3. Valitut end-to-end yhteiskehittämisen mallin mukaiset pilotit (revops & tuloksellisuuden malli). Miten data tallennetaan, varmistetaan, että toimitaan S3 mallin edistämiseksi fiksusti vaikka sen ympärillä ei teknisempää kehitystä.",
+      "owner": "Tiina Kosonen",
+      "ownerDomain": "S&M",
+      "day": 1,
+      "startTime": "13:30",
+      "endTime": "14:00",
+      "room": "k1-02",
+      "roomName": "Irene Huurre",
+      "participantCount": 7,
+      "conflicts": []
     },
     {
       "id": "session-29",
@@ -3407,10 +3440,10 @@
       "owner": "Johannes Hocksell",
       "ownerDomain": "DG",
       "day": 2,
-      "startTime": "09:00",
-      "endTime": "11:00",
-      "room": "k1-07",
-      "roomName": "Yrjö Niiniluoto",
+      "startTime": "13:00",
+      "endTime": "15:00",
+      "room": "k1-01",
+      "roomName": "Ilkka Malmberg",
       "participantCount": 10,
       "conflicts": [
         {
@@ -3418,73 +3451,13 @@
           "domain": "DG",
           "requiredInThis": true,
           "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
           "type": "overlap",
-          "otherSessionId": "session-19",
-          "otherSessionTopic": "Discovery: kasvupalvelun suunnittelutiimin työkalujen ja järjestelmien pienkehitystyö ja suunnittelu miten kannattaisi hyödyntää esim. SalesForcea"
+          "otherSessionId": "session-3",
+          "otherSessionTopic": "Eduskuntavaaleista kasvua - digin ostaminen & operaatiot. avoimuusilmoitus"
         }
       ]
-    },
-    {
-      "id": "session-14",
-      "topic": "Sales KPI: myynnin raportoinnin & dashboard datojen haasteet ratkottava laittamalla kuntoon perusta datatuotteistuksen osalta jotta datakehitys tehdään agenttilähtöiseksi, ei raporttilähtöisesti. Edellyttää uudenlaista osaamista ja focusta tiimiin.",
-      "owner": "Sami Luutikivi",
-      "ownerDomain": "DSE",
-      "day": 3,
-      "startTime": "12:00",
-      "endTime": "13:30",
-      "room": "k1-08",
-      "roomName": "Teo Mertanen",
-      "participantCount": 3,
-      "conflicts": [
-        {
-          "person": "Filip Holmberg",
-          "domain": "DSE",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-23",
-          "otherSessionTopic": "TagomoAI agenttinen Ad Manager bookkaus: Toiminnallisuus, jossa automaagisesti päivitettään agency-advertiser relaatiota tiettyjen toimistojen osalta."
-        }
-      ]
-    },
-    {
-      "id": "session-25",
-      "topic": "Display material automation in Ad Manager.",
-      "owner": "Toni Törnqvist",
-      "ownerDomain": "DG",
-      "day": 3,
-      "startTime": "09:00",
-      "endTime": "10:00",
-      "room": "k1-07",
-      "roomName": "Yrjö Niiniluoto",
-      "participantCount": 7,
-      "conflicts": []
-    },
-    {
-      "id": "session-26",
-      "topic": "Missing Creative AI Capabilities (HTML5 and tags.)",
-      "owner": "Toni Törnqvist",
-      "ownerDomain": "DG",
-      "day": 3,
-      "startTime": "10:00",
-      "endTime": "11:00",
-      "room": "k1-01",
-      "roomName": "Ilkka Malmberg",
-      "participantCount": 7,
-      "conflicts": []
-    },
-    {
-      "id": "session-8",
-      "topic": "Insight&Research -tiimin Monday-käyttöönotto",
-      "owner": "Jaana Jamalainen",
-      "ownerDomain": "MSS",
-      "day": 1,
-      "startTime": "10:00",
-      "endTime": "11:00",
-      "room": "k1-09",
-      "roomName": "E.O.Sjöberg",
-      "participantCount": 3,
-      "conflicts": []
     },
     {
       "id": "session-9",
@@ -3494,61 +3467,123 @@
       "day": 1,
       "startTime": "12:00",
       "endTime": "13:30",
+      "room": "k1-08",
+      "roomName": "Teo Mertanen",
+      "participantCount": 3,
+      "conflicts": []
+    },
+    {
+      "id": "session-14",
+      "topic": "Sales KPI: myynnin raportoinnin & dashboard datojen haasteet ratkottava laittamalla kuntoon perusta datatuotteistuksen osalta jotta datakehitys tehdään agenttilähtöiseksi, ei raporttilähtöisesti. Edellyttää uudenlaista osaamista ja focusta tiimiin.",
+      "owner": "Sami Luutikivi",
+      "ownerDomain": "DSE",
+      "day": 1,
+      "startTime": "09:00",
+      "endTime": "10:30",
       "room": "k1-09",
       "roomName": "E.O.Sjöberg",
+      "participantCount": 3,
+      "conflicts": []
+    },
+    {
+      "id": "session-22",
+      "topic": "API uudistuksen PoC tukemaan AI kehitystä",
+      "owner": "Filip Holmberg",
+      "ownerDomain": "DSE",
+      "day": 2,
+      "startTime": "13:00",
+      "endTime": "14:00",
+      "room": "k1-02",
+      "roomName": "Irene Huurre",
+      "participantCount": 5,
+      "conflicts": [
+        {
+          "person": "Heidi Falenius",
+          "domain": "DSE",
+          "requiredInThis": true,
+          "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
+          "type": "overlap",
+          "otherSessionId": "session-3",
+          "otherSessionTopic": "Eduskuntavaaleista kasvua - digin ostaminen & operaatiot. avoimuusilmoitus"
+        }
+      ]
+    },
+    {
+      "id": "session-25",
+      "topic": "Display material automation in Ad Manager.",
+      "owner": "Toni Törnqvist",
+      "ownerDomain": "DG",
+      "day": 1,
+      "startTime": "10:00",
+      "endTime": "11:00",
+      "room": "k1-02",
+      "roomName": "Irene Huurre",
+      "participantCount": 7,
+      "conflicts": []
+    },
+    {
+      "id": "session-26",
+      "topic": "Missing Creative AI Capabilities (HTML5 and tags.)",
+      "owner": "Toni Törnqvist",
+      "ownerDomain": "DG",
+      "day": 3,
+      "startTime": "09:00",
+      "endTime": "10:00",
+      "room": "k1-09",
+      "roomName": "E.O.Sjöberg",
+      "participantCount": 7,
+      "conflicts": []
+    },
+    {
+      "id": "session-8",
+      "topic": "Insight&Research -tiimin Monday-käyttöönotto",
+      "owner": "Jaana Jamalainen",
+      "ownerDomain": "MSS",
+      "day": 1,
+      "startTime": "13:30",
+      "endTime": "14:30",
+      "room": "k1-08",
+      "roomName": "Teo Mertanen",
       "participantCount": 3,
       "conflicts": []
     }
   ],
   "conflicts": [
     {
-      "sessionId": "session-31",
-      "sessionTopic": "Proof of results trough attention measurement",
+      "sessionId": "session-27",
+      "sessionTopic": "Goal-based purchase flow",
       "conflicts": [
-        {
-          "person": "Heidi Falenius",
-          "domain": "DSE",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-2",
-          "otherSessionTopic": "Eduskuntavaaleista kasvua - tulostavoitteet ja markkinointi, tuotteistus"
-        }
-      ]
-    },
-    {
-      "sessionId": "session-38",
-      "sessionTopic": "AV Manager, rahapelaaminen, tuotteiden konfigurointi & myynnin rajoitteet",
-      "conflicts": [
-        {
-          "person": "Heidi Falenius",
-          "domain": "DSE",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-5",
-          "otherSessionTopic": "Eduskuntavaaleista kasvua - monimediallinen ostaminen & operaatiot"
-        }
-      ]
-    },
-    {
-      "sessionId": "session-30",
-      "sessionTopic": "Soft launch (?) new RT-optimized CPC productization",
-      "conflicts": [
-        {
-          "person": "Heidi Falenius",
-          "domain": "DSE",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-41",
-          "otherSessionTopic": "Raportointi tarpeet S3:selle."
-        },
         {
           "person": "Jonne Ansamaa",
           "domain": "DG",
           "requiredInThis": true,
           "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
+          "type": "overlap",
+          "otherSessionId": "session-41",
+          "otherSessionTopic": "Raportointi tarpeet S3:selle."
+        },
+        {
+          "person": "Pilvi Rimmanen",
+          "domain": "DG",
+          "requiredInThis": true,
+          "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
+          "type": "overlap",
+          "otherSessionId": "session-41",
+          "otherSessionTopic": "Raportointi tarpeet S3:selle."
+        },
+        {
+          "person": "Heidi Falenius",
+          "domain": "DSE",
+          "requiredInThis": true,
+          "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
           "type": "overlap",
           "otherSessionId": "session-41",
           "otherSessionTopic": "Raportointi tarpeet S3:selle."
@@ -3564,69 +3599,11 @@
           "domain": "DSE",
           "requiredInThis": true,
           "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-34",
-          "otherSessionTopic": "AV Maestro, meeting 1"
-        }
-      ]
-    },
-    {
-      "sessionId": "session-39",
-      "sessionTopic": "TV Beat, meeting 1",
-      "conflicts": [
-        {
-          "person": "Jonne Ansamaa",
-          "domain": "DG",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-27",
-          "otherSessionTopic": "Goal-based purchase flow"
-        }
-      ]
-    },
-    {
-      "sessionId": "session-18",
-      "sessionTopic": "Discovery: jatkuvat palvelutuotteet varattaviksi (Kasvupalvelu Startti, Google, Meta)",
-      "conflicts": [
-        {
-          "person": "Heidi Falenius",
-          "domain": "DSE",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-27",
-          "otherSessionTopic": "Goal-based purchase flow"
-        }
-      ]
-    },
-    {
-      "sessionId": "session-15",
-      "sessionTopic": "Tuloksellisuus. Tavoite ja mittarimallin seuraavat vaiheet & vaikutukset eri domaineille (odotukset painottuen S1, mutta domainien odotetaan arvioivan ja huomioivan vaikutuksia jo S3 nykyisessä tekemisessä)",
-      "conflicts": [
-        {
-          "person": "Jonne Ansamaa",
-          "domain": "DG",
-          "requiredInThis": true,
-          "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
           "type": "overlap",
           "otherSessionId": "session-41",
           "otherSessionTopic": "Raportointi tarpeet S3:selle."
-        }
-      ]
-    },
-    {
-      "sessionId": "session-19",
-      "sessionTopic": "Discovery: kasvupalvelun suunnittelutiimin työkalujen ja järjestelmien pienkehitystyö ja suunnittelu miten kannattaisi hyödyntää esim. SalesForcea",
-      "conflicts": [
-        {
-          "person": "Jaana Tanskanen",
-          "domain": "DSE",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-5",
-          "otherSessionTopic": "Eduskuntavaaleista kasvua - monimediallinen ostaminen & operaatiot"
         }
       ]
     },
@@ -3639,72 +3616,90 @@
           "domain": "DSE",
           "requiredInThis": true,
           "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
           "type": "overlap",
-          "otherSessionId": "session-2",
-          "otherSessionTopic": "Eduskuntavaaleista kasvua - tulostavoitteet ja markkinointi, tuotteistus"
+          "otherSessionId": "session-19",
+          "otherSessionTopic": "Discovery: kasvupalvelun suunnittelutiimin työkalujen ja järjestelmien pienkehitystyö ja suunnittelu miten kannattaisi hyödyntää esim. SalesForcea"
         },
         {
-          "person": "Toni Törnqvist",
-          "domain": "B2B",
+          "person": "Filip Holmberg",
+          "domain": "DSE",
           "requiredInThis": true,
           "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
           "type": "overlap",
-          "otherSessionId": "session-31",
-          "otherSessionTopic": "Proof of results trough attention measurement"
+          "otherSessionId": "session-19",
+          "otherSessionTopic": "Discovery: kasvupalvelun suunnittelutiimin työkalujen ja järjestelmien pienkehitystyö ja suunnittelu miten kannattaisi hyödyntää esim. SalesForcea"
         }
       ]
     },
     {
-      "sessionId": "session-28",
-      "sessionTopic": "Instream to Ad Manager (Productization, technical requirements, and Booking API work)",
+      "sessionId": "session-15",
+      "sessionTopic": "Tuloksellisuus. Tavoite ja mittarimallin seuraavat vaiheet & vaikutukset eri domaineille (odotukset painottuen S1, mutta domainien odotetaan arvioivan ja huomioivan vaikutuksia jo S3 nykyisessä tekemisessä)",
       "conflicts": [
         {
-          "person": "Toni Törnqvist",
+          "person": "Jonne Ansamaa",
           "domain": "DG",
           "requiredInThis": true,
           "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
           "type": "overlap",
-          "otherSessionId": "session-27",
-          "otherSessionTopic": "Goal-based purchase flow"
-        },
-        {
-          "person": "Anniina Hautala",
-          "domain": "DG",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-27",
-          "otherSessionTopic": "Goal-based purchase flow"
+          "otherSessionId": "session-3",
+          "otherSessionTopic": "Eduskuntavaaleista kasvua - digin ostaminen & operaatiot. avoimuusilmoitus"
         }
       ]
     },
     {
-      "sessionId": "session-20",
-      "sessionTopic": "Discovery: verkkokauppasegmentin tuotemahdollisuudet",
-      "conflicts": [
-        {
-          "person": "Jenni Tamminen",
-          "domain": "S&M",
-          "requiredInThis": true,
-          "requiredInOther": true,
-          "type": "overlap",
-          "otherSessionId": "session-15",
-          "otherSessionTopic": "Tuloksellisuus. Tavoite ja mittarimallin seuraavat vaiheet & vaikutukset eri domaineille (odotukset painottuen S1, mutta domainien odotetaan arvioivan ja huomioivan vaikutuksia jo S3 nykyisessä tekemisessä)"
-        }
-      ]
-    },
-    {
-      "sessionId": "session-22",
-      "sessionTopic": "API uudistuksen PoC tukemaan AI kehitystä",
+      "sessionId": "session-30",
+      "sessionTopic": "Soft launch (?) new RT-optimized CPC productization",
       "conflicts": [
         {
           "person": "Heidi Falenius",
           "domain": "DSE",
           "requiredInThis": true,
           "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
           "type": "overlap",
-          "otherSessionId": "session-41",
-          "otherSessionTopic": "Raportointi tarpeet S3:selle."
+          "otherSessionId": "session-2",
+          "otherSessionTopic": "Eduskuntavaaleista kasvua - tulostavoitteet ja markkinointi, tuotteistus"
+        }
+      ]
+    },
+    {
+      "sessionId": "session-34",
+      "sessionTopic": "AV Maestro, meeting 1",
+      "conflicts": [
+        {
+          "person": "Heidi Falenius",
+          "domain": "DSE",
+          "requiredInThis": true,
+          "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
+          "type": "overlap",
+          "otherSessionId": "session-18",
+          "otherSessionTopic": "Discovery: jatkuvat palvelutuotteet varattaviksi (Kasvupalvelu Startti, Google, Meta)"
+        }
+      ]
+    },
+    {
+      "sessionId": "session-40",
+      "sessionTopic": "TV Beat, meeting 2",
+      "conflicts": [
+        {
+          "person": "Heidi Falenius",
+          "domain": "DSE",
+          "requiredInThis": true,
+          "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
+          "type": "overlap",
+          "otherSessionId": "session-7",
+          "otherSessionTopic": "MSS Prio 9: Insight as a Service -kuukausipalvelun pilotointi asiakasrajapintaan"
         }
       ]
     },
@@ -3717,24 +3712,28 @@
           "domain": "DG",
           "requiredInThis": true,
           "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
           "type": "overlap",
-          "otherSessionId": "session-19",
-          "otherSessionTopic": "Discovery: kasvupalvelun suunnittelutiimin työkalujen ja järjestelmien pienkehitystyö ja suunnittelu miten kannattaisi hyödyntää esim. SalesForcea"
+          "otherSessionId": "session-3",
+          "otherSessionTopic": "Eduskuntavaaleista kasvua - digin ostaminen & operaatiot. avoimuusilmoitus"
         }
       ]
     },
     {
-      "sessionId": "session-14",
-      "sessionTopic": "Sales KPI: myynnin raportoinnin & dashboard datojen haasteet ratkottava laittamalla kuntoon perusta datatuotteistuksen osalta jotta datakehitys tehdään agenttilähtöiseksi, ei raporttilähtöisesti. Edellyttää uudenlaista osaamista ja focusta tiimiin.",
+      "sessionId": "session-22",
+      "sessionTopic": "API uudistuksen PoC tukemaan AI kehitystä",
       "conflicts": [
         {
-          "person": "Filip Holmberg",
+          "person": "Heidi Falenius",
           "domain": "DSE",
           "requiredInThis": true,
           "requiredInOther": true,
+          "isOwnerInThis": false,
+          "isOwnerInOther": false,
           "type": "overlap",
-          "otherSessionId": "session-23",
-          "otherSessionTopic": "TagomoAI agenttinen Ad Manager bookkaus: Toiminnallisuus, jossa automaagisesti päivitettään agency-advertiser relaatiota tiettyjen toimistojen osalta."
+          "otherSessionId": "session-3",
+          "otherSessionTopic": "Eduskuntavaaleista kasvua - digin ostaminen & operaatiot. avoimuusilmoitus"
         }
       ]
     }

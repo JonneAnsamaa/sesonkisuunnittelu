@@ -54,7 +54,7 @@
       "topicFull": "Eduskuntavaaleista kasvua - tulostavoitteet ja markkinointi, tuotteistus\r\n- kaupallinen kulma - tulostavoitteet ja näiden mittaus, kohderyhmä ja kuka vastaa \r\n- kampanjasivusto\r\n- markkinoinnin automaation rooli ja henkilöroolitus\r\n- tuotepaketit\r\n- Analytiikka",
       "owner": "Satu Raatikainen",
       "ownerDomain": "S&M",
-      "duration": 90,
+      "duration": 120,
       "priority": 2,
       "status": "active",
       "participants": [
@@ -67,6 +67,18 @@
         {
           "name": "Heidi Falenius",
           "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Konsta Raussi",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Tiina Kosonen",
+          "domain": "S&M",
           "team": "",
           "required": true
         },
@@ -131,18 +143,36 @@
           "required": true
         },
         {
-          "name": "Tiina Kosonen",
+          "name": "Ria Vaahto",
+          "domain": "MS&S",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Suvi Vesanen",
+          "domain": "MS&S",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Sampsa Näkki",
+          "domain": "S&M",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Jutta Kangas",
           "domain": "S&M",
           "team": "",
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-3",
       "topic": "Eduskuntavaaleista kasvua - digin ostaminen & operaatiot. avoimuusilmoitus",
-      "topicFull": "Eduskuntavaaleista kasvua -  digin ostaminen & operaatiot. avoimuusilmoitus\r\n- vaalituotteistuspaketit myyntikanavasta tekniseen tuotteistukseen vaalipiiri geo-kohdennuksella\r\n- digi avoimuusilmoitus - DG Tuuli Rikama?\r\n- aineistoprosessi, digi aineistobannerikoneen linkitys\r\n- Advendio-Adnuntius integraatio, APIt \r\n- luottokorttimaksaminen vs. nykyinen malli laskulla\r\n- kampanjaraportti\r\n- asiakastuki\r\n- palevlunhallinta Adnuntius, - consentin ja vendorlistin  päivitys",
+      "topicFull": "Eduskuntavaaleista kasvua -  digin ostaminen & operaatiot. avoimuusilmoitus\r\n- vaalituotteistuspaketit myyntikanavasta tekniseen tuotteistukseen vaalipiiri geo-kohdennuksella\r\n- digi avoimuusilmoitus - DG Tuuli Rikama?\r\n- aineistoprosessi, digi aineistobannerikoneen linkitys\r\n- Advendio-Adnuntius integraatio, APIt \r\n- kampanjaraportti, - delivery data & FINA prosessi\r\n- asiakastuki\r\n- palevlunhallinta Adnuntius, - consentin ja vendorlistin  päivitys",
       "owner": "Tuuli Rikama",
       "ownerDomain": "DG",
       "duration": 180,
@@ -152,12 +182,6 @@
         {
           "name": "Tuuli Rikama",
           "domain": "DG",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Bilal Gill",
-          "domain": "DSE",
           "team": "",
           "required": true
         },
@@ -180,6 +204,24 @@
           "required": true
         },
         {
+          "name": "Hanna Majanmaa",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Roope Malho",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Anne Salo",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
           "name": "Anniina Hautala",
           "domain": "DG",
           "team": "",
@@ -192,7 +234,7 @@
           "required": true
         },
         {
-          "name": "Janne Mikkola",
+          "name": "Janne Mikkonen",
           "domain": "DG",
           "team": "",
           "required": true
@@ -235,6 +277,12 @@
         },
         {
           "name": "Mikko Vartiainen",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Asko Sälli",
           "domain": "DG",
           "team": "",
           "required": true
@@ -303,7 +351,7 @@
       "topicFull": "Eduskuntavaaleista kasvua -  monimediallinen ostaminen & operaatiot\r\n- Design\r\n- Ad Manager Print integraatio\r\n- APIt\r\n- aineistoilmoitusten monikanavainen generointi ja manageeraus\r\n- operaatiot (ilmoitusten julkaisupäätökset, tekoälyn validointi)",
       "owner": "Heidi Falenius",
       "ownerDomain": "DSE",
-      "duration": 90,
+      "duration": 180,
       "priority": 2,
       "status": "active",
       "participants": [
@@ -321,6 +369,24 @@
         },
         {
           "name": "Vesa Lindqvist",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Maiju Häkkinen",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Roope Malho",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Anne Salo",
           "domain": "DSE",
           "team": "",
           "required": true
@@ -351,6 +417,36 @@
         },
         {
           "name": "Sini Lähdemäki",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Tuuli Rikama",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Jonne Ansamaa",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Birgitta Kursi",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Anu Ollikainen",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Rosa Forsell",
           "domain": "DG",
           "team": "",
           "required": true
@@ -392,13 +488,31 @@
           "required": true
         },
         {
+          "name": "Asko Sälli",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Tuomas Waris",
+          "domain": "DG",
+          "team": "",
+          "required": true
+        },
+        {
           "name": "Jero Liimatainen",
+          "domain": "DSE",
+          "team": "",
+          "required": true
+        },
+        {
+          "name": "Juho Pöyhönen",
           "domain": "DSE",
           "team": "",
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-6",
@@ -846,7 +960,7 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-16",
@@ -993,7 +1107,7 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-19",
@@ -1042,7 +1156,7 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-20",
@@ -1116,12 +1230,6 @@
           "required": true
         },
         {
-          "name": "Jonne Ansamaa",
-          "domain": "DG",
-          "team": "",
-          "required": true
-        },
-        {
           "name": "Timo Rinne",
           "domain": "N&F",
           "team": "",
@@ -1129,18 +1237,6 @@
         },
         {
           "name": "Anssi Hämäläinen",
-          "domain": "N&F",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Teemu Hauhia",
-          "domain": "N&F",
-          "team": "",
-          "required": true
-        },
-        {
-          "name": "Sanna Wirkkala",
           "domain": "N&F",
           "team": "",
           "required": true
@@ -1158,7 +1254,7 @@
           "required": true
         }
       ],
-      "participantListReady": false
+      "participantListReady": true
     },
     {
       "id": "session-22",
@@ -1238,7 +1334,7 @@
           "required": true
         },
         {
-          "name": "Janne Mikkola",
+          "name": "Janne Mikkonen",
           "domain": "DG",
           "team": "",
           "required": true
@@ -1331,7 +1427,7 @@
         },
         {
           "name": "Janne Mikkonen",
-          "domain": "Ad Manager",
+          "domain": "DG",
           "team": "",
           "required": true
         },
@@ -1386,7 +1482,7 @@
         },
         {
           "name": "Janne Mikkonen",
-          "domain": "Ad Manager",
+          "domain": "DG",
           "team": "",
           "required": true
         },
@@ -2201,6 +2297,12 @@
           "domain": "TM",
           "team": "",
           "required": true
+        },
+        {
+          "name": "Jukka Siltakorpi",
+          "domain": "B2B",
+          "team": "",
+          "required": true
         }
       ],
       "participantListReady": true
@@ -2434,7 +2536,7 @@
     "Tuuli Rikama": "DG",
     "Tuukka Antikainen": "DG",
     "Anniina Hautala": "DG",
-    "Janne Mikkola": "DG",
+    "Janne Mikkonen": "DG",
     "Sini Lähdemäki": "DG",
     "Birgitta Kursi": "DG",
     "Anu Ollikainen": "DG",

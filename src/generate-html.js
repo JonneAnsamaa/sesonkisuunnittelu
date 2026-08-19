@@ -619,9 +619,10 @@ function getOverlapConflicts(session,start,end,day,scheduled) {
     if(s.day!==day)continue;
     if(start<timeToMin(s.endTime)&&end>timeToMin(s.startTime)) {
       const other=sessions.find(x=>x.id===s.id); if(!other)continue;
+      const ownSplit=(n)=>n.split(/[+&\\/]/).map(x=>x.trim());
       for(const p of session.participants)
         if(other.participants.some(op=>op.name===p.name))
-          c.push({person:p.name,domain:p.domain,requiredInThis:p.required,requiredInOther:other.participants.find(op=>op.name===p.name)?.required,type:'overlap',otherSessionId:s.id,otherSessionTopic:other.topic});
+          c.push({person:p.name,domain:p.domain,requiredInThis:p.required,requiredInOther:other.participants.find(op=>op.name===p.name)?.required,isOwnerInThis:ownSplit(session.owner).includes(p.name),isOwnerInOther:ownSplit(other.owner).includes(p.name),type:'overlap',otherSessionId:s.id,otherSessionTopic:other.topic});
     }
   }
   return c;
@@ -662,8 +663,18 @@ function runScheduler() {
     const ar=a.participants.filter(p=>p.required).length,br=b.participants.filter(p=>p.required).length;
     if(br!==ar)return br-ar; if(b.participants.length!==a.participants.length)return b.participants.length-a.participants.length; return a.priority-b.priority;
   });
-  const slots=buildTimeSlots(); schedule=[]; conflicts=[];
+  const slots=buildTimeSlots(); const prevSchedule=[...schedule]; schedule=[]; conflicts=[];
   const scheduledIds=new Set();
+
+  // Pre-place locked sessions from previous schedule
+  for(const prev of prevSchedule){
+    const session=active.find(s=>s.id===prev.id);
+    if(!session||!session.locked)continue;
+    if(!rooms.find(r=>r.id===prev.room))continue;
+    schedule.push({...prev,conflicts:[]});
+    scheduledIds.add(prev.id);
+  }
+
   const groups={};
   for(const s of active){if(s.group){if(!groups[s.group])groups[s.group]=[];groups[s.group].push(s);}}
   for(const g of Object.values(groups))g.sort((a,b)=>(a.groupOrder||0)-(b.groupOrder||0));
@@ -684,6 +695,7 @@ function runScheduler() {
             const ac=getAvailConflicts(p.session,p.startTime,p.endTime,day);
             if(ac.some(c=>c.requiredInThis)){blocker=true;break;}
             const oc=getOverlapConflicts(p.session,p.startTime,p.endTime,day,schedule);
+            if(oc.some(c=>c.isOwnerInThis||c.isOwnerInOther)){blocker=true;break;}
             p.conflicts=[...ac,...oc];
           }
           if(blocker)continue;
@@ -713,6 +725,7 @@ function runScheduler() {
           const ac=getAvailConflicts(session,slot,end,day);
           if(ac.some(c=>c.requiredInThis))continue;
           const oc=getOverlapConflicts(session,slot,end,day,schedule);
+          if(oc.some(c=>c.isOwnerInThis||c.isOwnerInOther))continue;
           const all=[...ac,...oc];
           let pp=0;for(const p of session.participants){const pref=preferences.find(pr=>pr.person===p.name&&pr.type==='prefer-day');if(pref&&!pref.days.includes(day))pp++;}
           const score=oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*0.3;
@@ -1278,6 +1291,7 @@ function autoScheduleOne(si){
       const ac=getAvailConflicts(s,slot,end,day);
       if(ac.some(c=>c.requiredInThis))continue;
       const oc=getOverlapConflicts(s,slot,end,day,schedWithout);
+      if(oc.some(c=>c.isOwnerInThis||c.isOwnerInOther))continue;
       const all=[...ac,...oc];
       let pp=0;for(const p of s.participants){const pref=preferences.find(pr=>pr.person===p.name&&pr.type==='prefer-day');if(pref&&!pref.days.includes(day))pp++;}
       const score=oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*0.3;

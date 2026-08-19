@@ -20,5 +20,11 @@
     "startTime": "09:00",
     "endTime": "12:00",
     "reason": "Ei ti klo 12 jälkeen, jos mahdollista"
+  },
+  {
+    "sessionId": "session-2",
+    "type": "prefer-session-time",
+    "days": [1, 2],
+    "reason": "Maanantai tai tiistai, keskiviikkona vain aamulla onnistuu"
   }
 ]

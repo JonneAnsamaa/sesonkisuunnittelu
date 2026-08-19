@@ -97,6 +97,9 @@ function getPersonConflicts(session, startTime, endTime, day, schedule) {
           (p) => p.name === participant.name
         );
         if (inOther) {
+          const ownerNames = (n) => n.split(/[+&\/]/).map(x=>x.trim());
+          const isOwnerInThis = ownerNames(session.owner).includes(participant.name);
+          const isOwnerInOther = ownerNames(scheduledSession.owner).includes(participant.name);
           conflicts.push({
             person: participant.name,
             domain: participant.domain,
@@ -104,6 +107,8 @@ function getPersonConflicts(session, startTime, endTime, day, schedule) {
             requiredInOther: scheduledSession.participants.find(
               (p) => p.name === participant.name
             )?.required,
+            isOwnerInThis,
+            isOwnerInOther,
             type: 'overlap',
             otherSessionId: scheduled.id,
             otherSessionTopic: scheduledSession.topic,
@@ -310,6 +315,7 @@ function scheduleWithOrder(sorted, active) {
             const ac = getAvailabilityConflicts(p.session, p.startTime, p.endTime, day);
             if (ac.some(c => c.requiredInThis)) { hasBlocker = true; break; }
             const oc = getPersonConflicts(p.session, p.startTime, p.endTime, day, scheduled);
+            if (oc.some(c => c.isOwnerInThis || c.isOwnerInOther)) { hasBlocker = true; break; }
             p.conflicts = [...ac, ...oc];
           }
           if (hasBlocker) continue;
@@ -374,6 +380,8 @@ function scheduleWithOrder(sorted, active) {
           if (availConflicts.some(c => c.requiredInThis)) continue;
 
           const overlapConflicts = getPersonConflicts(session, slotStart, endTime, day, scheduled);
+
+          if (overlapConflicts.some(c => c.isOwnerInThis || c.isOwnerInOther)) continue;
 
           const allConflictsForSlot = [...availConflicts, ...overlapConflicts];
           const requiredOverlaps = overlapConflicts.filter((c) => c.requiredInThis).length;

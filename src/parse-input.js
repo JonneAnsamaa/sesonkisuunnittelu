@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import XLSX from 'xlsx';
 
-const inputPath = process.argv[2] || 'data/testitesti.xlsx';
+const inputPath = process.argv[2] || 'data/S3Y26 Teknologiakehityksen ja arkkitehtuurien synkronisointipalaveri 17.08 (1).xlsx';
 
 const workbook = XLSX.readFile(inputPath);
 const sheet = workbook.Sheets[workbook.SheetNames[0]];
@@ -74,6 +74,7 @@ const NAME_ALIASES = {
   'Maria Meruman': 'Maria Meurman',
   'Tarja Wiljanen': 'Tarja Viljanen',
   'Niko-Petteri Varho': 'Petteri Varho',
+  'Janne Mikkola': 'Janne Mikkonen',
 };
 
 // Nämä eivät ole henkilönimiä
@@ -94,7 +95,7 @@ function normalizeName(name) {
   return NAME_ALIASES[name] || name;
 }
 
-function extractNames(text) {
+function extractNames(text, { skipParenNames = false } = {}) {
   if (!text || typeof text !== 'string') return [];
 
   let processed = text;
@@ -117,7 +118,7 @@ function extractNames(text) {
   let parenMatch;
   while ((parenMatch = parenPattern.exec(processed)) !== null) {
     const inner = parenMatch[1];
-    const innerParts = inner.split(/[,/]/).map(p => p.trim());
+    const innerParts = inner.split(/[,/]|\bja\b|\band\b/).map(p => p.trim());
     for (const p of innerParts) {
       const namePattern = /^[A-ZÄÖÅÉÈ][a-zäöåéèü]+\s+[A-ZÄÖÅÉÈ][a-zäöåéèü]+(?:\s+[A-ZÄÖÅÉÈ][a-zäöåéèü]+)?$/;
       if (namePattern.test(p) && p.length >= 4 && p.length <= 40) {
@@ -141,7 +142,7 @@ function extractNames(text) {
 
     line = line.replace(/\([^)]*\)/g, '');
 
-    const parts = line.split(/[,/;]/).map(p => p.trim()).filter(Boolean);
+    const parts = line.split(/[,/;]|\bja\b|\band\b/).map(p => p.trim()).filter(Boolean);
 
     for (let part of parts) {
       part = part.replace(/^[+•–-]\s*/, '');
@@ -169,10 +170,12 @@ function extractNames(text) {
     }
   }
 
-  for (const pn of parenNames) {
-    const normalized = normalizeName(pn);
-    if (!NOT_NAMES.has(normalized)) {
-      names.push(normalized);
+  if (!skipParenNames) {
+    for (const pn of parenNames) {
+      const normalized = normalizeName(pn);
+      if (!NOT_NAMES.has(normalized)) {
+        names.push(normalized);
+      }
     }
   }
 
@@ -260,7 +263,8 @@ if (existsSync(teamExplainPath)) {
   console.log(`Ladattu ${Object.keys(PERSON_DOMAIN_MAP).length} henkilö→domain-mäppäystä tiimiselitteistä`);
 }
 
-const EXCLUDE_PATTERNS = ['ei suunnittelu', 'ei pidetä', 'ei tarvita', 'ei dep syncciin'];
+const EXCLUDE_PATTERNS = ['ei suunnittelu', 'ei pidetä', 'ei dep syncciin'];
+const EXCLUDE_REGEX = [/ei tarvita(?!\s*sync)/];
 
 function parseRow(row, index) {
   const topic = row[COL.topic];
@@ -268,12 +272,14 @@ function parseRow(row, index) {
 
   const domain = (row[COL.domain] || '').toString().trim();
   const ownerRaw = cleanOwner(row[COL.owner]);
-  const internalOnly = row[COL.internalOnly] === 'x' || row[COL.internalOnly] === true;
+  const internalOnly = String(row[COL.internalOnly] || '').trim().toLowerCase() === 'x' || row[COL.internalOnly] === true;
 
   const infoText = (row[COL.info] || '').toString().toLowerCase();
   if (EXCLUDE_PATTERNS.some(p => infoText.includes(p))) return null;
+  if (EXCLUDE_REGEX.some(r => r.test(infoText))) return null;
 
-  const participantNames = extractNames(row[COL.participants]);
+  const skipParenNames = /ei tarvita.*sului/i.test(infoText);
+  const participantNames = extractNames(row[COL.participants], { skipParenNames });
   const ownerNames = splitMultiOwner(ownerRaw);
 
   const participants = [];
