@@ -134,9 +134,9 @@ const html = `<!DOCTYPE html>
     .timetable .cell.slot-30 { border-top: 1px solid var(--border); }
     .session-block { position: absolute; left: 2px; right: 2px; top: 1px; border-radius: 6px; padding: 0.25rem 0.35rem; font-size: 0.62rem; overflow: hidden; cursor: pointer; border-left: 4px solid; transition: opacity 0.2s, box-shadow 0.15s; z-index: 1; display: flex; flex-direction: column; }
     .session-block:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 4; }
-    .session-block .block-topic { font-weight: 600; line-height: 1.2; }
-    .session-block .block-time { font-size: 0.6rem; opacity: 0.7; }
-    .session-block .block-meta { display: flex; align-items: center; gap: 0.3rem; font-size: 0.58rem; opacity: 0.85; margin-top: auto; line-height: 1; }
+    .session-block .block-topic { font-weight: 600; line-height: 1.2; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: var(--topic-lines, 3); flex-shrink: 1; min-height: 0; }
+    .session-block .block-time { font-size: 0.6rem; opacity: 0.7; flex-shrink: 0; }
+    .session-block .block-meta { display: flex; align-items: center; gap: 0.3rem; font-size: 0.58rem; opacity: 0.85; margin-top: auto; line-height: 1; flex-shrink: 0; }
     .session-block.dimmed { opacity: var(--dimmed-opacity); }
     .session-block.highlighted { box-shadow: 0 0 0 2px var(--highlight-border); z-index: 2; }
     .session-block.conflict { box-shadow: 0 0 0 2px var(--conflict-border); z-index: 3; }
@@ -908,11 +908,12 @@ function renderGrid() {
       const sh=dayS.find(s=>s.room===room.id&&timeToMin(s.startTime)===slot);
       if(sh) {
         const dur=timeToMin(sh.endTime)-timeToMin(sh.startTime), hs=dur/g, ht=(hs*40)-2, col=domainColors[sh.ownerDomain]||'#999';
+        const topicLines=dur<=30?1:dur<=60?2:dur<=90?3:5;
         let c='session-block';
         if(currentDomain&&sh.ownerDomain!==currentDomain)c+=' dimmed';
         else if(currentPerson){if(isIn(sh.id,currentPerson)){c+=hasConf(sh.id,currentPerson)?' conflict':' highlighted';}else c+=' dimmed';}
-        h+='<div class="'+c+'" style="height:'+ht+'px;background:'+col+'18;border-left-color:'+col+'" onclick="showBlockPopup(event,\\''+sh.id+'\\')">';
-        h+='<div class="block-topic">'+schedTopicText(sh)+'</div>';
+        h+='<div class="'+c+'" style="height:'+ht+'px;background:'+col+'18;border-left-color:'+col+';--topic-lines:'+topicLines+'" onclick="showBlockPopup(event,\\''+sh.id+'\\')">';
+        h+='<div class="block-topic" title="'+escHtml(schedTopicText(sh))+'">'+schedTopicText(sh)+'</div>';
         h+='<div class="block-time">'+sh.startTime+'\\u2013'+sh.endTime+'</div>';
         h+='<div class="block-meta"><span class="domain-badge" style="background:'+col+'">'+sh.ownerDomain+'</span><span>\\ud83d\\udc65'+sh.participantCount+'</span></div>';
         h+='<div style="font-size:0.55rem;opacity:0.7;margin-top:1px;">'+sh.owner+'</div>';
@@ -933,11 +934,10 @@ function renderConflicts() {
   for(const c of conflicts) {
     h+='<div class="conflict-card"><h3>'+c.sessionTopic+'</h3><ul>';
     for(const cf of c.conflicts) {
-      const badge=cf.type==='availability'?'<span class="badge availability">'+t('badgeBlocked')+'</span>':cf.requiredInThis?'<span class="badge required">'+t('badgeRequired')+'</span>':'<span class="badge optional">'+t('badgeNth')+'</span>';
       let detail='';
       if(cf.type==='availability')detail=cf.reason+' ('+cf.constraintStart+'\\u2013'+cf.constraintEnd+')';
       else detail=t('overlapWith')+': \\u201c'+cf.otherSessionTopic+'\\u201d';
-      h+='<li>'+badge+' <strong>'+cf.person+'</strong> ('+cf.domain+') \\u2014 '+detail+'</li>';
+      h+='<li><strong>'+cf.person+'</strong> ('+cf.domain+') \\u2014 '+detail+'</li>';
     }
     h+='</ul></div>';
   }
