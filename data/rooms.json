@@ -1,51 +1,364 @@
 {
   "config": {
     "days": [
-      { "day": 1, "date": "2026-08-24", "label": "Ma 24.8." },
-      { "day": 2, "date": "2026-08-25", "label": "Ti 25.8." },
-      { "day": 3, "date": "2026-08-26", "label": "Ke 26.8." }
+      {
+        "day": 1,
+        "date": "2026-08-24",
+        "label": "Ma 24.8."
+      },
+      {
+        "day": 2,
+        "date": "2026-08-25",
+        "label": "Ti 25.8."
+      },
+      {
+        "day": 3,
+        "date": "2026-08-26",
+        "label": "Ke 26.8."
+      }
     ],
     "dayStartTime": "09:00",
     "dayEndTime": "15:00",
-    "lunchStart": "11:00",
+    "lunchStart": "11:30",
     "lunchEnd": "12:00",
     "breakBetweenSessions": 0,
     "slotGranularity": 15,
-    "activeFloors": ["K1"],
-    "secondaryRoomIds": ["9a-taka-toolo", "9a-etu-toolo", "9b-kaisaniemi", "9a-laakso"]
+    "activeFloors": [
+      "K1"
+    ],
+    "secondaryRoomIds": [
+      "9a-taka-toolo",
+      "9a-etu-toolo",
+      "9b-kaisaniemi",
+      "9a-laakso"
+    ]
   },
   "rooms": [
-    { "id": "k1-01", "name": "Ilkka Malmberg", "floor": "K1", "number": "01", "capacity": 8, "availableDays": [1, 2, 3] },
-    { "id": "k1-02", "name": "Irene Huurre", "floor": "K1", "number": "02", "capacity": 8, "availableDays": [1, 2, 3] },
-    { "id": "k1-04", "name": "K.J.Ståhlberg", "floor": "K1", "number": "04", "capacity": 14, "availableDays": [1, 2] },
-    { "id": "k1-06", "name": "Oskar Merikanto", "floor": "K1", "number": "06", "capacity": 6, "availableDays": [1, 2] },
-    { "id": "k1-07", "name": "Yrjö Niiniluoto", "floor": "K1", "number": "07", "capacity": 8, "availableDays": [2, 3] },
-    { "id": "k1-08", "name": "Teo Mertanen", "floor": "K1", "number": "08", "capacity": 8, "availableDays": [1, 2, 3] },
-    { "id": "k1-09", "name": "E.O.Sjöberg", "floor": "K1", "number": "09", "capacity": 8, "availableDays": [1, 2, 3] },
-    { "id": "k1-10", "name": "Evert Katila", "floor": "K1", "number": "10", "capacity": 8, "availableDays": [3] },
-    { "id": "k1-11", "name": "Tekla Hultin", "floor": "K1", "number": "11", "capacity": 8, "availableDays": [2, 3] },
-    { "id": "k1-12", "name": "Eino Leino", "floor": "K1", "number": "12", "capacity": 14, "availableDays": [1] },
-    { "id": "k1-13", "name": "Arvid Järnefelt", "floor": "K1", "number": "13", "capacity": 14, "availableDays": [3] },
-    { "id": "k1-15", "name": "Ari Joutsi", "floor": "K1", "number": "15", "capacity": 8, "availableDays": [1] },
-    { "id": "k1-16", "name": "Marja Niiniluoto", "floor": "K1", "number": "16", "capacity": 4, "availableDays": [3] },
-    { "id": "k1-17", "name": "Sirkka Ruotsalainen", "floor": "K1", "number": "17", "capacity": 4, "availableDays": [3] },
-    { "id": "2b-indie", "name": "Indie", "floor": "2B", "capacity": 10, "availableDays": [3] },
-    { "id": "3a-aamulehti", "name": "Aamulehti", "floor": "3A", "capacity": 6, "availableDays": [1, 3] },
-    { "id": "3a-iltasanomat", "name": "IltaSanomat", "floor": "3A", "capacity": 6, "availableDays": [1, 2] },
-    { "id": "3a-nelonen", "name": "Nelonen", "floor": "3A", "capacity": 8, "availableDays": [1] },
-    { "id": "3a-suomipop", "name": "Suomipop", "floor": "3A", "capacity": 8, "availableDays": [1, 3] },
-    { "id": "3a-hs", "name": "Helsingin Sanomat", "floor": "3A", "capacity": 10, "availableDays": [3] },
-    { "id": "3a-luottokumppani", "name": "Luottokumppani", "floor": "3A", "capacity": 16, "availableDays": [3] },
-    { "id": "3a-rockfest", "name": "Rockfest", "floor": "3A", "capacity": 6, "availableDays": [3] },
-    { "id": "3b-menaiset", "name": "Me Naiset", "floor": "3B", "capacity": 6, "availableDays": [1, 2, 3] },
-    { "id": "3b-contentstudio", "name": "Content Studio", "floor": "3B", "capacity": 10, "availableDays": [1, 2, 3] },
-    { "id": "3b-ruutu", "name": "Ruutu", "floor": "3B", "capacity": 8, "availableDays": [1, 2, 3] },
-    { "id": "9a-laakso", "name": "Laakso", "floor": "9A", "capacity": 13, "availableDays": [1] },
-    { "id": "9a-toolonlahti", "name": "Töölönlahti", "floor": "9A", "capacity": 9, "availableDays": [2, 3] },
-    { "id": "9a-taka-toolo", "name": "Taka-Töölö", "floor": "9A", "capacity": 14, "availableDays": [2] },
-    { "id": "9a-etu-toolo", "name": "Etu-Töölö", "floor": "9A", "capacity": 10, "availableDays": [2, 3] },
-    { "id": "9b-kaisaniemi", "name": "Kaisaniemi", "floor": "9B", "capacity": 11, "availableDays": [1, 2] },
-    { "id": "9b-kurvi", "name": "Kurvi", "floor": "9B", "capacity": 6, "availableDays": [1] },
-    { "id": "9b-hakaniemi", "name": "Hakaniemi", "floor": "9B", "capacity": 6, "availableDays": [2] }
+    {
+      "id": "k1-01",
+      "name": "Ilkka Malmberg",
+      "floor": "K1",
+      "number": "01",
+      "capacity": 8,
+      "availableDays": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "k1-02",
+      "name": "Irene Huurre",
+      "floor": "K1",
+      "number": "02",
+      "capacity": 8,
+      "availableDays": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "k1-04",
+      "name": "K.J.Ståhlberg",
+      "floor": "K1",
+      "number": "04",
+      "capacity": 14,
+      "availableDays": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "k1-06",
+      "name": "Oskar Merikanto",
+      "floor": "K1",
+      "number": "06",
+      "capacity": 6,
+      "availableDays": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "k1-07",
+      "name": "Yrjö Niiniluoto",
+      "floor": "K1",
+      "number": "07",
+      "capacity": 8,
+      "availableDays": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "k1-08",
+      "name": "Teo Mertanen",
+      "floor": "K1",
+      "number": "08",
+      "capacity": 8,
+      "availableDays": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "k1-09",
+      "name": "E.O.Sjöberg",
+      "floor": "K1",
+      "number": "09",
+      "capacity": 8,
+      "availableDays": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "k1-10",
+      "name": "Evert Katila",
+      "floor": "K1",
+      "number": "10",
+      "capacity": 8,
+      "availableDays": [
+        3
+      ]
+    },
+    {
+      "id": "k1-11",
+      "name": "Tekla Hultin",
+      "floor": "K1",
+      "number": "11",
+      "capacity": 8,
+      "availableDays": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "k1-12",
+      "name": "Eino Leino",
+      "floor": "K1",
+      "number": "12",
+      "capacity": 14,
+      "availableDays": [
+        1
+      ]
+    },
+    {
+      "id": "k1-13",
+      "name": "Arvid Järnefelt",
+      "floor": "K1",
+      "number": "13",
+      "capacity": 14,
+      "availableDays": [
+        3
+      ]
+    },
+    {
+      "id": "k1-15",
+      "name": "Ari Joutsi",
+      "floor": "K1",
+      "number": "15",
+      "capacity": 8,
+      "availableDays": [
+        1
+      ]
+    },
+    {
+      "id": "k1-16",
+      "name": "Marja Niiniluoto",
+      "floor": "K1",
+      "number": "16",
+      "capacity": 4,
+      "availableDays": [
+        3
+      ]
+    },
+    {
+      "id": "k1-17",
+      "name": "Sirkka Ruotsalainen",
+      "floor": "K1",
+      "number": "17",
+      "capacity": 4,
+      "availableDays": [
+        3
+      ]
+    },
+    {
+      "id": "2b-indie",
+      "name": "Indie",
+      "floor": "2B",
+      "capacity": 10,
+      "availableDays": [
+        3
+      ]
+    },
+    {
+      "id": "3a-aamulehti",
+      "name": "Aamulehti",
+      "floor": "3A",
+      "capacity": 6,
+      "availableDays": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": "3a-iltasanomat",
+      "name": "IltaSanomat",
+      "floor": "3A",
+      "capacity": 6,
+      "availableDays": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "3a-nelonen",
+      "name": "Nelonen",
+      "floor": "3A",
+      "capacity": 8,
+      "availableDays": [
+        1
+      ]
+    },
+    {
+      "id": "3a-suomipop",
+      "name": "Suomipop",
+      "floor": "3A",
+      "capacity": 8,
+      "availableDays": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": "3a-hs",
+      "name": "Helsingin Sanomat",
+      "floor": "3A",
+      "capacity": 10,
+      "availableDays": [
+        3
+      ]
+    },
+    {
+      "id": "3a-luottokumppani",
+      "name": "Luottokumppani",
+      "floor": "3A",
+      "capacity": 16,
+      "availableDays": [
+        3
+      ]
+    },
+    {
+      "id": "3a-rockfest",
+      "name": "Rockfest",
+      "floor": "3A",
+      "capacity": 6,
+      "availableDays": [
+        3
+      ]
+    },
+    {
+      "id": "3b-menaiset",
+      "name": "Me Naiset",
+      "floor": "3B",
+      "capacity": 6,
+      "availableDays": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "3b-contentstudio",
+      "name": "Content Studio",
+      "floor": "3B",
+      "capacity": 10,
+      "availableDays": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "3b-ruutu",
+      "name": "Ruutu",
+      "floor": "3B",
+      "capacity": 8,
+      "availableDays": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": "9a-laakso",
+      "name": "Laakso",
+      "floor": "9A",
+      "capacity": 13,
+      "availableDays": [
+        1
+      ]
+    },
+    {
+      "id": "9a-toolonlahti",
+      "name": "Töölönlahti",
+      "floor": "9A",
+      "capacity": 9,
+      "availableDays": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "9a-taka-toolo",
+      "name": "Taka-Töölö",
+      "floor": "9A",
+      "capacity": 14,
+      "availableDays": [
+        2
+      ]
+    },
+    {
+      "id": "9a-etu-toolo",
+      "name": "Etu-Töölö",
+      "floor": "9A",
+      "capacity": 10,
+      "availableDays": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "9b-kaisaniemi",
+      "name": "Kaisaniemi",
+      "floor": "9B",
+      "capacity": 11,
+      "availableDays": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "9b-kurvi",
+      "name": "Kurvi",
+      "floor": "9B",
+      "capacity": 6,
+      "availableDays": [
+        1
+      ]
+    },
+    {
+      "id": "9b-hakaniemi",
+      "name": "Hakaniemi",
+      "floor": "9B",
+      "capacity": 6,
+      "availableDays": [
+        2
+      ]
+    }
   ]
 }
