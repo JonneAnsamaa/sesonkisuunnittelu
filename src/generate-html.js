@@ -294,6 +294,7 @@ const html = `<!DOCTYPE html>
       .sessions-toolbar { flex-direction: column; align-items: stretch; }
       .session-card-header { grid-template-columns: auto 1fr auto; }
       .session-card-header .sc-schedule { grid-column: 1 / -1; text-align: left; }
+      .lang-toggle { position: static; justify-content: center; margin-bottom: 0.5rem; }
     }
   </style>
 </head>
