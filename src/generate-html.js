@@ -691,6 +691,10 @@ function runScheduler() {
     scheduledIds.add(prev.id);
   }
 
+  // Pakotetut sijoitukset
+  const forcePlacements=[{id:'session-1',day:1,startTime:'10:00',endTime:'11:30',room:'k1-01'}];
+  for(const fp of forcePlacements){if(scheduledIds.has(fp.id))continue;const sess=active.find(s=>s.id===fp.id);if(!sess)continue;const rm=rooms.find(r=>r.id===fp.room);schedule.push({id:sess.id,topic:sess.topic,owner:sess.owner,ownerDomain:sess.ownerDomain,day:fp.day,startTime:fp.startTime,endTime:fp.endTime,room:fp.room,roomName:rm?rm.name:fp.room,roomFloor:rm?rm.floor:'',participantCount:sess.participants.length,conflicts:[]});scheduledIds.add(fp.id);}
+
   const groups={};
   for(const s of active){if(s.group){if(!groups[s.group])groups[s.group]=[];groups[s.group].push(s);}}
   for(const g of Object.values(groups))g.sort((a,b)=>(a.groupOrder||0)-(b.groupOrder||0));

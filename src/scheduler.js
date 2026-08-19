@@ -297,6 +297,31 @@ function scheduleWithOrder(sorted, active) {
     }
   }
 
+  // Manuaaliset pakotetut sijoitukset
+  const forcePlacements = [
+    { id: 'session-1', day: 1, startTime: '10:00', endTime: '11:30', room: 'k1-01' },
+  ];
+  for (const fp of forcePlacements) {
+    if (scheduledIds.has(fp.id)) continue;
+    const session = active.find(s => s.id === fp.id);
+    if (!session) continue;
+    const rm = rooms.find(r => r.id === fp.room);
+    const startMin = timeToMinutes(fp.startTime);
+    const endMin = timeToMinutes(fp.endTime);
+    const availConflicts = getAvailabilityConflicts(session, startMin, endMin, fp.day);
+    const overlapConflicts = getPersonConflicts(session, startMin, endMin, fp.day, scheduled);
+    const allC = [...availConflicts, ...overlapConflicts];
+    scheduled.push({
+      id: session.id, topic: session.topic, owner: session.owner, ownerDomain: session.ownerDomain,
+      day: fp.day, startTime: fp.startTime, endTime: fp.endTime,
+      room: fp.room, roomName: rm ? rm.name : fp.room,
+      participantCount: session.participants.length, conflicts: allC,
+    });
+    scheduledIds.add(session.id);
+    if (allC.length > 0) allConflicts.push({ sessionId: session.id, sessionTopic: session.topic, conflicts: allC });
+    console.log(`Pakotettu: ${session.topic.substring(0, 50)} → pv${fp.day} ${fp.startTime}-${fp.endTime}`);
+  }
+
   const groups = {};
   for (const s of active) {
     if (s.group) {
