@@ -392,17 +392,18 @@ function scheduleWithOrder(sorted, active) {
           }
           // Session-level time preferences
           const sesPrefs = preferences.filter(pr => pr.type === 'prefer-session-time' && pr.sessionId === session.id);
+          let hardBlock = false;
           for (const sp of sesPrefs) {
             const matchDay = sp.days.includes(day);
-            if (sp.startTime && sp.endTime) {
-              const prefStart = timeToMinutes(sp.startTime);
-              const prefEnd = timeToMinutes(sp.endTime);
-              if (!matchDay || slotStart < prefStart || endTime > prefEnd) prefPenalty += 5;
-            } else {
-              if (!matchDay) prefPenalty += 5;
-            }
+            const prefStart = sp.startTime ? timeToMinutes(sp.startTime) : null;
+            const prefEnd = sp.endTime ? timeToMinutes(sp.endTime) : null;
+            const timeOk = (prefStart === null || slotStart >= prefStart) && (prefEnd === null || endTime <= prefEnd);
+            const fits = matchDay && timeOk;
+            if (sp.hard && !fits) { hardBlock = true; break; }
+            if (!fits) prefPenalty += 5;
           }
-          const conflictScore = ownerOverlaps * 10000 + requiredOverlaps * 1000 + optionalConflicts + prefPenalty * 0.3;
+          if (hardBlock) continue;
+          const conflictScore = ownerOverlaps * 10000 + requiredOverlaps * 1000 + optionalConflicts + prefPenalty * 100;
 
           const room = selectRoom(session, slotStart, endTime, day, scheduled);
           if (!room) continue;

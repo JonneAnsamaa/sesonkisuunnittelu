@@ -24,7 +24,9 @@
   {
     "sessionId": "session-2",
     "type": "prefer-session-time",
-    "days": [1, 2],
-    "reason": "Maanantai tai tiistai, keskiviikkona vain aamulla onnistuu"
+    "days": [1, 2, 3],
+    "endTime": "11:00",
+    "hard": true,
+    "reason": "Maanantai tai tiistai, tai keskiviikkona ennen klo 11"
   }
 ]

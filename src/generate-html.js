@@ -728,7 +728,11 @@ function runScheduler() {
           const all=[...ac,...oc];
           const ownerOL=oc.filter(c=>c.isOwnerInThis||c.isOwnerInOther).length;
           let pp=0;for(const p of session.participants){const pref=preferences.find(pr=>pr.person===p.name&&pr.type==='prefer-day');if(pref&&!pref.days.includes(day))pp++;}
-          const score=ownerOL*10000+oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*0.3;
+          const sesPrefs=preferences.filter(pr=>pr.type==='prefer-session-time'&&pr.sessionId===session.id);
+          let hardBlock=false;
+          for(const sp of sesPrefs){const md=sp.days.includes(day);const ps=sp.startTime?timeToMin(sp.startTime):null;const pe=sp.endTime?timeToMin(sp.endTime):null;const tok=(ps===null||slot>=ps)&&(pe===null||end<=pe);const fits=md&&tok;if(sp.hard&&!fits){hardBlock=true;break;}if(!fits)pp+=5;}
+          if(hardBlock)continue;
+          const score=ownerOL*10000+oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*100;
           const room=selectRoom(session,slot,end,day,schedule);
           if(!room)continue;
           if(score<bestScore){bestScore=score;best={day,startTime:minToTime(slot),endTime:minToTime(end),room:room.id,roomName:room.name,conflicts:all};}
@@ -1294,7 +1298,11 @@ function autoScheduleOne(si){
       const all=[...ac,...oc];
       const ownerOL=oc.filter(c=>c.isOwnerInThis||c.isOwnerInOther).length;
       let pp=0;for(const p of s.participants){const pref=preferences.find(pr=>pr.person===p.name&&pr.type==='prefer-day');if(pref&&!pref.days.includes(day))pp++;}
-      const score=ownerOL*10000+oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*0.3;
+      const sesPrefs2=preferences.filter(pr=>pr.type==='prefer-session-time'&&pr.sessionId===s.id);
+      let hardBlock2=false;
+      for(const sp of sesPrefs2){const md=sp.days.includes(day);const ps=sp.startTime?timeToMin(sp.startTime):null;const pe=sp.endTime?timeToMin(sp.endTime):null;const tok=(ps===null||slot>=ps)&&(pe===null||end<=pe);const fits=md&&tok;if(sp.hard&&!fits){hardBlock2=true;break;}if(!fits)pp+=5;}
+      if(hardBlock2)continue;
+      const score=ownerOL*10000+oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*100;
       const afr=config.activeFloors;
       const dr=rooms.filter(r=>(!r.availableDays||r.availableDays.includes(day))&&(!afr||!afr.length||afr.includes(r.floor)));
       const sr=[...dr].sort((a,b)=>b.capacity-a.capacity);
