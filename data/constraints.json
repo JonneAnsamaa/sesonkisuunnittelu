@@ -1,4 +1,18 @@
 [
   { "person": "Toni Törnqvist", "day": 1, "startTime": "14:00", "endTime": "15:00", "reason": "Lähtee toimistolta 14:00" },
-  { "person": "Toni Törnqvist", "day": 3, "startTime": "14:00", "endTime": "15:00", "reason": "Lähtee toimistolta 14:00" }
+  { "person": "Toni Törnqvist", "day": 3, "startTime": "14:00", "endTime": "15:00", "reason": "Lähtee toimistolta 14:00" },
+  { "person": "Johan Korsbäck", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
+  { "person": "Emmy Ramsay", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
+  { "person": "Miia Salmi", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
+  { "person": "Sina Reunala", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
+  { "person": "Jaakko Kuivalainen", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
+  { "person": "Janne Nurmisto", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
+  { "person": "Johannes Hocksell", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
+  { "person": "Laura Kangas", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
+  { "person": "Minna Kruhse", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
+  { "person": "Netta Aavikko", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
+  { "person": "Tuuli Rikama", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
+  { "person": "Aki Salonen", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
+  { "person": "Riku Talvitie", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" },
+  { "person": "Tuukka Antikainen", "day": 3, "startTime": "09:30", "endTime": "10:30", "reason": "Tärkeä palaveri" }
 ]

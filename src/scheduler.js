@@ -383,6 +383,18 @@ function scheduleWithOrder(sorted, active) {
             const pref = preferences.find(pr => pr.person === p.name && pr.type === 'prefer-day');
             if (pref && !pref.days.includes(day)) prefPenalty++;
           }
+          // Session-level time preferences
+          const sesPrefs = preferences.filter(pr => pr.type === 'prefer-session-time' && pr.sessionId === session.id);
+          for (const sp of sesPrefs) {
+            const matchDay = sp.days.includes(day);
+            if (sp.startTime && sp.endTime) {
+              const prefStart = timeToMinutes(sp.startTime);
+              const prefEnd = timeToMinutes(sp.endTime);
+              if (!matchDay || slotStart < prefStart || endTime > prefEnd) prefPenalty += 5;
+            } else {
+              if (!matchDay) prefPenalty += 5;
+            }
+          }
           const conflictScore = requiredOverlaps * 1000 + optionalConflicts + prefPenalty * 0.3;
 
           const room = selectRoom(session, slotStart, endTime, day, scheduled);

@@ -27,7 +27,7 @@ const KNOWN_DOMAIN_PREFIXES = [
   'Marketing', 'Print', 'Ad Manager & Creative AI',
   'Ad Manager Product', 'Ad Manager', 'Creative AI',
   'Performance Products', 'Personalization', 'API', 'SF', 'OPU', 'CPR',
-  'PP', 'YDP',
+  'PP', 'YDP', 'Display team', 'Core', 'B2B Core',
 ];
 
 // Nimimäppäykset: normalisoidaan variantit samaan nimeen
@@ -69,6 +69,8 @@ const NAME_ALIASES = {
   'Fabio La torre': 'Fabio La Torre',
   'Zeeshan Rais': 'Zeeshan Rais',
   'Minna Krushe': 'Minna Kruhse',
+  'Jonne Ansama': 'Jonne Ansamaa',
+  'Laura KAngas': 'Laura Kangas',
   'Maria Meruman': 'Maria Meurman',
   'Tarja Wiljanen': 'Tarja Viljanen',
   'Niko-Petteri Varho': 'Petteri Varho',
@@ -99,6 +101,9 @@ function extractNames(text) {
 
   // Strip zero-width spaces and other invisible Unicode
   processed = processed.replace(/[​-‍﻿]/g, '');
+
+  // Fix mixed-case typos like "KAngas" → "Kangas" (uppercase letter followed by uppercase then lowercase)
+  processed = processed.replace(/\b([A-ZÄÖÅ])([A-ZÄÖÅ])([a-zäöå])/g, (m, a, b, c) => a + b.toLowerCase() + c);
 
   // Replace known domain prefixes (with colon/dot) with newlines — handles inline prefixes
   for (const prefix of KNOWN_DOMAIN_PREFIXES) {
@@ -136,7 +141,7 @@ function extractNames(text) {
 
     line = line.replace(/\([^)]*\)/g, '');
 
-    const parts = line.split(/[,/]/).map(p => p.trim()).filter(Boolean);
+    const parts = line.split(/[,/;]/).map(p => p.trim()).filter(Boolean);
 
     for (let part of parts) {
       part = part.replace(/^[+•–-]\s*/, '');
@@ -146,14 +151,14 @@ function extractNames(text) {
       if (!part) continue;
 
       // Try extracting a name from the end of a longer non-matching string
-      const namePattern = /^[A-ZÄÖÅÉÈ][a-zäöåéèü]+(?:\s+[A-ZÄÖÅÉÈ][a-zäöåéèü]+){0,3}$/;
+      const namePattern = /^[A-ZÄÖÅÉÈ][a-zäöåéèü]+(?:-[A-ZÄÖÅÉÈ][a-zäöåéèü]+)?(?:\s+[A-ZÄÖÅÉÈ][a-zäöåéèü]+(?:-[A-ZÄÖÅÉÈ][a-zäöåéèü]+)?){0,3}$/;
       if (namePattern.test(part) && part.length >= 4 && part.length <= 40) {
         const normalized = normalizeName(part);
         if (!NOT_NAMES.has(normalized)) {
           names.push(normalized);
         }
       } else {
-        const tailMatch = part.match(/([A-ZÄÖÅÉÈ][a-zäöåéèü]+\s+[A-ZÄÖÅÉÈ][a-zäöåéèü]+)\s*$/);
+        const tailMatch = part.match(/([A-ZÄÖÅÉÈ][a-zäöåéèü]+(?:-[A-ZÄÖÅÉÈ][a-zäöåéèü]+)?\s+[A-ZÄÖÅÉÈ][a-zäöåéèü]+(?:-[A-ZÄÖÅÉÈ][a-zäöåéèü]+)?)\s*$/);
         if (tailMatch && tailMatch[1].length >= 4) {
           const normalized = normalizeName(tailMatch[1]);
           if (!NOT_NAMES.has(normalized)) {
@@ -255,7 +260,7 @@ if (existsSync(teamExplainPath)) {
   console.log(`Ladattu ${Object.keys(PERSON_DOMAIN_MAP).length} henkilö→domain-mäppäystä tiimiselitteistä`);
 }
 
-const EXCLUDE_PATTERNS = ['ei suunnittelu', 'buukattu', 'buukannut', 'ei pidetä', 'ei tarvita'];
+const EXCLUDE_PATTERNS = ['ei suunnittelu', 'ei pidetä', 'ei tarvita', 'ei dep syncciin'];
 
 function parseRow(row, index) {
   const topic = row[COL.topic];

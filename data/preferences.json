@@ -4,5 +4,21 @@
     "type": "prefer-day",
     "days": [3],
     "reason": "Toive mahdollisimman paljon sessioita keskiviikolle"
+  },
+  {
+    "sessionId": "session-18",
+    "type": "prefer-session-time",
+    "days": [2, 3],
+    "startTime": "10:30",
+    "endTime": "13:00",
+    "reason": "Tiistai 10:30-13:00 tai keskiviikko"
+  },
+  {
+    "sessionId": "session-21",
+    "type": "prefer-session-time",
+    "days": [2],
+    "startTime": "09:00",
+    "endTime": "12:00",
+    "reason": "Ei ti klo 12 jälkeen, jos mahdollista"
   }
 ]
