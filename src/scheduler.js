@@ -12,6 +12,13 @@ const preferences = existsSync('data/preferences.json')
 const { config, rooms } = roomsData;
 const { sessions } = input;
 
+// Toni Törnqvist toivotuksi session-3:ssa (este pv1+3, ei estä session siirtoa)
+const s3 = sessions.find(s => s.id === 'session-3');
+if (s3) {
+  const toni = s3.participants.find(p => p.name === 'Toni Törnqvist');
+  if (toni) toni.required = false;
+}
+
 const prevSchedule = existsSync('data/schedule.json')
   ? JSON.parse(readFileSync('data/schedule.json', 'utf-8'))
   : null;
@@ -402,8 +409,17 @@ function scheduleWithOrder(sorted, active) {
             if (sp.hard && !fits) { hardBlock = true; break; }
             if (!fits) prefPenalty += 5;
           }
+          // not-same-day: very heavy penalty if a linked session is already scheduled on this day
+          const notSameDayPrefs = preferences.filter(pr => pr.type === 'not-same-day' && pr.sessions.includes(session.id));
+          let sameDayPenalty = 0;
+          for (const nsd of notSameDayPrefs) {
+            const otherIds = nsd.sessions.filter(id => id !== session.id);
+            for (const oid of otherIds) {
+              if (scheduled.find(s => s.id === oid && s.day === day)) sameDayPenalty++;
+            }
+          }
           if (hardBlock) continue;
-          const conflictScore = ownerOverlaps * 10000 + requiredOverlaps * 1000 + optionalConflicts + prefPenalty * 100;
+          const conflictScore = sameDayPenalty * 1000000 + ownerOverlaps * 10000 + requiredOverlaps * 1000 + optionalConflicts + prefPenalty * 100;
 
           const room = selectRoom(session, slotStart, endTime, day, scheduled);
           if (!room) continue;
@@ -439,6 +455,7 @@ function scheduleWithOrder(sorted, active) {
           participantCount: session.participants.length,
           conflicts: bestPlacement.conflicts,
         });
+        scheduledIds.add(session.id);
 
         if (bestPlacement.conflicts.length > 0) {
           allConflicts.push({

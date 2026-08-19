@@ -743,8 +743,10 @@ function runScheduler() {
           const sesPrefs=preferences.filter(pr=>pr.type==='prefer-session-time'&&pr.sessionId===session.id);
           let hardBlock=false;
           for(const sp of sesPrefs){const md=sp.days.includes(day);const ps=sp.startTime?timeToMin(sp.startTime):null;const pe=sp.endTime?timeToMin(sp.endTime):null;const tok=(ps===null||slot>=ps)&&(pe===null||end<=pe);const fits=md&&tok;if(sp.hard&&!fits){hardBlock=true;break;}if(!fits)pp+=5;}
+          const nsdPrefs=preferences.filter(pr=>pr.type==='not-same-day'&&pr.sessions.includes(session.id));
+          let sdp=0;for(const nsd of nsdPrefs){for(const oid of nsd.sessions.filter(id=>id!==session.id)){if(schedule.some(s=>s.id===oid&&s.day===day))sdp++;}}
           if(hardBlock)continue;
-          const score=ownerOL*10000+oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*100;
+          const score=sdp*50000+ownerOL*10000+oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*100;
           const room=selectRoom(session,slot,end,day,schedule);
           if(!room)continue;
           if(score<bestScore){bestScore=score;best={day,startTime:minToTime(slot),endTime:minToTime(end),room:room.id,roomName:room.name,conflicts:all};}
