@@ -63,7 +63,7 @@ const html = `<!DOCTYPE html>
 * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      background: var(--bg); color: var(--text); line-height: 1.5; padding: 1rem;
+      background: var(--bg); color: var(--text); line-height: 1.5; padding: 1rem; overflow-x: hidden; max-width: 100vw;
     }
     body.has-bg {
       background-color: rgba(245,245,245,0.7);
@@ -74,9 +74,9 @@ const html = `<!DOCTYPE html>
       --card-bg: rgba(255,255,255,0.88);
     }
     @font-face { font-family: 'Unica One'; src: url(data:font/ttf;base64,${fontBase64}) format('truetype'); font-weight: 400; font-style: normal; }
-    header { text-align: center; margin-bottom: 1.5rem; padding: 1.5rem 1rem; }
-    header h1 { font-family: 'Unica One', sans-serif; font-size: 3.2rem; font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; -webkit-text-stroke: 0.5px currentColor; }
-    header p { color: var(--text-muted); margin-top: 0.25rem; }
+    header { text-align: center; margin-bottom: 1.5rem; padding: 1.5rem 1rem; overflow: hidden; }
+    header h1 { font-family: 'Unica One', sans-serif; font-size: clamp(1.4rem, 5vw, 3.2rem); font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; -webkit-text-stroke: 0.5px currentColor; word-break: break-word; }
+    header p { color: var(--text-muted); margin-top: 0.25rem; font-size: clamp(0.75rem, 2vw, 1rem); }
 
     .controls {
       display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem;
@@ -285,6 +285,15 @@ const html = `<!DOCTYPE html>
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
       .list-card-meta { gap: 0.5rem; }
       .form-row { flex-direction: column; align-items: flex-start; }
+      .controls { gap: 0.5rem; }
+      .controls select, #person-filter, #domain-filter { min-width: 0; width: 100%; }
+      .filter-group { width: 100%; }
+      .day-btn-group { width: 100%; display: flex; }
+      .day-btn-group .day-btn { flex: 1; padding: 0.5rem 0.4rem; font-size: 0.8rem; }
+      header { padding: 1rem 0.5rem; }
+      .sessions-toolbar { flex-direction: column; align-items: stretch; }
+      .session-card-header { grid-template-columns: auto 1fr auto; }
+      .session-card-header .sc-schedule { grid-column: 1 / -1; text-align: left; }
     }
   </style>
 </head>
