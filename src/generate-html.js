@@ -692,7 +692,7 @@ function runScheduler() {
   }
 
   // Pakotetut sijoitukset
-  const forcePlacements=[{id:'session-1',day:1,startTime:'10:00',endTime:'11:30',room:'k1-01'}];
+  const forcePlacements=[{id:'session-1',day:1,startTime:'10:00',endTime:'11:30',room:'k1-01'},{id:'session-30',day:1,startTime:'10:30',endTime:'11:30',room:'k1-02'}];
   for(const fp of forcePlacements){if(scheduledIds.has(fp.id))continue;const sess=active.find(s=>s.id===fp.id);if(!sess)continue;const rm=rooms.find(r=>r.id===fp.room);schedule.push({id:sess.id,topic:sess.topic,owner:sess.owner,ownerDomain:sess.ownerDomain,day:fp.day,startTime:fp.startTime,endTime:fp.endTime,room:fp.room,roomName:rm?rm.name:fp.room,roomFloor:rm?rm.floor:'',participantCount:sess.participants.length,conflicts:[]});scheduledIds.add(fp.id);}
 
   const groups={};

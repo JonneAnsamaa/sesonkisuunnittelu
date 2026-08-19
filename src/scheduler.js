@@ -300,6 +300,7 @@ function scheduleWithOrder(sorted, active) {
   // Manuaaliset pakotetut sijoitukset
   const forcePlacements = [
     { id: 'session-1', day: 1, startTime: '10:00', endTime: '11:30', room: 'k1-01' },
+    { id: 'session-30', day: 1, startTime: '10:30', endTime: '11:30', room: 'k1-02' },
   ];
   for (const fp of forcePlacements) {
     if (scheduledIds.has(fp.id)) continue;
