@@ -305,6 +305,7 @@ function scheduleWithOrder(sorted, active) {
   const forcePlacements = [
     { id: 'session-1', day: 1, startTime: '10:00', endTime: '11:30', room: 'k1-01' },
     { id: 'session-30', day: 1, startTime: '10:30', endTime: '11:30', room: 'k1-02' },
+    { id: 'session-23', day: 3, startTime: '09:00', endTime: '10:00', room: 'k1-13' },
   ];
   for (const fp of forcePlacements) {
     if (scheduledIds.has(fp.id)) continue;
