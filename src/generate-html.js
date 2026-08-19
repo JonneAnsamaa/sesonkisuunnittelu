@@ -329,7 +329,7 @@ const html = `<!DOCTYPE html>
     <button id="lang-fi" class="active" onclick="setLang('fi')">&#127467;&#127470; Suomi</button>
     <button id="lang-en" onclick="setLang('en')">&#127468;&#127463; English</button>
   </div>
-  <h1 id="main-title">Sesonkisuunnittelu: Sesonki ${season.number}/2026</h1>
+  <h1 id="main-title">Sesonki&shy;suunnittelu: Sesonki ${season.number}/2026</h1>
   <details style="margin-top:0.5rem;cursor:pointer;">
     <summary id="cycles-title" style="font-size:0.85rem;color:#555;font-weight:600;">S3/26 syklit</summary>
     <div style="display:flex;flex-wrap:wrap;gap:0.4rem;justify-content:center;margin-top:0.5rem;">
@@ -427,7 +427,7 @@ const TR = {
     statusLabel:'Tila', statusActive:'Aktiivinen', statusInternal:'Domainin sisäinen', statusCancelled:'Ei tarvita',
     statusScheduled:'sessiota aikataulutettu', statusRooms:'neukkaria',
     statusDays:'päivää', statusPersons:'henkilöä',
-    mainTitle:'Sesonkisuunnittelu: Sesonki', cyclesTitle:'S3/26 syklit',
+    mainTitle:'Sesonki­suunnittelu: Sesonki', cyclesTitle:'S3/26 syklit',
     eggDuck:'\\ud83e\\udd86 Aku Ankka on estynyt \\u2014 h\\u00e4n on Ankkalinnassa kokouksessa Roope-sed\\u00e4n kanssa',
     eggDuckNames:'Aku Ankka muutti kaikki nimet! Palautuu kohta...',
     eggRankTitle:'\\ud83c\\udfc6 Kokouskuningas/-kuningatar',
@@ -558,7 +558,7 @@ function translateStatic() {
   const wb=document.getElementById('welcome-body'); if(wb)wb.innerHTML=t('welcomeBody');
   const wf=document.getElementById('welcome-footer'); if(wf)wf.innerHTML=t('welcomeFooter');
   const wc=document.getElementById('welcome-cta'); if(wc)wc.textContent=t('welcomeCta');
-  const mt=document.getElementById('main-title'); if(mt)mt.textContent=t('mainTitle')+' ${season.number}/2026';
+  const mt=document.getElementById('main-title'); if(mt)mt.innerHTML=t('mainTitle')+' ${season.number}/2026';
   const ct=document.getElementById('cycles-title'); if(ct)ct.textContent=t('cyclesTitle');
 }
 
