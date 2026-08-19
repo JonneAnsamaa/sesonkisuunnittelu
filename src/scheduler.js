@@ -23,6 +23,10 @@ if (s3) {
 const s13 = sessions.find(s => s.id === 'session-13');
 if (s13) s13.status = 'cancelled';
 
+// Session-23 lyhennetty 60 minuuttiin
+const s23 = sessions.find(s => s.id === 'session-23');
+if (s23) s23.duration = 60;
+
 const prevSchedule = existsSync('data/schedule.json')
   ? JSON.parse(readFileSync('data/schedule.json', 'utf-8'))
   : null;
