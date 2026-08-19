@@ -315,7 +315,6 @@ function scheduleWithOrder(sorted, active) {
             const ac = getAvailabilityConflicts(p.session, p.startTime, p.endTime, day);
             if (ac.some(c => c.requiredInThis)) { hasBlocker = true; break; }
             const oc = getPersonConflicts(p.session, p.startTime, p.endTime, day, scheduled);
-            if (oc.some(c => c.isOwnerInThis || c.isOwnerInOther)) { hasBlocker = true; break; }
             p.conflicts = [...ac, ...oc];
           }
           if (hasBlocker) continue;
@@ -324,7 +323,8 @@ function scheduleWithOrder(sorted, active) {
           if (!room) continue;
 
           const totalConflicts = placements.flatMap(p => p.conflicts);
-          const score = totalConflicts.filter(c => c.requiredInThis).length * 1000
+          const score = totalConflicts.filter(c => c.isOwnerInThis || c.isOwnerInOther).length * 10000
+                      + totalConflicts.filter(c => c.requiredInThis).length * 1000
                       + totalConflicts.filter(c => !c.requiredInThis).length;
 
           if (score < bestConflictScore) {
@@ -381,9 +381,8 @@ function scheduleWithOrder(sorted, active) {
 
           const overlapConflicts = getPersonConflicts(session, slotStart, endTime, day, scheduled);
 
-          if (overlapConflicts.some(c => c.isOwnerInThis || c.isOwnerInOther)) continue;
-
           const allConflictsForSlot = [...availConflicts, ...overlapConflicts];
+          const ownerOverlaps = overlapConflicts.filter(c => c.isOwnerInThis || c.isOwnerInOther).length;
           const requiredOverlaps = overlapConflicts.filter((c) => c.requiredInThis).length;
           const optionalConflicts = allConflictsForSlot.filter((c) => !c.requiredInThis).length;
           let prefPenalty = 0;
@@ -403,7 +402,7 @@ function scheduleWithOrder(sorted, active) {
               if (!matchDay) prefPenalty += 5;
             }
           }
-          const conflictScore = requiredOverlaps * 1000 + optionalConflicts + prefPenalty * 0.3;
+          const conflictScore = ownerOverlaps * 10000 + requiredOverlaps * 1000 + optionalConflicts + prefPenalty * 0.3;
 
           const room = selectRoom(session, slotStart, endTime, day, scheduled);
           if (!room) continue;
@@ -496,12 +495,56 @@ function schedule() {
   }));
 
   // Strategy: reverse day search (start from day 3)
-  // We'll handle this by shuffling the base sort with a flag — but simpler: just reverse
   const reversed = [...baseSort].reverse();
-  // Keep internals at the end
   const internals = reversed.filter(s => s.status === 'internal');
   const nonInternals = reversed.filter(s => s.status !== 'internal');
   strategies.push([...nonInternals, ...internals]);
+
+  // Strategy: busiest person first (total minutes, not session count)
+  const personMinutes = {};
+  for (const s of active) {
+    if (s.status === 'cancelled') continue;
+    for (const p of s.participants) {
+      if (p.required) personMinutes[p.name] = (personMinutes[p.name] || 0) + s.duration;
+    }
+  }
+  strategies.push([...active].sort((a, b) => {
+    const aInt = a.status === 'internal' ? 1 : 0;
+    const bInt = b.status === 'internal' ? 1 : 0;
+    if (aInt !== bInt) return aInt - bInt;
+    const aLoad = Math.max(...a.participants.filter(p => p.required).map(p => personMinutes[p.name] || 0), 0);
+    const bLoad = Math.max(...b.participants.filter(p => p.required).map(p => personMinutes[p.name] || 0), 0);
+    return bLoad - aLoad || b.duration - a.duration;
+  }));
+
+  // Strategy: longest sessions first, then busiest person
+  strategies.push([...active].sort((a, b) => {
+    const aInt = a.status === 'internal' ? 1 : 0;
+    const bInt = b.status === 'internal' ? 1 : 0;
+    if (aInt !== bInt) return aInt - bInt;
+    if (b.duration !== a.duration) return b.duration - a.duration;
+    const aLoad = Math.max(...a.participants.filter(p => p.required).map(p => personMinutes[p.name] || 0), 0);
+    const bLoad = Math.max(...b.participants.filter(p => p.required).map(p => personMinutes[p.name] || 0), 0);
+    return bLoad - aLoad;
+  }));
+
+  // Strategy: most participants first
+  strategies.push([...active].sort((a, b) => {
+    const aInt = a.status === 'internal' ? 1 : 0;
+    const bInt = b.status === 'internal' ? 1 : 0;
+    if (aInt !== bInt) return aInt - bInt;
+    return b.participants.length - a.participants.length || b.duration - a.duration;
+  }));
+
+  // Strategy: combined score (participants × duration × busiest person load)
+  strategies.push([...active].sort((a, b) => {
+    const aInt = a.status === 'internal' ? 1 : 0;
+    const bInt = b.status === 'internal' ? 1 : 0;
+    if (aInt !== bInt) return aInt - bInt;
+    const aScore = a.participants.length * a.duration * Math.max(...a.participants.filter(p => p.required).map(p => personLoad[p.name] || 0), 1);
+    const bScore = b.participants.length * b.duration * Math.max(...b.participants.filter(p => p.required).map(p => personLoad[p.name] || 0), 1);
+    return bScore - aScore;
+  }));
 
   let best = null;
   for (let i = 0; i < strategies.length; i++) {

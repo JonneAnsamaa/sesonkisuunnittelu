@@ -725,10 +725,10 @@ function runScheduler() {
           const ac=getAvailConflicts(session,slot,end,day);
           if(ac.some(c=>c.requiredInThis))continue;
           const oc=getOverlapConflicts(session,slot,end,day,schedule);
-          if(oc.some(c=>c.isOwnerInThis||c.isOwnerInOther))continue;
           const all=[...ac,...oc];
+          const ownerOL=oc.filter(c=>c.isOwnerInThis||c.isOwnerInOther).length;
           let pp=0;for(const p of session.participants){const pref=preferences.find(pr=>pr.person===p.name&&pr.type==='prefer-day');if(pref&&!pref.days.includes(day))pp++;}
-          const score=oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*0.3;
+          const score=ownerOL*10000+oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*0.3;
           const room=selectRoom(session,slot,end,day,schedule);
           if(!room)continue;
           if(score<bestScore){bestScore=score;best={day,startTime:minToTime(slot),endTime:minToTime(end),room:room.id,roomName:room.name,conflicts:all};}
@@ -1291,10 +1291,10 @@ function autoScheduleOne(si){
       const ac=getAvailConflicts(s,slot,end,day);
       if(ac.some(c=>c.requiredInThis))continue;
       const oc=getOverlapConflicts(s,slot,end,day,schedWithout);
-      if(oc.some(c=>c.isOwnerInThis||c.isOwnerInOther))continue;
       const all=[...ac,...oc];
+      const ownerOL=oc.filter(c=>c.isOwnerInThis||c.isOwnerInOther).length;
       let pp=0;for(const p of s.participants){const pref=preferences.find(pr=>pr.person===p.name&&pr.type==='prefer-day');if(pref&&!pref.days.includes(day))pp++;}
-      const score=oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*0.3;
+      const score=ownerOL*10000+oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*0.3;
       const afr=config.activeFloors;
       const dr=rooms.filter(r=>(!r.availableDays||r.availableDays.includes(day))&&(!afr||!afr.length||afr.includes(r.floor)));
       const sr=[...dr].sort((a,b)=>b.capacity-a.capacity);
