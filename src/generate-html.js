@@ -668,6 +668,8 @@ function selectRoomForGroup(placements,day,scheduled) {
   return null;
 }
 function runScheduler() {
+  const s3=sessions.find(s=>s.id==='session-3');
+  if(s3){const t=s3.participants.find(p=>p.name==='Toni Törnqvist');if(t)t.required=false;}
   const active=sessions.filter(s=>s.status!=='cancelled');
   const sorted=[...active].sort((a,b)=>{
     const ai=a.status==='internal'?1:0, bi=b.status==='internal'?1:0;
@@ -746,7 +748,7 @@ function runScheduler() {
           const nsdPrefs=preferences.filter(pr=>pr.type==='not-same-day'&&pr.sessions.includes(session.id));
           let sdp=0;for(const nsd of nsdPrefs){for(const oid of nsd.sessions.filter(id=>id!==session.id)){if(schedule.some(s=>s.id===oid&&s.day===day))sdp++;}}
           if(hardBlock)continue;
-          const score=sdp*50000+ownerOL*10000+oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*100;
+          const score=sdp*1000000+ownerOL*10000+oc.filter(c=>c.requiredInThis).length*1000+all.filter(c=>!c.requiredInThis).length+pp*100;
           const room=selectRoom(session,slot,end,day,schedule);
           if(!room)continue;
           if(score<bestScore){bestScore=score;best={day,startTime:minToTime(slot),endTime:minToTime(end),room:room.id,roomName:room.name,conflicts:all};}
