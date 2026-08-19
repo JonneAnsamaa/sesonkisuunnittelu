@@ -1504,8 +1504,8 @@ function importFile(target){
 }
 
 // === PASSWORD & MODE ===
-const VIEW_HASH = '${createHash('sha256').update('luottokumppani').digest('hex')}';
-const ADMIN_HASH = '${createHash('sha256').update('luottokumppaniadmin').digest('hex')}';
+const VIEW_HASH = '${createHash('sha256').update('b2bplanning').digest('hex')}';
+const ADMIN_HASH = '${createHash('sha256').update('b2bplanningadmin').digest('hex')}';
 let isAdmin = false;
 
 async function sha256(str){
