@@ -296,10 +296,12 @@ const html = `<!DOCTYPE html>
       .session-card-header .sc-schedule { grid-column: 1 / -1; text-align: left; }
       .lang-toggle { position: static; justify-content: center; margin-bottom: 0.5rem; }
     }
+    .logged-in #login-gate { display: none !important; }
+    .logged-in #app-content { display: block !important; }
   </style>
 </head>
 <body>
-
+<script>if(sessionStorage.getItem('sesonki-mode'))document.documentElement.classList.add('logged-in');</script>
 <div id="login-gate" style="position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:#0a0a0a;z-index:9999;">
   ${bgBase64 ? '<div style="position:absolute;inset:0;background-image:url(data:image/jpeg;base64,' + bgBase64 + ');background-size:cover;background-position:center;opacity:0.45;"></div>' : ''}
   <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 50%,rgba(0,0,0,0.7) 100%);"></div>
